@@ -13,19 +13,14 @@ This Docker container makes it easy to get an instance of Confluence up and runn
 For the `CONFLUENCE_HOME` directory that is used to store Confluence data
 (amongst other things) we recommend mounting a host directory as a [data volume](https://docs.docker.com/userguide/dockervolumes/#mount-a-host-directory-as-a-data-volume):
  
-Set permissions for the data directory so that the runuser can write to it:
- 
-    $> docker run -u root -v /data/bitbucket:/var/atlassian/application-data/bitbucket atlassian/bitbucket-server chown -R daemon  /var/atlassian/application-data/bitbucket
- 
 Start Atlassian Confluence Server:
  
-    $> docker run -v /data/bitbucket:/var/atlassian/application-data/bitbucket --name="bitbucket" -d -p 7990:7990 -p 7999:7999 atlassian/bitbucket-server
+    $> docker run -v /data/your-confluence-home:/var/atlassian/confluence-home --name="confluence" -d -p 8090:8090 atlassian/confluence-server
  
 **Success**. Confluence is now available on [http://localhost:8090](http://localhost:8090)*
  
 Please ensure your container has the necessary resources allocated to it.
-We recommend 2GiB of memory allocated to accommodate both the application server
-and the git processes.
+We recommend 2GiB of memory allocated to accommodate the application server.
 See [Supported Platforms](https://confluence.atlassian.com/display/DOC/Supported+platforms) for further information.
      
  
