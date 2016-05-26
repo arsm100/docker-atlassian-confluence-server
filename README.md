@@ -45,7 +45,7 @@ container and its volumes using the `-v` option._
  
 For evaluating Confluence you can use the built-in database that will store its files in the Confluence Server home directory. In that case it is sufficient to create a backup archive of the directory on the host that is used as a volume (`/data/your-confluence-home` in the example above).
  
-Confluence's [automatic backup](https://confluence.atlassian.com/display/DOC/Configuring+Backups) is currently not supported in the Docker setup. You can however use the [Production Backup Strategy](https://confluence.atlassian.com/display/DOC/Production+Backup+Strategy) approach if you're using an external database.
+Confluence's [automatic backup](https://confluence.atlassian.com/display/DOC/Configuring+Backups) is currently supported in the Docker setup. You can also use the [Production Backup Strategy](https://confluence.atlassian.com/display/DOC/Production+Backup+Strategy) approach if you're using an external database.
  
 Read more about data recovery and backups: [Site Backup and Restore](https://confluence.atlassian.com/display/DOC/Site+Backup+and+Restore)
  
