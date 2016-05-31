@@ -61,6 +61,14 @@ Alternatively, you can use a specific minor version of Confluence Server by usin
 tag: `atlassian/confluence-server:5.9`. This will install the latest `5.9.x` version that
 is available.
  
+# Known Problems
+In Mac OS X with Docker version 1.11.0, when running with docker-machine, there is a bug where the directory specified for `CONFLUENCE_HOME` in a volume mount will not have the correct permission, and thus startup fails with a permission denied error:
+     Error writing state to confluence.cfg.xml
+com.atlassian.config.ConfigurationException: Couldn't save confluence.cfg.xml to /var/atlassian/confluence-home directory.
+
+See https://github.com/docker/docker/issues/4023 for details.
+
+To work around this issue, use a different host operating system other than Mac OSX until a newer release of Docker fixes this issue.
  
 # Issue tracker
  
