@@ -2,7 +2,7 @@ FROM java:openjdk-8-jre
 MAINTAINER Atlassian Confluence
 
 # Setup useful environment variables
-ENV CONFLUENCE_HOME     /var/atlassian/confluence-home
+ENV CONFLUENCE_HOME     /var/atlassian/application-data/confluence
 ENV CONFLUENCE_INSTALL  /opt/atlassian/confluence
 ENV CONF_VERSION  5.9.11
 
