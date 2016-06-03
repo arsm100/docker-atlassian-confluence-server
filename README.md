@@ -60,6 +60,8 @@ So `atlassian/confluence:latest` will use the newest stable version of Confluenc
 Alternatively, you can use a specific minor version of Confluence Server by using a version number
 tag: `atlassian/confluence-server:5.9`. This will install the latest `5.9.x` version that
 is available.
+
+For the latest developer (EAP) release use `atlassian/confluence-server:eap`. This will install our latest milestone (not supported for use in production).  
  
 # Known Problems
 In Mac OS X with Docker version 1.11.0, when running with docker-machine, there is a bug where the directory specified for `CONFLUENCE_HOME` in a volume mount will not have the correct permission, and thus startup fails with a permission denied error:
