@@ -58,7 +58,7 @@ The `latest` tag matches the most recent release of Atlassian Confluence Server.
 So `atlassian/confluence-server:latest` will use the newest stable version of Confluence Server available.
  
 Alternatively, you can use a specific minor version of Confluence Server by using a version number
-tag: `atlassian/confluence-server:5.9`. This will install the latest `5.9.x` version that
+tag: `atlassian/confluence-server:5.10`. This will install the latest `5.10.x` version that
 is available.
 
 For the latest developer (EAP) release use `atlassian/confluence-server:eap`. This will install our latest milestone (not supported for use in production).  
