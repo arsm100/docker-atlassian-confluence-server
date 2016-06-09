@@ -75,3 +75,6 @@ To work around this issue, use a different host operating system other than Mac 
 # Issue tracker
  
 Please raise an [issue](https://jira.atlassian.com/secure/CreateIssueDetails!init.jspa?pid=10470&issuetype=1&components=10461&labels=affects-server&labels=docker) if you encounter any problems with this Dockerfile.
+
+# Support
+For product support, go to [support.atlassian.com](http://support.atlassian.com)
