@@ -77,4 +77,10 @@ To work around this issue, use a different host operating system other than Mac 
 Please raise an [issue](https://jira.atlassian.com/secure/CreateIssueDetails!init.jspa?pid=10470&issuetype=1&components=10461&labels=affects-server&labels=docker) if you encounter any problems with this Dockerfile.
 
 # Support
-For product support, go to [support.atlassian.com](http://support.atlassian.com)
+
+This Docker image is great for evaluating Confluence, however it does use OpenJDK which is not supported for running Confluence in production. 
+
+To meet our supported platform requirements, you'll need to build your own image based on [Oracle JDK](https://github.com/oracle/docker-images/tree/master/OracleJDK). See [Update the Confluence Docker image to use Oracle JDK ](https://confluence.atlassian.com/display/CONFKB/Update+the+Confluence+Docker+image+to+use+Oracle+JDK) for more info. 
+
+For product support go to [support.atlassian.com](http://support.atlassian.com).  
+
