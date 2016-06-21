@@ -72,10 +72,6 @@ See https://github.com/docker/docker/issues/4023 for details.
 
 To work around this issue, use a different host operating system other than Mac OSX until a newer release of Docker fixes this issue.
  
-# Issue tracker
- 
-Please raise an [issue](https://jira.atlassian.com/secure/CreateIssueDetails!init.jspa?pid=10470&issuetype=1&components=10461&labels=affects-server&labels=docker) if you encounter any problems with this Dockerfile.
-
 # Support
 
 This Docker image is great for evaluating Confluence, however it does use OpenJDK which is not supported for running Confluence in production. 
