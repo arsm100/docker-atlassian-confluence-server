@@ -17,7 +17,7 @@ For the directory in the environmental variable `CONFLUENCE_HOME` that is used t
  
 Start Atlassian Confluence Server:
  
-    $> docker run -v /data/your-confluence-home:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 atlassian/confluence-server
+    $> docker run -v /data/your-confluence-home:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 atlassian/confluence-server
  
 
 **Success**. Confluence is now available on [http://localhost:8090](http://localhost:8090)*
