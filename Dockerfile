@@ -22,10 +22,13 @@ ENV RUN_GROUP           daemon
 
 # Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
+# dumb-init is used to give proper signal handling to the app inside Docker
 RUN set -x \
     && apt-get update --quiet \
     && apt-get install --quiet --yes --no-install-recommends libtcnative-1 xmlstarlet \
     && apt-get clean \
+    && wget -nv -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 \
+    && chmod +x /usr/local/bin/dumb-init \
     && mkdir -p                           "${CONFLUENCE_HOME}" \
     && chmod -R 700                       "${CONFLUENCE_HOME}" \
     && chown ${RUN_USER}:${RUN_GROUP}     "${CONFLUENCE_HOME}" \
@@ -71,4 +74,4 @@ VOLUME ["${CONFLUENCE_INSTALL}", "${CONFLUENCE_HOME}"]
 WORKDIR ${CONFLUENCE_INSTALL}
 
 # Run Atlassian Confluence as a foreground process by default.
-CMD ["./bin/catalina.sh", "run"]
+CMD ["/usr/local/bin/dumb-init", "./bin/catalina.sh", "run"]
