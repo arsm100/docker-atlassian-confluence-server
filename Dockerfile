@@ -1,77 +1,38 @@
-FROM java:openjdk-8-jre
-MAINTAINER Atlassian Confluence
+FROM openjdk:8u121-alpine
+MAINTAINER Dave Chevell
 
-# Setup useful environment variables
-ENV CONFLUENCE_HOME     /var/atlassian/application-data/confluence
-ENV CONFLUENCE_INSTALL  /opt/atlassian/confluence
-ENV CONF_VERSION 6.3.3
-
-LABEL Description="This image is used to start Atlassian Confluence" Vendor="Atlassian" Version="${CONF_VERSION}"
-
-ENV CONFLUENCE_DOWNLOAD_URL http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONF_VERSION}.tar.gz
-
-ENV MYSQL_VERSION 5.1.38
-ENV MYSQL_DRIVER_DOWNLOAD_URL http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-${MYSQL_VERSION}.tar.gz
-
-# Use the default unprivileged account. This could be considered bad practice
-# on systems where multiple processes end up being executed by 'daemon' but
-# here we only ever run one process anyway.
 ENV RUN_USER            daemon
 ENV RUN_GROUP           daemon
 
+# https://confluence.atlassian.com/display/JSERVERM/Important+directories+and+files
+ENV CONFLUENCE_HOME          /var/atlassian/application-data/confluence
+ENV CONFLUENCE_INSTALL_DIR   /opt/atlassian/confluence
 
-# Install Atlassian Confluence and helper tools and setup initial home
-# directory structure.
-# dumb-init is used to give proper signal handling to the app inside Docker
-RUN set -x \
-    && apt-get update --quiet \
-    && apt-get install --quiet --yes --no-install-recommends libtcnative-1 xmlstarlet \
-    && apt-get clean \
-    && wget -nv -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 \
-    && chmod +x /usr/local/bin/dumb-init \
-    && mkdir -p                           "${CONFLUENCE_HOME}" \
-    && chmod -R 700                       "${CONFLUENCE_HOME}" \
-    && chown ${RUN_USER}:${RUN_GROUP}     "${CONFLUENCE_HOME}" \
-    && mkdir -p                           "${CONFLUENCE_INSTALL}/conf" \
-    && curl -Ls                           "${CONFLUENCE_DOWNLOAD_URL}" | tar -xz --directory "${CONFLUENCE_INSTALL}" --strip-components=1 --no-same-owner \
-    && curl -Ls                           "${MYSQL_DRIVER_DOWNLOAD_URL}" | tar -xz --directory "${CONFLUENCE_INSTALL}/confluence/WEB-INF/lib" --strip-components=1 --no-same-owner "mysql-connector-java-${MYSQL_VERSION}/mysql-connector-java-${MYSQL_VERSION}-bin.jar" \
-    && chmod -R 700                       "${CONFLUENCE_INSTALL}/conf" \
-    && chmod -R 700                       "${CONFLUENCE_INSTALL}/temp" \
-    && chmod -R 700                       "${CONFLUENCE_INSTALL}/logs" \
-    && chmod -R 700                       "${CONFLUENCE_INSTALL}/work" \
-    && chown -R ${RUN_USER}:${RUN_GROUP}  "${CONFLUENCE_INSTALL}/conf" \
-    && chown -R ${RUN_USER}:${RUN_GROUP}  "${CONFLUENCE_INSTALL}/temp" \
-    && chown -R ${RUN_USER}:${RUN_GROUP}  "${CONFLUENCE_INSTALL}/logs" \
-    && chown -R ${RUN_USER}:${RUN_GROUP}  "${CONFLUENCE_INSTALL}/work" \
-    && echo -e                            "\nconfluence.home=${CONFLUENCE_HOME}" >> "${CONFLUENCE_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties" \
-    && xmlstarlet                         ed --inplace \
-        --delete                          "Server/@debug" \
-        --delete                          "Server/Service/Connector/@debug" \
-        --delete                          "Server/Service/Connector/@useURIValidationHack" \
-        --delete                          "Server/Service/Connector/@minProcessors" \
-        --delete                          "Server/Service/Connector/@maxProcessors" \
-        --delete                          "Server/Service/Engine/@debug" \
-        --delete                          "Server/Service/Engine/Host/@debug" \
-        --delete                          "Server/Service/Engine/Host/Context/@debug" \
-                                          "${CONFLUENCE_INSTALL}/conf/server.xml" \
-    && touch -d "@0"                      "${CONFLUENCE_INSTALL}/conf/server.xml"
+VOLUME ["${CONFLUENCE_HOME}"]
 
-# Use the default unprivileged account. This could be considered bad practice
-# on systems where multiple processes end up being executed by 'daemon' but
-# here we only ever run one process anyway.
-USER ${RUN_USER}:${RUN_GROUP}
-
-# Expose default HTTP connector port.
+# Expose HTTP and Synchrony ports
 EXPOSE 8090
 EXPOSE 8091
 
-# Set volume mount points for installation and home directory. Changes to the
-# home directory needs to be persisted as well as parts of the installation
-# directory due to eg. logs.
-VOLUME ["${CONFLUENCE_INSTALL}", "${CONFLUENCE_HOME}"]
+WORKDIR $CONFLUENCE_HOME
 
-# Set the default working directory as the Confluence installation directory.
-WORKDIR ${CONFLUENCE_INSTALL}
+CMD ["/entrypoint.sh", "-fg"]
+ENTRYPOINT ["/sbin/tini", "--"]
 
-# Run Atlassian Confluence as a foreground process by default.
-CMD ["/usr/local/bin/dumb-init", "./bin/catalina.sh", "run"]
+RUN apk update -qq \
+    && update-ca-certificates \
+    && apk add ca-certificates wget curl openssh bash procps openssl perl ttf-dejavu tini \
+    && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
+
+COPY entrypoint.sh              /entrypoint.sh
+
+ARG CONFLUENCE_VERSION=6.3.3
+ARG DOWNLOAD_URL=http://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz
+
+COPY . /tmp
+
+RUN mkdir -p                             ${CONFLUENCE_INSTALL_DIR} \
+    && curl -L --silent                  ${DOWNLOAD_URL} | tar -xz --strip-components=1 -C "$CONFLUENCE_INSTALL_DIR" \
+    && chown -R ${RUN_USER}:${RUN_GROUP} ${CONFLUENCE_INSTALL_DIR}/ \
+    && sed -i -e 's/-Xms\([0-9]\+[kmg]\) -Xmx\([0-9]\+[kmg]\)/-Xms\${JVM_MINIMUM_MEMORY:=\1} -Xmx\${JVM_MAXIMUM_MEMORY:=\2} \${JVM_SUPPORT_RECOMMENDED_ARGS}/g' ${CONFLUENCE_INSTALL_DIR}/bin/setenv.sh \
+    && sed -i -e 's/port="8090"/port="8090" secure="${catalinaConnectorSecure}" scheme="${catalinaConnectorScheme}" proxyName="${catalinaConnectorProxyName}" proxyPort="${catalinaConnectorProxyPort}"/' ${CONFLUENCE_INSTALL_DIR}/conf/server.xml
