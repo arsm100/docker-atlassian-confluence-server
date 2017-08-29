@@ -29,6 +29,51 @@ See [Supported Platforms](https://confluence.atlassian.com/display/DOC/Supported
  
 _* Note: If you are using `docker-machine` on Mac OS X, please use `open http://$(docker-machine ip default):8090` instead._
  
+## Memory / Heap Size
+
+If you need to override Confluence Server's default memory allocation, you can control the minimum heap (Xms) and maximum heap (Xmx) via the below environment variables.
+
+* `JVM_MINIMUM_MEMORY` (default: 1024m)
+
+   The minimum heap size of the JVM
+
+* `JVM_MAXIMUM_MEMORY` (default: 1024m)
+
+   The maximum heap size of the JVM
+
+## Reverse Proxy Settings
+
+If Confluence is run behind a reverse proxy server, then you need to specify extra options to make Confluence aware of the setup. They can be controlled via the below environment variables.
+
+* `CATALINA_CONNECTOR_PROXYNAME` (default: NONE)
+
+   The reverse proxy's fully qualified hostname.
+
+* `CATALINA_CONNECTOR_PROXYPORT` (default: NONE)
+
+   The reverse proxy's port number via which Confluence is accessed.
+
+* `CATALINA_CONNECTOR_SCHEME` (default: http)
+
+   The protocol via which Confluence is accessed.
+
+* `CATALINA_CONNECTOR_SECURE` (default: false)
+
+   Set 'true' if CATALINA_CONNECTOR_SCHEME is 'https'.
+
+## JVM configuration
+
+If you need to pass additional JVM arguments to Confluence such as specifying a custom trust store, you can add them via the below environment variable
+
+* `JVM_SUPPORT_RECOMMENDED_ARGS`
+
+   Additional JVM arguments for Confluence
+   
+Example:
+
+    $> docker run -e JVM_SUPPORT_RECOMMENDED_ARGS=-Djavax.net.ssl.trustStore=/var/atlassian/application-data/confluence/cacerts -v confluenceVolume:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 atlassian/confluence-server
+
+ 
 # Upgrade
  
 To upgrade to a more recent version of Confluence Server you can simply stop the `Confluence`
