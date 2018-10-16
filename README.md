@@ -60,6 +60,10 @@ If Confluence is run behind a reverse proxy server, then you need to specify ext
 * `CATALINA_CONNECTOR_SECURE` (default: false)
 
    Set 'true' if CATALINA_CONNECTOR_SCHEME is 'https'.
+   
+* `CATALINA_CONTEXT_PATH` (default: NONE)
+
+   The context path the application is served over.
 
 ## JVM configuration
 
