@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM adoptopenjdk/openjdk8:x86_64-alpine-jdk8u192-b12
 MAINTAINER Atlassian Confluence
 
 ENV RUN_USER            daemon
@@ -21,7 +21,7 @@ ENTRYPOINT ["/sbin/tini", "--"]
 
 RUN apk update -qq \
     && update-ca-certificates \
-    && apk add ca-certificates wget curl openssh bash procps openssl perl ttf-dejavu tini libc6-compat \
+    && apk add ca-certificates wget curl openssh bash procps openssl perl ttf-dejavu tini \
     && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
 
 COPY entrypoint.sh              /entrypoint.sh
