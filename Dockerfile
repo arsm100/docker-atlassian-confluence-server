@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk8:x86_64-alpine-jdk8u192-b12
+FROM adoptopenjdk/openjdk8:jdk8u192-b12-alpine
 MAINTAINER Atlassian Confluence
 
 ENV RUN_USER            daemon
