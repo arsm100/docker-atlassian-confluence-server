@@ -4,28 +4,30 @@ clone:
 
 pipelines:
   custom:
-    create-release-base-6:
+    create-release-base-6-adoptopenjdk8:
       - step:
           script:
             - git fetch --all
-            - export BASE_BRANCH=base-6
+            - export BASE_BRANCH=base-6-adoptopenjdk8
             - export BASE_VERSION=6
             - export DOCKER_REPO=atlassian/confluence-server
             - export DOCKERFILE_VERSION_STRING=CONFLUENCE_VERSION
             - export GIT_USER=pipelinesagent
             - export GIT_EMAIL=pipelines-agent@atlassian.com
             - export MAC_PRODUCT_KEY=confluence
+            - export TAG_SUFFIX=ubuntu-16.04-adoptopenjdk8
             - python /usr/src/app/create_release.py
   branches:
-    base-6:
+    base-6-adoptopenjdk8:
       - step:
           script:
             - git fetch --all
-            - export BASE_BRANCH=base-6
+            - export BASE_BRANCH=base-6-adoptopenjdk8
             - export BASE_VERSION=6
             - export DOCKER_REPO=atlassian/confluence-server
             - export DOCKERFILE_VERSION_STRING=CONFLUENCE_VERSION
             - export GIT_USER=pipelinesagent
             - export GIT_EMAIL=pipelines-agent@atlassian.com
             - export MAC_PRODUCT_KEY=confluence
+            - export TAG_SUFFIX=ubuntu-16.04-adoptopenjdk8
             - python /usr/src/app/update_release.py
