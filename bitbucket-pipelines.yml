@@ -15,7 +15,7 @@ pipelines:
             - export GIT_USER=pipelinesagent
             - export GIT_EMAIL=pipelines-agent@atlassian.com
             - export MAC_PRODUCT_KEY=confluence
-            - export TAG_SUFFIX=ubuntu-16.04-adoptopenjdk8
+            - export TAG_SUFFIX=ubuntu-18.04-adoptopenjdk8
             - export SHOULD_CREATE_LATEST_TAG=true
             - python /usr/src/app/create_release.py
   branches:
@@ -30,6 +30,6 @@ pipelines:
             - export GIT_USER=pipelinesagent
             - export GIT_EMAIL=pipelines-agent@atlassian.com
             - export MAC_PRODUCT_KEY=confluence
-            - export TAG_SUFFIX=ubuntu-16.04-adoptopenjdk8
+            - export TAG_SUFFIX=ubuntu-18.04-adoptopenjdk8
             - export SHOULD_CREATE_LATEST_TAG=true
             - python /usr/src/app/update_release.py
