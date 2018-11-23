@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM adoptopenjdk/openjdk8:x86_64-ubuntu-jdk8u192-b12
 MAINTAINER Atlassian Confluence
 
 ENV RUN_USER            daemon
@@ -19,10 +19,8 @@ WORKDIR $CONFLUENCE_HOME
 CMD ["/entrypoint.sh", "-fg"]
 ENTRYPOINT ["/sbin/tini", "--"]
 
-RUN apk update -qq \
-    && update-ca-certificates \
-    && apk add ca-certificates wget curl openssh bash procps openssl perl ttf-dejavu tini libc6-compat \
-    && rm -rf /var/lib/{apt,dpkg,cache,log}/ /tmp/* /var/tmp/*
+RUN apt-get update && apt-get install -y wget curl bash procps perl fontconfig && apt-get clean -y && apt-get autoremove -y
+RUN wget https://github.com/krallin/tini/releases/download/v0.18.0/tini -O /sbin/tini && chmod a+x /sbin/tini
 
 COPY entrypoint.sh              /entrypoint.sh
 
