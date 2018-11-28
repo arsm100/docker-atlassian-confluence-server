@@ -8,12 +8,7 @@ You can find the repository for this Dockerfile at <https://hub.docker.com/r/atl
  
 # Overview
  
-This Docker image is great for evaluating Confluence. However, it does not use an Oracle JDK due to licensing constraints. Instead, it uses OpenJDK which is not supported for running Confluence in production.
-
-To meet our supported platform requirements, you'll need to either:
-
-* build your own image based on [Oracle JDK](https://github.com/oracle/docker-images/tree/master/OracleJDK). See [Update the Confluence Docker image to use Oracle JDK ](https://confluence.atlassian.com/display/CONFKB/Update+the+Confluence+Docker+image+to+use+Oracle+JDK) for more info.
-* use our image that is based on AdoptOpenJDK 8, which is fully supported for Confluence 6.13 and later. These images are tagged with the suffix `ubuntu-18.04-adoptopenjdk8` together with the Confluence version.
+This Docker container makes it easy to get an instance of Confluence up and running.
  
 # Quick Start
  
@@ -134,7 +129,8 @@ To work around this issue, use a different host operating system other than Mac 
 
 This Docker image is great for evaluating Confluence. However, it does not use an Oracle JDK due to licensing constraints. Instead, it uses OpenJDK which is not supported for running Confluence in production.
 
-To meet our supported platform requirements, you'll need to build your own image based on [Oracle JDK](https://github.com/oracle/docker-images/tree/master/OracleJDK). See [Update the Confluence Docker image to use Oracle JDK ](https://confluence.atlassian.com/display/CONFKB/Update+the+Confluence+Docker+image+to+use+Oracle+JDK) for more info. 
+To meet our supported platform requirements, you'll need to either:
 
-For product support go to [support.atlassian.com](http://support.atlassian.com).
+* build your own image based on [Oracle JDK](https://github.com/oracle/docker-images/tree/master/OracleJDK). See [Update the Confluence Docker image to use Oracle JDK ](https://confluence.atlassian.com/display/CONFKB/Update+the+Confluence+Docker+image+to+use+Oracle+JDK) for more info.
+* use our image that is based on AdoptOpenJDK 8, which is fully supported for Confluence 6.13 and later. These images are tagged with the suffix `ubuntu-18.04-adoptopenjdk8` together with the Confluence version.
 
