@@ -8,7 +8,12 @@ You can find the repository for this Dockerfile at <https://hub.docker.com/r/atl
  
 # Overview
  
-This Docker container makes it easy to get an instance of Confluence up and running.
+This Docker image is great for evaluating Confluence. However, it does not use an Oracle JDK due to licensing constraints. Instead, it uses OpenJDK which is not supported for running Confluence in production.
+
+To meet our supported platform requirements, you'll need to either:
+
+* build your own image based on [Oracle JDK](https://github.com/oracle/docker-images/tree/master/OracleJDK). See [Update the Confluence Docker image to use Oracle JDK ](https://confluence.atlassian.com/display/CONFKB/Update+the+Confluence+Docker+image+to+use+Oracle+JDK) for more info.
+* use our image that is based on AdoptOpenJDK 8, which is fully supported for Confluence 6.13 and later. These images are tagged with the suffix `ubuntu-18.04-adoptopenjdk8` together with the Confluence version.
  
 # Quick Start
  
@@ -112,10 +117,10 @@ is available.
 
 For the latest developer (EAP) release use `atlassian/confluence-server:eap`. This will install our latest milestone (not supported for use in production).
 
-Besides the docker image for OpenJDK, we also support docker images for Adopt OpenJDK. 
-Those are tagged with the suffix `ubuntu-18.04-adoptopenjdk8` together with Confluence versions.
-For e.g: `atlassian/confluence-server:6.13-ubuntu-18.04-adoptopenjdk8`, this will install the latest `6.13.x` version together with latest version Adopt OpenJDK 8
- 
+By default our Docker image uses OpenJDK, which is not supported for production sites. However we do provide a fully supported Docker image that uses AdoptOpenJDK 8. These images are tagged with the suffix `ubuntu-18.04-adoptopenjdk8` together with the Confluence version.
+
+For example, `atlassian/confluence-server:6.13-ubuntu-18.04-adoptopenjdk8` will install the latest 6.13.x version with AdoptOpenJDK 8.
+
 # Known Problems
 In Mac OS X with Docker version 1.11.0, when running with docker-machine, there is a bug where the directory specified for `CONFLUENCE_HOME` in a volume mount will not have the correct permission, and thus startup fails with a permission denied error:
      Error writing state to confluence.cfg.xml
