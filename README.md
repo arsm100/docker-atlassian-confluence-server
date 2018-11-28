@@ -1,6 +1,6 @@
 ![Atlassian Confluence Server](https://www.atlassian.com/dam/wac/legacy/confluence_logo_landing.png)
  
-Confluence Server is where you create, organise and discuss work with your team. Capture the knowledge that's too often lost in email inboxes and shared network drives in Confluence â€“ where it's easy to find, use, and update. Give every team, project, or department its own space to create the things they need, whether it's meeting notes, product requirements, file lists, or project plans, you can get more done in Confluence.
+Confluence Server is where you create, organise and discuss work with your team. Capture the knowledge that's too often lost in email inboxes and shared network drives in Confluence – where it's easy to find, use, and update. Give every team, project, or department its own space to create the things they need, whether it's meeting notes, product requirements, file lists, or project plans, you can get more done in Confluence.
  
 Learn more about Confluence Server: <https://www.atlassian.com/software/confluence>
 
@@ -102,15 +102,19 @@ Confluence's [automatic backup](https://confluence.atlassian.com/display/DOC/Con
 Read more about data recovery and backups: [Site Backup and Restore](https://confluence.atlassian.com/display/DOC/Site+Backup+and+Restore)
  
 # Versioning
- 
+
 The `latest` tag matches the most recent release of Atlassian Confluence Server.
 So `atlassian/confluence-server:latest` will use the newest stable version of Confluence Server available.
  
 Alternatively, you can use a specific minor version of Confluence Server by using a version number
-tag: `atlassian/confluence-server:5.10`. This will install the latest `5.10.x` version that
+tag: `atlassian/confluence-server:6.13`. This will install the latest `6.13.x` version that
 is available.
 
-For the latest developer (EAP) release use `atlassian/confluence-server:eap`. This will install our latest milestone (not supported for use in production).  
+For the latest developer (EAP) release use `atlassian/confluence-server:eap`. This will install our latest milestone (not supported for use in production).
+
+Besides the docker image for OpenJDK, we also support docker images for Adopt OpenJDK. 
+Those are tagged with the suffix `ubuntu-18.04-adoptopenjdk8` together with Confluence versions.
+For e.g: `atlassian/confluence-server:6.13-ubuntu-18.04-adoptopenjdk8`, this will install the latest `6.13.x` version together with latest version Adopt OpenJDK 8
  
 # Known Problems
 In Mac OS X with Docker version 1.11.0, when running with docker-machine, there is a bug where the directory specified for `CONFLUENCE_HOME` in a volume mount will not have the correct permission, and thus startup fails with a permission denied error:
