@@ -1,29 +1,31 @@
-image: dchevell/docker-release-maker:latest
-clone:
-  depth: full
+image: atlassian/docker-release-maker:latest
 
 pipelines:
   custom:
     create-release-base-6-adoptopenjdk8:
       - step:
+          services:
+            - docker
           script:
-            - git remote set-url origin ${BITBUCKET_GIT_HTTP_ORIGIN}
-            - git fetch --all
-            - export BASE_BRANCH='base-6-adoptopenjdk8'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export DOCKERFILE_VERSION_STRING='CONFLUENCE_VERSION'
+            - export BASE_VERSION='6'
             - export DEFAULT_RELEASE='true'
-            - export ADDITIONAL_TAG_SUFFIXES='ubuntu,ubuntu-18.04-adoptopenjdk8'
+            - export DOCKER_REPO='atlassian/confluence-server'
+            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
+            - export MAC_PRODUCT_KEY='confluence'
+            - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
+            - docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
             - python /usr/src/app/run.py --create
   branches:
     base-6-adoptopenjdk8:
       - step:
+          services:
+            - docker
           script:
-            - git remote set-url origin ${BITBUCKET_GIT_HTTP_ORIGIN}
-            - git fetch --all
-            - export BASE_BRANCH='base-6-adoptopenjdk8'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export DOCKERFILE_VERSION_STRING='CONFLUENCE_VERSION'
+            - export BASE_VERSION='6'
             - export DEFAULT_RELEASE='true'
-            - export ADDITIONAL_TAG_SUFFIXES='ubuntu,ubuntu-18.04-adoptopenjdk8'
+            - export DOCKER_REPO='atlassian/confluence-server'
+            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
+            - export MAC_PRODUCT_KEY='confluence'
+            - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
+            - docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
             - python /usr/src/app/run.py --update
