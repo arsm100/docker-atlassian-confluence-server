@@ -2,7 +2,7 @@ image: atlassian/docker-release-maker:latest
 
 pipelines:
   custom:
-    create-release-base-6-adoptopenjdk8:
+    base-6-ubuntu-create-releases:
       - step:
           services:
             - docker
@@ -13,8 +13,19 @@ pipelines:
             - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
             - export MAC_PRODUCT_KEY='confluence'
             - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-            - docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
             - python /usr/src/app/run.py --create
+    base-6-ubuntu-create-custom-release:
+      - variables:
+          - name: CONFLUENCE_VERSION
+          - name: DOCKER_TAG
+      - step:
+          services:
+            - docker
+          script:
+            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+            - docker build -t atlassian/confluence-server:${DOCKER_TAG} --build-arg CONFLUENCE_VERSION=${CONFLUENCE_VERSION} .
+            - docker push atlassian/confluence-server:${DOCKER_TAG}
   branches:
     base-6-adoptopenjdk8:
       - step:
@@ -27,5 +38,5 @@ pipelines:
             - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
             - export MAC_PRODUCT_KEY='confluence'
             - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-            - docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
+            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
             - python /usr/src/app/run.py --update
