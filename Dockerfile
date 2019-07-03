@@ -27,7 +27,7 @@ RUN chmod +x /tini
 
 COPY entrypoint.sh              			/entrypoint.sh
 
-ARG CONFLUENCE_VERSION=6.3.3
+ARG CONFLUENCE_VERSION
 ARG DOWNLOAD_URL=https://product-downloads.atlassian.com/software/confluence/downloads/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz
 
 RUN mkdir -p                             	${CONFLUENCE_INSTALL_DIR} \
