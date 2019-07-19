@@ -2,7 +2,7 @@ image: atlassian/docker-release-maker:latest
 
 pipelines:
   custom:
-    base-6-ubuntu-create-releases:
+    create-new-releases:
       - step:
           services:
             - docker
@@ -15,7 +15,7 @@ pipelines:
             - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
             - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
             - python /usr/src/app/run.py --create
-    base-6-ubuntu-create-custom-release:
+    create-custom-release:
       - variables:
           - name: CONFLUENCE_VERSION
           - name: DOCKER_TAG
