@@ -86,3 +86,16 @@ pipelines:
             - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
             - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
             - python /usr/src/app/run.py --update
+  pull-requests:
+    '**':
+      - step:
+          image: python:3.7-alpine3.9
+          services:
+            - docker
+          script:
+            - pip install -q -r tests/test-requirements.txt
+            - py.test tests/
+definitions:
+  services:
+    docker:
+      memory: 2048
