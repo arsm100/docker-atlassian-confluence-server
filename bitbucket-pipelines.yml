@@ -4,19 +4,6 @@ pipelines:
   custom:
     new-releases:
       - step:
-          name: Confluence Ubuntu
-          services:
-            - docker
-          script:
-            - export BASE_VERSION='6'
-            - export DEFAULT_RELEASE='true'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create
-      - step:
           name: Confluence Alpine
           services:
             - docker
@@ -28,6 +15,19 @@ pipelines:
             - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
             - export MAC_PRODUCT_KEY='confluence'
             - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
+            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+            - python /usr/src/app/run.py --create
+      - step:
+          name: Confluence Ubuntu
+          services:
+            - docker
+          script:
+            - export BASE_VERSION='6'
+            - export DEFAULT_RELEASE='true'
+            - export DOCKER_REPO='atlassian/confluence-server'
+            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
+            - export MAC_PRODUCT_KEY='confluence'
+            - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
             - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
             - python /usr/src/app/run.py --create
     ubuntu-custom-release:
@@ -60,19 +60,6 @@ pipelines:
   branches:
     master:
       - step:
-          name: Confluence Ubuntu
-          services:
-            - docker
-          script:
-            - export BASE_VERSION='6'
-            - export DEFAULT_RELEASE='true'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --update
-      - step:
           name: Confluence Alpine
           services:
             - docker
@@ -84,6 +71,19 @@ pipelines:
             - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
             - export MAC_PRODUCT_KEY='confluence'
             - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
+            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+            - python /usr/src/app/run.py --update
+      - step:
+          name: Confluence Ubuntu
+          services:
+            - docker
+          script:
+            - export BASE_VERSION='6'
+            - export DEFAULT_RELEASE='true'
+            - export DOCKER_REPO='atlassian/confluence-server'
+            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
+            - export MAC_PRODUCT_KEY='confluence'
+            - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
             - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
             - python /usr/src/app/run.py --update
   pull-requests:
