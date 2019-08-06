@@ -21,14 +21,29 @@ def get_fileobj_from_container(container, filepath):
         file = tar.extractfile(filename)
     return file
 
+def get_procs(container):
+    ps = container.exec_run('ps aux')
+    return ps.output.decode().split('\n')
+
+def wait_for_proc(container, proc_str, max_wait=10):
+    waited = 0
+    while waited < max_wait:
+        procs = list(filter(lambda p: proc_str in p, get_procs(container)))
+        if len(procs) > 0:
+            return procs[0]
+        time.sleep(0.1)
+        waited += 0.1
+
+    raise RuntimeError("Failed to find target process")
+
 
 # def test_server_xml_defaults(docker_cli, image):
 #     container = docker_cli.containers.run(image, detach=True)
 #     server_xml = get_fileobj_from_container(container, '/opt/atlassian/jira/conf/server.xml')
-#     xml = etree.parse(server_xml) 
+#     xml = etree.parse(server_xml)
 #     connector = xml.find('.//Connector')
 #     context = xml.find('.//Context')
-#     
+#
 #     assert connector.get('port') == '8090'
 #     assert connector.get('maxThreads') == '200'
 #     assert connector.get('minSpareThreads') == '10'
@@ -40,8 +55,8 @@ def get_fileobj_from_container(container, filepath):
 #     assert connector.get('scheme') == 'http'
 #     assert connector.get('proxyName') == ''
 #     assert connector.get('proxyPort') == ''
-# 
-# 
+#
+#
 # def test_server_xml_params(docker_cli, image):
 #     environment = {
 #         'ATL_TOMCAT_MGMT_PORT': '8006',
@@ -64,9 +79,9 @@ def get_fileobj_from_container(container, filepath):
 #     server = xml.getroot()
 #     connector = xml.find('.//Connector')
 #     context = xml.find('.//Context')
-#     
+#
 #     assert server.get('port') == environment.get('ATL_TOMCAT_MGMT_PORT')
-#     
+#
 #     assert connector.get('port') == environment.get('ATL_TOMCAT_PORT')
 #     assert connector.get('maxThreads') == environment.get('ATL_TOMCAT_MAXTHREADS')
 #     assert connector.get('minSpareThreads') == environment.get('ATL_TOMCAT_MINSPARETHREADS')
@@ -78,27 +93,27 @@ def get_fileobj_from_container(container, filepath):
 #     assert connector.get('scheme') == environment.get('ATL_TOMCAT_SCHEME')
 #     assert connector.get('proxyName') == environment.get('ATL_PROXY_NAME')
 #     assert connector.get('proxyPort') == environment.get('ATL_PROXY_PORT')
-#     
+#
 #     assert context.get('path') == environment.get('ATL_TOMCAT_CONTEXTPATH')
-# 
-# 
+#
+#
 # def test_confluence_cfg_xml_defaults(docker_cli, image):
 #     environment = {
-#     
+#
 #     }
 #     container = docker_cli.containers.run(image, environment=environment, detach=True)
 #     confluence_cfg_xml = get_fileobj_from_container(container, '/var/atlassian/application-data/confluence/confluence.cfg.xml')
 #     xml = etree.parse(confluence_cfg_xml)
-#     
-# 
+#
+#
 # def test_confluence_cfg_xml_params(docker_cli, image):
 #     environment = {
-#     
+#
 #     }
 #     container = docker_cli.containers.run(image, environment=environment, detach=True)
 #     confluence_cfg_xml = get_fileobj_from_container(container, '/var/atlassian/application-data/confluence/confluence.cfg.xml')
 #     xml = etree.parse(confluence_cfg_xml)
- 
+
 
 def test_jvm_args(docker_cli, image):
     environment = {
@@ -107,10 +122,8 @@ def test_jvm_args(docker_cli, image):
         'JVM_SUPPORT_RECOMMENDED_ARGS': '-verbose:gc',
     }
     container = docker_cli.containers.run(image, environment=environment, detach=True)
-    time.sleep(0.5) # JVM doesn't start immediately when container runs
-    procs = container.exec_run('ps aux')
-    procs_list = procs.output.decode().split('\n')
-    jvm = [proc for proc in procs_list if '-Dconfluence.home' in proc][0]
+    jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+
     assert f'-Xms{environment.get("JVM_MINIMUM_MEMORY")}' in jvm
     assert f'-Xmx{environment.get("JVM_MAXIMUM_MEMORY")}' in jvm
     assert environment.get('JVM_SUPPORT_RECOMMENDED_ARGS') in jvm
@@ -131,4 +144,3 @@ def test_first_run_state(docker_cli, image):
                 return
         time.sleep(1)
     raise TimeoutError
-    
