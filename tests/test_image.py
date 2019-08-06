@@ -2,11 +2,18 @@ import pytest
 
 import io
 import tarfile
+import testinfra
 import time
 import xml.etree.ElementTree as etree
 
 import requests
 
+
+# Run an image and wrap it in a TestInfra host for convenience.
+# FIXME: There's probably a way to turn this into a fixture with parameters.
+def run_image(docker_cli, image, environment={}, ports={}):
+    container = docker_cli.containers.run(image, environment=environment, ports=ports, detach=True)
+    return testinfra.get_host("docker://"+container.id)
 
 # Helper function to get a file-like object from an image
 def get_fileobj_from_container(container, filepath):
@@ -21,9 +28,10 @@ def get_fileobj_from_container(container, filepath):
         file = tar.extractfile(filename)
     return file
 
+# TestInfra's process command doesn't seem to work for arg matching
 def get_procs(container):
-    ps = container.exec_run('ps aux')
-    return ps.output.decode().split('\n')
+    ps = container.run('ps -axo args')
+    return ps.stdout.split('\n')
 
 def wait_for_proc(container, proc_str, max_wait=10):
     waited = 0
@@ -34,7 +42,54 @@ def wait_for_proc(container, proc_str, max_wait=10):
         time.sleep(0.1)
         waited += 0.1
 
-    raise RuntimeError("Failed to find target process")
+    raise TimeoutError("Failed to find target process")
+
+
+######################################################################
+# Tests
+
+def test_jvm_args(docker_cli, image):
+    environment = {
+        'JVM_MINIMUM_MEMORY': '383m',
+        'JVM_MAXIMUM_MEMORY': '2047m',
+        'JVM_SUPPORT_RECOMMENDED_ARGS': '-verbose:gc',
+    }
+    container = run_image(docker_cli, image, environment=environment)
+    jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+
+    assert f'-Xms{environment.get("JVM_MINIMUM_MEMORY")}' in jvm
+    assert f'-Xmx{environment.get("JVM_MAXIMUM_MEMORY")}' in jvm
+    assert environment.get('JVM_SUPPORT_RECOMMENDED_ARGS') in jvm
+
+
+def test_install_permissions(docker_cli, image):
+    container = run_image(docker_cli, image)
+
+    assert container.file('/opt/atlassian/confluence/conf/server.xml').user == 'root'
+
+    for d in ['logs', 'work', 'temp']:
+        path = '/opt/atlassian/confluence/{}/'.format(d)
+        assert container.file(path).user == 'confluence'
+
+
+def test_first_run_state(docker_cli, image):
+    PORT = 8090
+    container = run_image(docker_cli, image, ports={PORT: PORT})
+    jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+
+    for i in range(20):
+        try:
+            r = requests.get(f'http://localhost:{PORT}/status')
+        except requests.exceptions.ConnectionError:
+            pass
+        else:
+            if r.status_code == 200:
+                state = r.json().get('state')
+                assert state in ('STARTING', 'FIRST_RUN')
+                return
+        time.sleep(1)
+    raise TimeoutError
+
 
 
 # def test_server_xml_defaults(docker_cli, image):
@@ -113,34 +168,3 @@ def wait_for_proc(container, proc_str, max_wait=10):
 #     container = docker_cli.containers.run(image, environment=environment, detach=True)
 #     confluence_cfg_xml = get_fileobj_from_container(container, '/var/atlassian/application-data/confluence/confluence.cfg.xml')
 #     xml = etree.parse(confluence_cfg_xml)
-
-
-def test_jvm_args(docker_cli, image):
-    environment = {
-        'JVM_MINIMUM_MEMORY': '383m',
-        'JVM_MAXIMUM_MEMORY': '2047m',
-        'JVM_SUPPORT_RECOMMENDED_ARGS': '-verbose:gc',
-    }
-    container = docker_cli.containers.run(image, environment=environment, detach=True)
-    jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
-
-    assert f'-Xms{environment.get("JVM_MINIMUM_MEMORY")}' in jvm
-    assert f'-Xmx{environment.get("JVM_MAXIMUM_MEMORY")}' in jvm
-    assert environment.get('JVM_SUPPORT_RECOMMENDED_ARGS') in jvm
-
-
-def test_first_run_state(docker_cli, image):
-    PORT = 8090
-    container = docker_cli.containers.run(image, ports={PORT: PORT}, detach=True)
-    for i in range(20):
-        try:
-            r = requests.get(f'http://localhost:{PORT}/status')
-        except requests.exceptions.ConnectionError:
-            pass
-        else:
-            if r.status_code == 200:
-                state = r.json().get('state')
-                assert state in ('STARTING', 'FIRST_RUN')
-                return
-        time.sleep(1)
-    raise TimeoutError
