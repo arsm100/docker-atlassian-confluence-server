@@ -43,27 +43,52 @@ If you need to override Confluence Server's default memory allocation, you can c
 
 ## Reverse Proxy Settings
 
-If Confluence is run behind a reverse proxy server, then you need to specify extra options to make Confluence aware of the setup. They can be controlled via the below environment variables.
+If Confluence is run behind a reverse proxy server (e.g. a load-balancer or
+nginx server), then you need to specify extra options to make Confluence aware
+of the setup. They can be controlled via the below environment variables.
 
-* `CATALINA_CONNECTOR_PROXYNAME` (default: NONE)
+* `ATL_PROXY_NAME` (default: NONE)
 
-   The reverse proxy's fully qualified hostname.
+   The reverse proxy's fully qualified hostname. `CATALINA_CONNECTOR_PROXYNAME`
+   is also supported for backwards compatability.
 
-* `CATALINA_CONNECTOR_PROXYPORT` (default: NONE)
+* `ATL_PROXY_PORT` (default: NONE)
 
-   The reverse proxy's port number via which Confluence is accessed.
+   The reverse proxy's port number via which Jira is
+   accessed. `CATALINA_CONNECTOR_PROXYPORT` is also supported for backwards
+   compatability.
 
-* `CATALINA_CONNECTOR_SCHEME` (default: http)
+* `ATL_TOMCAT_PORT` (default: 8090)
 
-   The protocol via which Confluence is accessed.
+   The port for Tomcat/Jira to listen on. Depending on your container
+   deployment method this port may need to be 
+   [exposed and published][docker-expose].
 
-* `CATALINA_CONNECTOR_SECURE` (default: false)
+* `ATL_TOMCAT_SCHEME` (default: http)
 
-   Set 'true' if CATALINA_CONNECTOR_SCHEME is 'https'.
-   
-* `CATALINA_CONTEXT_PATH` (default: NONE)
+   The protocol via which Jira is accessed. `CATALINA_CONNECTOR_SCHEME` is also
+   supported for backwards compatability.
 
-   The context path the application is served over.
+* `ATL_TOMCAT_SECURE` (default: false)
+
+   Set 'true' if `ATL_TOMCAT_SCHEME` is 'https'. `CATALINA_CONNECTOR_SECURE` is
+   also supported for backwards compatability.
+
+* `ATL_TOMCAT_CONTEXTPATH` (default: NONE)
+
+   The context path the application is served over. `CATALINA_CONTEXT_PATH` is
+   also supported for backwards compatability.
+
+The following Tomcat/Catalina options are also supported. For more information,
+see https://tomcat.apache.org/tomcat-7.0-doc/config/index.html.
+
+* `ATL_TOMCAT_MGMT_PORT` (default: 8000)
+* `ATL_TOMCAT_MAXTHREADS` (default: 200)
+* `ATL_TOMCAT_MINSPARETHREADS` (default: 10)
+* `ATL_TOMCAT_CONNECTIONTIMEOUT` (default: 20000)
+* `ATL_TOMCAT_ENABLELOOKUPS` (default: false)
+* `ATL_TOMCAT_PROTOCOL` (default: HTTP/1.1)
+* `ATL_TOMCAT_ACCEPTCOUNT` (default: 10)
 
 ## JVM configuration
 
