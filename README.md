@@ -41,7 +41,7 @@ If you need to override Confluence Server's default memory allocation, you can c
 
    The maximum heap size of the JVM
 
-## Reverse Proxy Settings
+## Tomcat and Reverse Proxy Settings
 
 If Confluence is run behind a reverse proxy server (e.g. a load-balancer or
 nginx server), then you need to specify extra options to make Confluence aware
@@ -89,6 +89,12 @@ see https://tomcat.apache.org/tomcat-7.0-doc/config/index.html.
 * `ATL_TOMCAT_ENABLELOOKUPS` (default: false)
 * `ATL_TOMCAT_PROTOCOL` (default: HTTP/1.1)
 * `ATL_TOMCAT_ACCEPTCOUNT` (default: 10)
+
+## Confluence-specific settings
+
+* `ATL_AUTOLOGIN_COOKIE_AGE` (default: 1209600; two weeks, in seconds)
+
+   The maximum time a user can remain logged-in with 'Remember Me'.
 
 ## JVM configuration
 

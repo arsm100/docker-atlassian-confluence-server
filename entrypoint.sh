@@ -42,6 +42,16 @@ log "Generating ${CONFLUENCE_INSTALL_DIR}/conf/server.xml"
     /opt/atlassian/etc/server.xml.j2 \
     > ${CONFLUENCE_INSTALL_DIR}/conf/server.xml
 
+######################################################################
+# Configure login properties
+
+# The default is two weeks, in seconds, same as the seraph default.
+export atl_autologin_cookie_age=${ATL_AUTOLOGIN_COOKIE_AGE:=1209600}
+
+log "Generating ${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/classes/seraph-config.xml"
+/opt/atlassian/bin/templater.sh \
+    /opt/atlassian/etc/seraph-config.xml.j2 \
+    > ${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/classes/seraph-config.xml
 
 
 # Start Confluence as the correct user

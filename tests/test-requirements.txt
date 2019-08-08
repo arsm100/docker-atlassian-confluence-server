@@ -18,3 +18,4 @@ wcwidth==0.1.7
 websocket-client==0.56.0
 zipp==0.5.2
 testinfra==3.0.6
+lxml==4.4.0

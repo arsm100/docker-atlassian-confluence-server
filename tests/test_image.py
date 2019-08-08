@@ -4,7 +4,7 @@ import io
 import tarfile
 import testinfra
 import time
-import xml.etree.ElementTree as etree
+from lxml import etree
 
 import requests
 
@@ -14,19 +14,6 @@ import requests
 def run_image(docker_cli, image, environment={}, ports={}):
     container = docker_cli.containers.run(image, environment=environment, ports=ports, detach=True)
     return testinfra.get_host("docker://"+container.id)
-
-# Helper function to get a file-like object from an image
-def get_fileobj_from_container(container, filepath):
-    time.sleep(0.5) # Give container a moment if just started
-    stream, stat = container.get_archive(filepath)
-    f = io.BytesIO()
-    for chunk in stream:
-        f.write(chunk)
-    f.seek(0)
-    with tarfile.open(fileobj=f, mode='r') as tar:
-        filename = tar.getmembers()[0].name
-        file = tar.extractfile(filename)
-    return file
 
 # TestInfra's process command doesn't seem to work for arg matching
 def get_procs(container):
@@ -149,6 +136,24 @@ def test_server_xml_params(docker_cli, image):
     assert connector.get('proxyPort') == environment.get('ATL_PROXY_PORT')
 
     assert context.get('path') == environment.get('ATL_TOMCAT_CONTEXTPATH')
+
+
+def test_seraph_defaults(docker_cli, image):
+    container = run_image(docker_cli, image)
+    _jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+
+    xml = etree.fromstring(container.file('/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml').content)
+    param = xml.xpath('//param-name[text()="autologin.cookie.age"]')[0].getnext()
+    assert param.text == "1209600"
+
+
+def test_seraph_login_set(docker_cli, image):
+    container = run_image(docker_cli, image, environment={"ATL_AUTOLOGIN_COOKIE_AGE": "TEST_VAL"})
+    _jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+
+    xml = etree.fromstring(container.file('/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml').content)
+    param = xml.xpath('//param-name[text()="autologin.cookie.age"]')[0].getnext()
+    assert param.text == "TEST_VAL"
 
 #
 # def test_confluence_cfg_xml_defaults(docker_cli, image):
