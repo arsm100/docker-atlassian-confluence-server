@@ -31,6 +31,16 @@ def wait_for_proc(container, proc_str, max_wait=10):
 
     raise TimeoutError("Failed to find target process")
 
+def wait_for_file(container, path, max_wait=10):
+    waited = 0
+    while waited < max_wait:
+        if container.file(path).exists:
+            return
+        time.sleep(0.1)
+        waited += 0.1
+
+    raise TimeoutError("Failed to find target process")
+
 
 ######################################################################
 # Tests
@@ -140,7 +150,7 @@ def test_server_xml_params(docker_cli, image):
 
 def test_seraph_defaults(docker_cli, image):
     container = run_image(docker_cli, image)
-    _jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+    wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml")
 
     xml = etree.fromstring(container.file('/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml').content)
     param = xml.xpath('//param-name[text()="autologin.cookie.age"]')[0].getnext()
@@ -149,7 +159,7 @@ def test_seraph_defaults(docker_cli, image):
 
 def test_seraph_login_set(docker_cli, image):
     container = run_image(docker_cli, image, environment={"ATL_AUTOLOGIN_COOKIE_AGE": "TEST_VAL"})
-    _jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+    wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml")
 
     xml = etree.fromstring(container.file('/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml').content)
     param = xml.xpath('//param-name[text()="autologin.cookie.age"]')[0].getnext()
@@ -158,26 +168,73 @@ def test_seraph_login_set(docker_cli, image):
 
 def test_conf_init_set(docker_cli, image):
     container = run_image(docker_cli, image, environment={"CONFLUENCE_HOME": "/tmp/"})
-    _jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+    wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/confluence-init.properties")
 
     init = container.file('/opt/atlassian/confluence/confluence/WEB-INF/classes/confluence-init.properties')
     assert init.contains("confluence.home = /tmp/")
 
 
-#
-# def test_confluence_cfg_xml_defaults(docker_cli, image):
-#     environment = {
-#
-#     }
-#     container = docker_cli.containers.run(image, environment=environment, detach=True)
-#     confluence_cfg_xml = get_fileobj_from_container(container, '/var/atlassian/application-data/confluence/confluence.cfg.xml')
-#     xml = etree.parse(confluence_cfg_xml)
-#
-#
-# def test_confluence_cfg_xml_params(docker_cli, image):
-#     environment = {
-#
-#     }
-#     container = docker_cli.containers.run(image, environment=environment, detach=True)
-#     confluence_cfg_xml = get_fileobj_from_container(container, '/var/atlassian/application-data/confluence/confluence.cfg.xml')
-#     xml = etree.parse(confluence_cfg_xml)
+def test_confluence_xml_default(docker_cli, image):
+    container = run_image(docker_cli, image)
+    wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/confluence-init.properties")
+    #_jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+
+    xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
+    assert xml.xpath('/confluence-configuration/buildNumber')[0].text == "0"
+    assert xml.xpath('/confluence-configuration/properties/property[@name="hibernate.connection.url"]') == []
+
+def test_confluence_xml_postgres(docker_cli, image):
+    environment = {
+        'ATL_DB_TYPE': 'postgresql',
+        'ATL_JDBC_URL': 'atl_jdbc_url',
+        'ATL_JDBC_USER': 'atl_jdbc_user',
+        'ATL_JDBC_PASSWORD': 'atl_jdbc_password'
+    }
+    container = run_image(docker_cli, image, environment=environment)
+    wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/confluence-init.properties")
+
+    xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
+    assert xml.xpath('//property[@name="hibernate.connection.url"]')[0].text == "atl_jdbc_url"
+    assert xml.xpath('//property[@name="hibernate.connection.username"]')[0].text == "atl_jdbc_user"
+    assert xml.xpath('//property[@name="hibernate.connection.password"]')[0].text == "atl_jdbc_password"
+    assert xml.xpath('//property[@name="confluence.database.choice"]')[0].text == "postgresql"
+    assert xml.xpath('//property[@name="hibernate.dialect"]')[0].text == "com.atlassian.confluence.impl.hibernate.dialect.PostgreSQLDialect"
+    assert xml.xpath('//property[@name="hibernate.connection.driver_class"]')[0].text == "org.postgresql.Driver"
+
+    assert xml.xpath('//property[@name="hibernate.c3p0.min_size"]')[0].text == "20"
+    assert xml.xpath('//property[@name="hibernate.c3p0.max_size"]')[0].text == "100"
+    assert xml.xpath('//property[@name="hibernate.c3p0.timeout"]')[0].text == "30"
+    assert xml.xpath('//property[@name="hibernate.c3p0.idle_test_period"]')[0].text == "100"
+    assert xml.xpath('//property[@name="hibernate.c3p0.max_statements"]')[0].text == "0"
+    assert xml.xpath('//property[@name="hibernate.c3p0.validate"]')[0].text == "false"
+    assert xml.xpath('//property[@name="hibernate.c3p0.acquire_increment"]')[0].text == "1"
+    assert xml.xpath('//property[@name="hibernate.c3p0.preferredTestQuery"]')[0].text == "select 1"
+
+def test_confluence_xml_postgres_all_set(docker_cli, image):
+    environment = {
+        'ATL_DB_TYPE': 'postgresql',
+        'ATL_JDBC_URL': 'atl_jdbc_url',
+        'ATL_JDBC_USER': 'atl_jdbc_user',
+        'ATL_JDBC_PASSWORD': 'atl_jdbc_password',
+        'ATL_DB_POOLMAXSIZE': 'x100',
+        'ATL_DB_POOLMINSIZE': 'x20',
+        'ATL_DB_TIMEOUT': 'x30',
+        'ATL_DB_IDLETESTPERIOD': 'x100',
+        'ATL_DB_MAXSTATEMENTS': 'x0',
+        'ATL_DB_VALIDATE': 'xfalse',
+        'ATL_DB_ACQUIREINCREMENT': 'x1',
+        'ATL_DB_VALIDATIONQUERY': 'xselect 1'
+    }
+    container = run_image(docker_cli, image, environment=environment)
+    wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/confluence-init.properties")
+
+    xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
+
+    assert xml.xpath('//property[@name="hibernate.c3p0.min_size"]')[0].text == "x20"
+    assert xml.xpath('//property[@name="hibernate.c3p0.max_size"]')[0].text == "x100"
+    assert xml.xpath('//property[@name="hibernate.c3p0.timeout"]')[0].text == "x30"
+    assert xml.xpath('//property[@name="hibernate.c3p0.idle_test_period"]')[0].text == "x100"
+    assert xml.xpath('//property[@name="hibernate.c3p0.max_statements"]')[0].text == "x0"
+    assert xml.xpath('//property[@name="hibernate.c3p0.validate"]')[0].text == "xfalse"
+    assert xml.xpath('//property[@name="hibernate.c3p0.acquire_increment"]')[0].text == "x1"
+    assert xml.xpath('//property[@name="hibernate.c3p0.preferredTestQuery"]')[0].text == "xselect 1"

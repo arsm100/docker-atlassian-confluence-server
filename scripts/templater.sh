@@ -16,6 +16,8 @@ vars=$(grep -oE '\{\{\s*[A-Za-z0-9_]+\s*\}\}' "$template" | sort | uniq | sed -e
 
 if [[ -z "$vars" ]]; then
     echo "Warning: No variable was found in $template, syntax is {{VAR}}" >&2
+    cat $template
+    exit
 fi
 
 var_value() {
