@@ -155,6 +155,15 @@ def test_seraph_login_set(docker_cli, image):
     param = xml.xpath('//param-name[text()="autologin.cookie.age"]')[0].getnext()
     assert param.text == "TEST_VAL"
 
+
+def test_conf_init_set(docker_cli, image):
+    container = run_image(docker_cli, image, environment={"CONFLUENCE_HOME": "/tmp/"})
+    _jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+
+    init = container.file('/opt/atlassian/confluence/confluence/WEB-INF/classes/confluence-init.properties')
+    assert init.contains("confluence.home = /tmp/")
+
+
 #
 # def test_confluence_cfg_xml_defaults(docker_cli, image):
 #     environment = {
