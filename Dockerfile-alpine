@@ -17,7 +17,7 @@ WORKDIR $CONFLUENCE_HOME
 EXPOSE 8090
 EXPOSE 8091
 
-CMD ["/entrypoint.sh", "-fg"]
+CMD ["/entrypoint.py", "-fg"]
 ENTRYPOINT ["/sbin/tini", "--"]
 
 RUN apk add --no-cache ca-certificates wget curl openssh bash procps openssl perl ttf-dejavu tini python3 py3-jinja2
@@ -28,7 +28,7 @@ RUN ln -s /usr/lib/libfontconfig.so.1 /usr/lib/libfontconfig.so \
     && ln -s /lib/libc.musl-x86_64.so.1 /usr/lib/libc.musl-x86_64.so.1
 ENV LD_LIBRARY_PATH /usr/lib
 
-COPY entrypoint.sh              			/entrypoint.sh
+COPY entrypoint.py              			/entrypoint.py
 COPY scripts/*						/opt/atlassian/bin/
 COPY config/*						/opt/atlassian/etc/
 

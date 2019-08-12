@@ -17,7 +17,7 @@ WORKDIR $CONFLUENCE_HOME
 EXPOSE 8090
 EXPOSE 8091
 
-CMD ["/entrypoint.sh", "-fg"]
+CMD ["/entrypoint.py", "-fg"]
 ENTRYPOINT ["/sbin/tini", "--"]
 
 RUN apt-get update \
@@ -28,7 +28,7 @@ ARG TINI_VERSION=v0.18.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /sbin/tini
 RUN chmod +x /sbin/tini
 
-COPY entrypoint.sh              			/entrypoint.sh
+COPY entrypoint.py              			/entrypoint.py
 COPY scripts/*						/opt/atlassian/bin/
 COPY config/*						/opt/atlassian/etc/
 
