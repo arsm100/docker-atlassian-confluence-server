@@ -81,6 +81,7 @@ for key, defval in defaults.items():
 gen_cfg('server.xml.j2', server_xml, env)
 
 
+
 ######################################################################
 # Start Confluence as the correct user
 
@@ -91,10 +92,10 @@ if os.getuid() == 0:
 
     cmd = '/bin/su'
     start_cmd = ' '.join([start_cmd] + sys.argv[1:])
-    args = [user, '-c', start_cmd]
+    args = [cmd, user, '-c', start_cmd]
 else:
     cmd = start_cmd
-    args = sys.argv
+    args = [start_cmd] + sys.argv[1:]
 
 logging.info("Running Confluence with command '{}', arguments {}".format(cmd, args))
-os.execvp(cmd, args)
+os.execv(cmd, args)
