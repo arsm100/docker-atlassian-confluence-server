@@ -81,6 +81,14 @@ for key, defval in defaults.items():
 gen_cfg('server.xml.j2', server_xml, env)
 
 
+######################################################################
+# Configure seraph login handling.
+
+# The default is two weeks, in seconds, same as the seraph default.
+env['atl_autologin_cookie_age'] = env.get('atl_autologin_cookie_age', "1209600")
+
+gen_cfg('seraph-config.xml.j2', seraph, env)
+
 
 ######################################################################
 # Start Confluence as the correct user
