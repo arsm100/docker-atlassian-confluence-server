@@ -226,10 +226,9 @@ def test_confluence_xml_postgres_all_set(docker_cli, image):
         'ATL_DB_VALIDATIONQUERY': 'xselect 1'
     }
     container = run_image(docker_cli, image, environment=environment)
-    wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/confluence-init.properties")
+    wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
 
     xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
-
     assert xml.xpath('//property[@name="hibernate.c3p0.min_size"]')[0].text == "x20"
     assert xml.xpath('//property[@name="hibernate.c3p0.max_size"]')[0].text == "x100"
     assert xml.xpath('//property[@name="hibernate.c3p0.timeout"]')[0].text == "x30"

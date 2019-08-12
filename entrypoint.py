@@ -94,6 +94,12 @@ env['atl_product_home'] = confluence_home
 
 gen_cfg('confluence-init.properties.j2', confluence_install_dir+'/confluence/WEB-INF/classes/confluence-init.properties', env)
 
+######################################################################
+# Configure confluence.cfg.xml
+
+gen_cfg('confluence.cfg.xml.j2', confluence_home+'/confluence.cfg.xml', env,
+        user=user, group=group, mode=0o640)
+
 
 ######################################################################
 # Start Confluence as the correct user
