@@ -20,7 +20,7 @@ EXPOSE 8091
 CMD ["/entrypoint.sh", "-fg"]
 ENTRYPOINT ["/sbin/tini", "--"]
 
-RUN apk add --no-cache ca-certificates wget curl openssh bash procps openssl perl ttf-dejavu tini
+RUN apk add --no-cache ca-certificates wget curl openssh bash procps openssl perl ttf-dejavu tini python3 py3-jinja2
 
 # Workaround for AdoptOpenJDK Alpine fontconfig bug
 RUN ln -s /usr/lib/libfontconfig.so.1 /usr/lib/libfontconfig.so \
