@@ -25,18 +25,16 @@ def gen_cfg(tmpl, target, env, user='root', group='root', mode=0o644):
 ######################################################################
 # Setup inputs and outputs
 
-# Extract some common parameters
-confluence_home = os.environ["CONFLUENCE_HOME"]
-confluence_install_dir = os.environ["CONFLUENCE_INSTALL_DIR"]
-user = os.environ["RUN_USER"]
-group = os.environ["RUN_GROUP"]
-
-# Import all ATL_* environment variables. We lower-case these for
-# compatability with Ansible template convention. We handle default
-# and legacy mappings below.
+# Import all ATL_* and Dockerfile environment variables. We
+# lower-case these for compatability with Ansible template
+# convention. We handle default and legacy mappings below.
 env = {k.lower(): v
        for k, v in os.environ.items()
-       if k.startswith('ATL_')}
+       if k.startswith(('ATL_', 'CONFLUENCE_', 'RUN_'))}
+
+# For compatability with the Ansible templates.
+env['atl_product_home'] = env['confluence_home']
+env['atl_product_home_shared'] = env.get('confluence_shared_home')
 
 # Setup Jinja2 for templating
 jenv = j2.Environment(
@@ -74,7 +72,7 @@ for key, defval in defaults.items():
     if (key not in env) and defval:
         env[key] = defval
 
-gen_cfg('server.xml.j2', confluence_install_dir+'/conf/server.xml', env)
+gen_cfg('server.xml.j2', env['confluence_install_dir']+'/conf/server.xml', env)
 
 
 ######################################################################
@@ -83,35 +81,33 @@ gen_cfg('server.xml.j2', confluence_install_dir+'/conf/server.xml', env)
 # The default is two weeks, in seconds, same as the seraph default.
 env['atl_autologin_cookie_age'] = env.get('atl_autologin_cookie_age', "1209600")
 
-gen_cfg('seraph-config.xml.j2', confluence_install_dir+'/confluence/WEB-INF/classes/seraph-config.xml', env)
+gen_cfg('seraph-config.xml.j2', env['confluence_install_dir']+'/confluence/WEB-INF/classes/seraph-config.xml', env)
 
 
 ######################################################################
 # Configure confluence-init.properties
 
-# For compatability with the Ansible templates.
-env['atl_product_home'] = confluence_home
 
-gen_cfg('confluence-init.properties.j2', confluence_install_dir+'/confluence/WEB-INF/classes/confluence-init.properties', env)
+gen_cfg('confluence-init.properties.j2', env['confluence_install_dir']+'/confluence/WEB-INF/classes/confluence-init.properties', env)
 
 ######################################################################
 # Configure confluence.cfg.xml
 
-gen_cfg('confluence.cfg.xml.j2', confluence_home+'/confluence.cfg.xml', env,
-        user=user, group=group, mode=0o640)
+gen_cfg('confluence.cfg.xml.j2', env['confluence_home']+'/confluence.cfg.xml', env,
+        user=env['run_user'], group=env['run_group'], mode=0o640)
 
 
 ######################################################################
 # Start Confluence as the correct user
 
-start_cmd = "{}/bin/start-confluence.sh".format(confluence_install_dir)
+start_cmd = "{}/bin/start-confluence.sh".format(env['confluence_install_dir'])
 if os.getuid() == 0:
-    logging.info("User is currently root. Will change directory ownership to {}:{}, then downgrade permission to {}".format(user, group, user))
-    set_perms(confluence_home, user, group, 0o700)
+    logging.info("User is currently root. Will change directory ownership to {} then downgrade permissions".format(env['run_user']))
+    set_perms(env['confluence_home'], env['run_user'], env['run_group'], 0o700)
 
     cmd = '/bin/su'
     start_cmd = ' '.join([start_cmd] + sys.argv[1:])
-    args = [cmd, user, '-c', start_cmd]
+    args = [cmd, env['run_user'], '-c', start_cmd]
 else:
     cmd = start_cmd
     args = [start_cmd] + sys.argv[1:]

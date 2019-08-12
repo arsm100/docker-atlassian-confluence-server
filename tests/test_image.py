@@ -182,6 +182,7 @@ def test_confluence_xml_default(docker_cli, image):
     xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
     assert xml.xpath('/confluence-configuration/buildNumber')[0].text == "0"
     assert xml.xpath('/confluence-configuration/properties/property[@name="hibernate.connection.url"]') == []
+    assert xml.xpath('/confluence-configuration/properties/property[@name="confluence.cluster.home"]') == []
 
 def test_confluence_xml_postgres(docker_cli, image):
     environment = {
@@ -239,3 +240,30 @@ def test_confluence_xml_postgres_all_set(docker_cli, image):
     assert xml.xpath('//property[@name="hibernate.c3p0.validate"]')[0].text == "xfalse"
     assert xml.xpath('//property[@name="hibernate.c3p0.acquire_increment"]')[0].text == "x1"
     assert xml.xpath('//property[@name="hibernate.c3p0.preferredTestQuery"]')[0].text == "xselect 1"
+
+
+def test_confluence_xml_cluster_aws(docker_cli, image):
+    environment = {
+        'ATL_CLUSTER_TYPE': 'aws',
+        'ATL_HAZELCAST_NETWORK_AWS_IAM_ROLE': 'atl_hazelcast_network_aws_iam_role',
+        'ATL_HAZELCAST_NETWORK_AWS_IAM_REGION': 'atl_hazelcast_network_aws_iam_region',
+        'ATL_HAZELCAST_NETWORK_AWS_HOST_HEADER': 'atl_hazelcast_network_aws_host_header',
+        'ATL_HAZELCAST_NETWORK_AWS_TAG_KEY': 'atl_hazelcast_network_aws_tag_key',
+        'ATL_HAZELCAST_NETWORK_AWS_TAG_VALUE': 'atl_hazelcast_network_aws_tag_value',
+        'ATL_CLUSTER_NAME': 'atl_cluster_name',
+        'ATL_CLUSTER_TTL': 'atl_cluster_ttl'
+    }
+    container = run_image(docker_cli, image, environment=environment)
+    wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
+    xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
+
+    assert xml.xpath('//property[@name="confluence.cluster"]')[0].text == "true"
+    assert xml.xpath('//property[@name="confluence.cluster.join.type"]')[0].text == "aws"
+
+    assert xml.xpath('//property[@name="confluence.cluster.aws.iam.role"]')[0].text == "atl_hazelcast_network_aws_iam_role"
+    assert xml.xpath('//property[@name="confluence.cluster.aws.region"]')[0].text == "atl_hazelcast_network_aws_iam_region"
+    assert xml.xpath('//property[@name="confluence.cluster.aws.host.header"]')[0].text == "atl_hazelcast_network_aws_host_header"
+    assert xml.xpath('//property[@name="confluence.cluster.aws.tag.key"]')[0].text == "atl_hazelcast_network_aws_tag_key"
+    assert xml.xpath('//property[@name="confluence.cluster.aws.tag.value"]')[0].text == "atl_hazelcast_network_aws_tag_value"
+    assert xml.xpath('//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
+    assert xml.xpath('//property[@name="confluence.cluster.ttl"]')[0].text == "atl_cluster_ttl"
