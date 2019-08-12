@@ -31,10 +31,6 @@ confluence_install_dir = os.environ["CONFLUENCE_INSTALL_DIR"]
 user = os.environ["RUN_USER"]
 group = os.environ["RUN_GROUP"]
 
-server_xml = confluence_install_dir+'/conf/server.xml'
-seraph = confluence_install_dir+'/confluence/WEB-INF/classes/seraph-config.xml'
-conf_cfg = confluence_home+'/confluence.cfg.xml'
-
 # Import all ATL_* environment variables. We lower-case these for
 # compatability with Ansible template convention. We handle default
 # and legacy mappings below.
@@ -78,7 +74,7 @@ for key, defval in defaults.items():
     if (key not in env) and defval:
         env[key] = defval
 
-gen_cfg('server.xml.j2', server_xml, env)
+gen_cfg('server.xml.j2', confluence_install_dir+'/conf/server.xml', env)
 
 
 ######################################################################
@@ -87,7 +83,16 @@ gen_cfg('server.xml.j2', server_xml, env)
 # The default is two weeks, in seconds, same as the seraph default.
 env['atl_autologin_cookie_age'] = env.get('atl_autologin_cookie_age', "1209600")
 
-gen_cfg('seraph-config.xml.j2', seraph, env)
+gen_cfg('seraph-config.xml.j2', confluence_install_dir+'/confluence/WEB-INF/classes/seraph-config.xml', env)
+
+
+######################################################################
+# Configure confluence-init.properties
+
+# For compatability with the Ansible templates.
+env['atl_product_home'] = confluence_home
+
+gen_cfg('confluence-init.properties.j2', confluence_install_dir+'/confluence/WEB-INF/classes/confluence-init.properties', env)
 
 
 ######################################################################
