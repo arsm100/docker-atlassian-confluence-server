@@ -7,18 +7,33 @@ import logging
 import jinja2 as j2
 
 
+######################################################################
+# Utils
+
 def set_perms(path, user, group, mode):
-    logging.info("SETTGING PERMS "+path)
     shutil.chown(path, user=user, group=group)
     os.chmod(path, mode)
 
-def chown_all(path, user, group, mode):
-    for root, dirs, files in os.walk(path):
-        for d in dirs:
-            set_perms(os.path.join(root, d), user, group, mode)
-        for f in files:
-            set_perms(os.path.join(root, d), user, group, mode)
-    set_perms(path, user, group, mode)
+def gen_cfg(tmpl, target, env, user='root', group='root', mode=0o644):
+    logging.info("Generating {} from template {}".format(target, tmpl))
+    cfg = jenv.get_template(tmpl).render(env)
+    with open(target, 'w') as fd:
+        fd.write(cfg)
+    set_perms(target, user, group, mode)
+
+
+######################################################################
+# Setup inputs and outputs
+
+# Extract some common parameters
+confluence_home = os.environ["CONFLUENCE_HOME"]
+confluence_install_dir = os.environ["CONFLUENCE_INSTALL_DIR"]
+user = os.environ["RUN_USER"]
+group = os.environ["RUN_GROUP"]
+
+server_xml = confluence_install_dir+'/conf/server.xml'
+seraph = confluence_install_dir+'/confluence/WEB-INF/classes/seraph-config.xml'
+conf_cfg = confluence_home+'/confluence.cfg.xml'
 
 # Import all ATL_* environment variables. We lower-case these for
 # compatability with Ansible template convention. We handle default
@@ -26,12 +41,6 @@ def chown_all(path, user, group, mode):
 env = {k.lower(): v
        for k, v in os.environ.items()
        if k.startswith('ATL_')}
-
-# Extract some common parameters
-confluence_home = os.environ["CONFLUENCE_HOME"]
-confluence_install_dir = os.environ["CONFLUENCE_INSTALL_DIR"]
-user = os.environ["RUN_USER"]
-group = os.environ["RUN_GROUP"]
 
 # Setup Jinja2 for templating
 jenv = j2.Environment(
@@ -49,8 +58,8 @@ defaults = {
     # for backwards compatability, if the new version is not set.
     'atl_proxy_name': os.environ.get('CATALINA_CONNECTOR_PROXYNAME'),
     'atl_proxy_port': os.environ.get('CATALINA_CONNECTOR_PROXYPORT'),
-    'atl_tomcat_secure': os.environ.get('CATALINA_CONNECTOR_SECURE'),
-    'atl_tomcat_scheme': os.environ.get('CATALINA_CONNECTOR_SCHEME'),
+    'atl_tomcat_secure': os.environ.get('CATALINA_CONNECTOR_SECURE', 'false'),
+    'atl_tomcat_scheme': os.environ.get('CATALINA_CONNECTOR_SCHEME', 'http'),
     'atl_tomcat_contextpath': os.environ.get('CATALINA_CONTEXT_PATH'),
 
     # Other default vals
@@ -60,7 +69,7 @@ defaults = {
     'atl_tomcat_minsparethreads': "10",
     'atl_tomcat_connectiontimeout': "20000",
     'atl_tomcat_enablelookups': "false",
-    'atl_tomcat_protocol': "HTTP",
+    'atl_tomcat_protocol': "HTTP/1.1",
     'atl_tomcat_redirectport': "8443",
     'atl_tomcat_acceptcount': "10",
 }
@@ -69,13 +78,7 @@ for key, defval in defaults.items():
     if (key not in env) and defval:
         env[key] = defval
 
-logging.info("Generating ${CONFLUENCE_INSTALL_DIR}/conf/server.xml")
-print(confluence_install_dir+'/conf/server.xml')
-xml = jenv.get_template('server.xml.j2').render(env)
-out = confluence_install_dir+'/conf/server.xml'
-with open(out, 'w') as fd:
-    fd.write(xml)
-chown_all(out, user, group, 0o640)
+gen_cfg('server.xml.j2', server_xml, env)
 
 
 ######################################################################
@@ -84,14 +87,14 @@ chown_all(out, user, group, 0o640)
 start_cmd = "{}/bin/start-confluence.sh".format(confluence_install_dir)
 if os.getuid() == 0:
     logging.info("User is currently root. Will change directory ownership to {}:{}, then downgrade permission to {}".format(user, group, user))
-    chown_all(confluence_home, user, group, 0o700)
+    set_perms(confluence_home, user, group, 0o700)
 
     cmd = '/bin/su'
     start_cmd = ' '.join([start_cmd] + sys.argv[1:])
-    args = ['-s /bin/bash', user, '-c', start_cmd]
+    args = [user, '-c', start_cmd]
 else:
     cmd = start_cmd
-    args = sys.argv[1:]
+    args = sys.argv
 
 logging.info("Running Confluence with command '{}', arguments {}".format(cmd, args))
-os.execv(cmd, args)
+os.execvp(cmd, args)
