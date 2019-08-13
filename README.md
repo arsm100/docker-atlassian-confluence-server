@@ -12,8 +12,13 @@ This Docker container makes it easy to get an instance of Confluence up and runn
  
 # Quick Start
  
-For the directory in the environmental variable `CONFLUENCE_HOME` that is used to store Confluence data
-(amongst other things) we recommend mounting a host directory as a [data volume](https://docs.docker.com/userguide/dockervolumes/#mount-a-host-directory-as-a-data-volume):
+For the directory in the environmental variable `CONFLUENCE_HOME` that is used
+to store Confluence data (amongst other things) we recommend mounting a host
+directory as a [data volume](https://docs.docker.com/userguide/dockervolumes/#mount-a-host-directory-as-a-data-volume):
+
+Additionally, if running Confluence in Data Center mode it is required that a
+shared filesystem is mounted. The mountpoint (inside the container) can be
+configured with `CONFLUENCE_SHARED_HOME`.
  
 Start Atlassian Confluence Server:
  
