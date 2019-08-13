@@ -165,7 +165,7 @@ This docker image can be run as part of a
 [Data Center](https://confluence.atlassian.com/doc/confluence-data-center-technical-overview-790795847.html)
 cluster. You can specify the following properties to start Confluence as a Data Center
 node, instead of manually configuring a cluster. See 
-[Installing Jira Data Center](https://confluence.atlassian.com/doc/installing-confluence-data-center-203603.html)
+[Installing Confluence Data Center](https://confluence.atlassian.com/doc/installing-confluence-data-center-203603.html)
 for more information.
 
 ### Cluster configuration
@@ -270,11 +270,6 @@ install the latest `6.13.x` version that is available.
 For the latest developer (EAP) release use
 `atlassian/confluence-server:eap`. This will install our latest milestone (not
 supported for use in production).
-
-By default our Docker image uses OpenJDK, which is not supported for production
-sites. However we do provide a fully supported Docker image that uses
-AdoptOpenJDK 8. These images are tagged with the suffix
-`ubuntu-18.04-adoptopenjdk8` together with the Confluence version.
 
 For example, `atlassian/confluence-server:6.13-ubuntu-18.04-adoptopenjdk8` will
 install the latest 6.13.x version with AdoptOpenJDK 8.
