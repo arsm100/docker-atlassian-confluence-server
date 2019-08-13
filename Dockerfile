@@ -28,10 +28,6 @@ ARG TINI_VERSION=v0.18.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /sbin/tini
 RUN chmod +x /sbin/tini
 
-COPY entrypoint.py              			/entrypoint.py
-COPY scripts/*						/opt/atlassian/bin/
-COPY config/*						/opt/atlassian/etc/
-
 ARG CONFLUENCE_VERSION
 ARG DOWNLOAD_URL=https://product-downloads.atlassian.com/software/confluence/downloads/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz
 
@@ -47,3 +43,7 @@ RUN groupadd --gid ${RUN_GID} ${RUN_GROUP} \
     && chown -R ${RUN_USER}:${RUN_GROUP} ${CONFLUENCE_INSTALL_DIR}/work \
     \
     && sed -i -e 's/-Xms\([0-9]\+[kmg]\) -Xmx\([0-9]\+[kmg]\)/-Xms\${JVM_MINIMUM_MEMORY:=\1} -Xmx\${JVM_MAXIMUM_MEMORY:=\2} \${JVM_SUPPORT_RECOMMENDED_ARGS} -Dconfluence.home=\${CONFLUENCE_HOME}/g' ${CONFLUENCE_INSTALL_DIR}/bin/setenv.sh
+
+COPY entrypoint.py              			/entrypoint.py
+COPY scripts/*						/opt/atlassian/bin/
+COPY config/*						/opt/atlassian/etc/
