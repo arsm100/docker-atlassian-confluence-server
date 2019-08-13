@@ -54,19 +54,19 @@ of the setup. They can be controlled via the below environment variables.
 
 * `ATL_PROXY_PORT` (default: NONE)
 
-   The reverse proxy's port number via which Jira is
+   The reverse proxy's port number via which Confluence is
    accessed. `CATALINA_CONNECTOR_PROXYPORT` is also supported for backwards
    compatability.
 
 * `ATL_TOMCAT_PORT` (default: 8090)
 
-   The port for Tomcat/Jira to listen on. Depending on your container
+   The port for Tomcat/Confluence to listen on. Depending on your container
    deployment method this port may need to be 
    [exposed and published][docker-expose].
 
 * `ATL_TOMCAT_SCHEME` (default: http)
 
-   The protocol via which Jira is accessed. `CATALINA_CONNECTOR_SCHEME` is also
+   The protocol via which Confluenceis accessed. `CATALINA_CONNECTOR_SCHEME` is also
    supported for backwards compatability.
 
 * `ATL_TOMCAT_SECURE` (default: false)
@@ -90,12 +90,6 @@ see https://tomcat.apache.org/tomcat-7.0-doc/config/index.html.
 * `ATL_TOMCAT_PROTOCOL` (default: HTTP/1.1)
 * `ATL_TOMCAT_ACCEPTCOUNT` (default: 10)
 
-## Confluence-specific settings
-
-* `ATL_AUTOLOGIN_COOKIE_AGE` (default: 1209600; two weeks, in seconds)
-
-   The maximum time a user can remain logged-in with 'Remember Me'.
-
 ## JVM configuration
 
 If you need to pass additional JVM arguments to Confluence such as specifying a custom trust store, you can add them via the below environment variable
@@ -108,6 +102,125 @@ Example:
 
     $> docker run -e JVM_SUPPORT_RECOMMENDED_ARGS=-Djavax.net.ssl.trustStore=/var/atlassian/application-data/confluence/cacerts -v confluenceVolume:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 atlassian/confluence-server
 
+## Confluence-specific settings
+
+* `ATL_AUTOLOGIN_COOKIE_AGE` (default: 1209600; two weeks, in seconds)
+
+   The maximum time a user can remain logged-in with 'Remember Me'.
+   
+* `CONFLUENCE_HOME`
+
+   The confluence home directory. This may be on an mounted volume; if so it
+   should be writable by the user `confluence`. See note below about UID
+   mappings.
+
+## Database configuration
+
+It is optionally possible to configure the database from the environment,
+avoiding the need to do so through the web startup screen.
+
+The following variables are all must all be supplied if using this feature:
+
+* `ATL_JDBC_URL`
+
+   The database URL; this is database-specific.
+
+* `ATL_JDBC_USER`
+
+   The database user to connect as.
+
+* `ATL_JDBC_PASSWORD`
+
+   The password for the database user.
+
+* `ATL_DB_TYPE`
+
+   The type of database; valid supported values are:
+
+   * `mssql`
+   * `mysql`
+   * `oracle12c`
+   * `postgresql`
+
+The following variables are for the database connection pool, and are
+optional.
+
+* `ATL_DB_POOLMINSIZE` (default: 20)
+* `ATL_DB_POOLMAXSIZE` (default: 100)
+* `ATL_DB_TIMEOUT` (default: 30)
+* `ATL_DB_IDLETESTPERIOD` (default: 100)
+* `ATL_DB_MAXSTATEMENTS` (default: 0)
+* `ATL_DB_VALIDATE` (default: false)
+* `ATL_DB_ACQUIREINCREMENT` (default: 1)
+* `ATL_DB_VALIDATIONQUERY` (default: "select 1")
+
+## Data Center configuration
+
+This docker image can be run as part of a 
+[Data Center](https://confluence.atlassian.com/doc/confluence-data-center-technical-overview-790795847.html)
+cluster. You can specify the following properties to start Confluence as a Data Center
+node, instead of manually configuring a cluster. See 
+[Installing Jira Data Center](https://confluence.atlassian.com/doc/installing-confluence-data-center-203603.html)
+for more information.
+
+### Cluster configuration
+
+Confluence Data Center allows clustering via various methods. For more
+information on the setting for each type see 
+[this page](https://confluence.atlassian.com/doc/change-node-discovery-from-multicast-to-tcp-ip-or-aws-792297728.html#ChangeNodeDiscoveryfromMulticasttoTCP/IPorAWS-TochangefromTCP/IPtomulticast).
+
+#### Common cluster settings
+
+* `ATL_CLUSTER_TYPE`
+
+   The cluster type. Setting this effectively enables clustering. Valid values
+   are `aws`, `multicast`, and `tcp_ip`.
+
+* `ATL_CLUSTER_NAME`
+
+   The cluster name; this should be common across all nodes.
+
+* `ATL_PRODUCT_HOME_SHARED`
+
+   The location of the shared home directory for all Confluence nodes. **Note**:
+   This must be real shared filesystem that is mounted inside the
+   container. Additionally, see the note about UIDs.
+
+* `ATL_CLUSTER_TTL`
+
+   The time-to-live for cluster packets. Primarily of use in multicast clusters.
+
+#### AWS cluster settints
+
+   The following should be populated from the AWS environment.
+
+* `ATL_HAZELCAST_NETWORK_AWS_IAM_ROLE`
+* `ATL_HAZELCAST_NETWORK_AWS_IAM_REGION`
+* `ATL_HAZELCAST_NETWORK_AWS_HOST_HEADER`
+* `ATL_HAZELCAST_NETWORK_AWS_TAG_KEY`
+* `ATL_HAZELCAST_NETWORK_AWS_TAG_VALUE`
+
+#### TCP cluster settings
+
+* `ATL_CLUSTER_PEERS`
+
+   A comma-separated list of peer IPs.
+
+#### Multicast cluster settings
+
+* `ATL_CLUSTER_ADDRESS`
+
+
+# Shared directory and user IDs
+
+By default the Confuence application runs as the user `confluence`, with a UID
+and GID of 2002. Consequently this UID must have write access to the shared
+filesystem. If for some reason a different UID must be used, there are a number
+of options available:
+
+* The Docker image can be rebuilt with a different UID.
+* Under Linux, the UID can be remapped using 
+  [user namespace remapping](https://docs.docker.com/engine/security/userns-remap/).
  
 # Upgrade
  
@@ -126,42 +239,63 @@ container and its volumes using the `-v` option._
  
 # Backup
  
-For evaluating Confluence you can use the built-in database that will store its files in the Confluence Server home directory. In that case it is sufficient to create a backup archive of the directory on the host that is used as a volume (`/data/your-confluence-home` in the example above).
+For evaluating Confluence you can use the built-in database that will store its
+files in the Confluence Server home directory. In that case it is sufficient to
+create a backup archive of the directory on the host that is used as a volume
+(`/data/your-confluence-home` in the example above).
  
-Confluence's [automatic backup](https://confluence.atlassian.com/display/DOC/Configuring+Backups) is currently supported in the Docker setup. You can also use the [Production Backup Strategy](https://confluence.atlassian.com/display/DOC/Production+Backup+Strategy) approach if you're using an external database.
+Confluence's [automatic backup](https://confluence.atlassian.com/display/DOC/Configuring+Backups) is
+currently supported in the Docker setup. You can also use the [Production Backup
+Strategy](https://confluence.atlassian.com/display/DOC/Production+Backup+Strategy)
+approach if you're using an external database.
  
 Read more about data recovery and backups: [Site Backup and Restore](https://confluence.atlassian.com/display/DOC/Site+Backup+and+Restore)
  
 # Versioning
 
 The `latest` tag matches the most recent release of Atlassian Confluence Server.
-So `atlassian/confluence-server:latest` will use the newest stable version of Confluence Server available.
+So `atlassian/confluence-server:latest` will use the newest stable version of
+Confluence Server available.
  
-Alternatively, you can use a specific minor version of Confluence Server by using a version number
-tag: `atlassian/confluence-server:6.13`. This will install the latest `6.13.x` version that
-is available.
+Alternatively, you can use a specific minor version of Confluence Server by
+using a version number tag: `atlassian/confluence-server:6.13`. This will
+install the latest `6.13.x` version that is available.
 
-For the latest developer (EAP) release use `atlassian/confluence-server:eap`. This will install our latest milestone (not supported for use in production).
+For the latest developer (EAP) release use
+`atlassian/confluence-server:eap`. This will install our latest milestone (not
+supported for use in production).
 
-By default our Docker image uses OpenJDK, which is not supported for production sites. However we do provide a fully supported Docker image that uses AdoptOpenJDK 8. These images are tagged with the suffix `ubuntu-18.04-adoptopenjdk8` together with the Confluence version.
+By default our Docker image uses OpenJDK, which is not supported for production
+sites. However we do provide a fully supported Docker image that uses
+AdoptOpenJDK 8. These images are tagged with the suffix
+`ubuntu-18.04-adoptopenjdk8` together with the Confluence version.
 
-For example, `atlassian/confluence-server:6.13-ubuntu-18.04-adoptopenjdk8` will install the latest 6.13.x version with AdoptOpenJDK 8.
+For example, `atlassian/confluence-server:6.13-ubuntu-18.04-adoptopenjdk8` will
+install the latest 6.13.x version with AdoptOpenJDK 8.
 
 # Known Problems
-In Mac OS X with Docker version 1.11.0, when running with docker-machine, there is a bug where the directory specified for `CONFLUENCE_HOME` in a volume mount will not have the correct permission, and thus startup fails with a permission denied error:
+
+In Mac OS X with Docker version 1.11.0, when running with docker-machine, there
+is a bug where the directory specified for `CONFLUENCE_HOME` in a volume mount
+will not have the correct permission, and thus startup fails with a permission
+denied error:
+
      Error writing state to confluence.cfg.xml
-com.atlassian.config.ConfigurationException: Couldn't save confluence.cfg.xml to /var/atlassian/confluence-home directory.
+     com.atlassian.config.ConfigurationException: Couldn't save confluence.cfg.xml to /var/atlassian/confluence-home directory.
 
 See https://github.com/docker/docker/issues/4023 for details.
 
-To work around this issue, use a different host operating system other than Mac OSX until a newer release of Docker fixes this issue.
+To work around this issue, use a different host operating system other than Mac
+OSX until a newer release of Docker fixes this issue.
  
 # Support
 
-This Docker image is great for evaluating Confluence. However, it does not use an Oracle JDK due to licensing constraints. Instead, it uses OpenJDK which is not supported for running Confluence in production.
+These Confluence Docker images are presented as an early-access release, and not
+recommended for critical production deployments. However if have you an interest
+in deploying with containers will would be interesting in hearing your feedback.
 
-To meet our supported platform requirements, you'll need to either:
-
-* build your own image based on [Oracle JDK](https://github.com/oracle/docker-images/tree/master/OracleJDK). See [Update the Confluence Docker image to use Oracle JDK ](https://confluence.atlassian.com/display/CONFKB/Update+the+Confluence+Docker+image+to+use+Oracle+JDK) for more info.
-* use our image that is based on AdoptOpenJDK 8, which is fully supported for Confluence 6.13 and later. These images are tagged with the suffix `ubuntu-18.04-adoptopenjdk8` together with the Confluence version.
-
+Note that these images are built on the
+[AdoptOpenJDK](https://adoptopenjdk.net/) images. Prior to Confluence 6.13
+OpenJDK was not a supported platform. See [the 6.13
+release-notes](https://confluence.atlassian.com/doc/confluence-6-13-release-notes-959288785.html)
+for more information.
