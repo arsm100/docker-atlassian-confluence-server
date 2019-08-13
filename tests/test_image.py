@@ -174,9 +174,7 @@ def test_seraph_defaults(docker_cli, image):
     wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml")
 
     xml = etree.fromstring(container.file('/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml').content)
-    param = xml.xpath('//param-name[text()="autologin.cookie.age"]')[0].getnext()
-    assert param.text == "1209600"
-
+    param = xml.xpath('//param-name[text()="autologin.cookie.age"]') == []
 
 def test_seraph_login_set(docker_cli, image):
     container = run_image(docker_cli, image, environment={"ATL_AUTOLOGIN_COOKIE_AGE": "TEST_VAL"})

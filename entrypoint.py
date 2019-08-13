@@ -10,6 +10,8 @@ import jinja2 as j2
 ######################################################################
 # Utils
 
+logging.basicConfig(level=logging.DEBUG)
+
 def set_perms(path, user, group, mode):
     shutil.chown(path, user=user, group=group)
     os.chmod(path, mode)
@@ -25,8 +27,6 @@ def gen_cfg(tmpl, target, env, user='root', group='root', mode=0o644):
     with open(target, 'w') as fd:
         fd.write(cfg)
     set_perms(target, user, group, mode)
-
-logging.basicConfig(level=logging.DEBUG)
 
 
 ######################################################################
@@ -46,30 +46,19 @@ env['atl_product_home_shared'] = env.get('confluence_shared_home')
 
 
 ######################################################################
-# Generate server.xml for Tomcat.
+# Generate all configuration files for Confluence
 
-gen_cfg('server.xml.j2', env['confluence_install_dir']+'/conf/server.xml', env)
+gen_cfg('server.xml.j2',
+        env['confluence_install_dir']+'/conf/server.xml', env)
 
+gen_cfg('seraph-config.xml.j2',
+        env['confluence_install_dir']+'/confluence/WEB-INF/classes/seraph-config.xml', env)
 
-######################################################################
-# Configure seraph login handling.
+gen_cfg('confluence-init.properties.j2',
+        env['confluence_install_dir']+'/confluence/WEB-INF/classes/confluence-init.properties', env)
 
-# The default is two weeks, in seconds, same as the seraph default.
-env['atl_autologin_cookie_age'] = env.get('atl_autologin_cookie_age', "1209600")
-
-gen_cfg('seraph-config.xml.j2', env['confluence_install_dir']+'/confluence/WEB-INF/classes/seraph-config.xml', env)
-
-
-######################################################################
-# Configure confluence-init.properties
-
-
-gen_cfg('confluence-init.properties.j2', env['confluence_install_dir']+'/confluence/WEB-INF/classes/confluence-init.properties', env)
-
-######################################################################
-# Configure confluence.cfg.xml
-
-gen_cfg('confluence.cfg.xml.j2', env['confluence_home']+'/confluence.cfg.xml', env,
+gen_cfg('confluence.cfg.xml.j2',
+        env['confluence_home']+'/confluence.cfg.xml', env,
         user=env['run_user'], group=env['run_group'], mode=0o640)
 
 

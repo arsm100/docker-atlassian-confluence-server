@@ -16,11 +16,13 @@
             <param-name>login.cookie.key</param-name>
             <param-value>seraph.confluence</param-value>
         </init-param>
- 
-        <init-param>
-            <param-name>autologin.cookie.age</param-name>
-            <param-value>{{ atl_autologin_cookie_age }}</param-value>
-        </init-param>
+
+        {% if atl_autologin_cookie_age is defined %}
+          <init-param>
+              <param-name>autologin.cookie.age</param-name>
+              <param-value>{{ atl_autologin_cookie_age }}</param-value>
+          </init-param>
+        {% endif %}
 
         <!--only basic authentication available-->
         <init-param>
