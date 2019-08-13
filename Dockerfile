@@ -45,5 +45,4 @@ RUN groupadd --gid ${RUN_GID} ${RUN_GROUP} \
     && sed -i -e 's/-Xms\([0-9]\+[kmg]\) -Xmx\([0-9]\+[kmg]\)/-Xms\${JVM_MINIMUM_MEMORY:=\1} -Xmx\${JVM_MAXIMUM_MEMORY:=\2} \${JVM_SUPPORT_RECOMMENDED_ARGS} -Dconfluence.home=\${CONFLUENCE_HOME}/g' ${CONFLUENCE_INSTALL_DIR}/bin/setenv.sh
 
 COPY entrypoint.py              			/entrypoint.py
-COPY scripts/*						/opt/atlassian/bin/
 COPY config/*						/opt/atlassian/etc/
