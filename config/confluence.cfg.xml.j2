@@ -38,18 +38,25 @@
 
     {% if atl_cluster_type is defined %}
       <property name="confluence.cluster">true</property>
-      <property name="confluence.cluster.join.type">{{ atl_cluster_type }}</property>
+      <property name="confluence.cluster.name">{{ atl_cluster_name }}</property>
       <property name="confluence.cluster.home">{{ atl_product_home_shared }}</property>
-      <property name="shared-home">{{ atl_product_home_shared }}</property>
 
+      <property name="confluence.cluster.join.type">{{ atl_cluster_type }}</property>
       {% if atl_cluster_type == 'aws' %}
         <property name="confluence.cluster.aws.iam.role">{{ atl_hazelcast_network_aws_iam_role }}</property>
         <property name="confluence.cluster.aws.region">{{ atl_hazelcast_network_aws_iam_region }}</property>
         <property name="confluence.cluster.aws.host.header">{{ atl_hazelcast_network_aws_host_header }}</property>
         <property name="confluence.cluster.aws.tag.key">{{ atl_hazelcast_network_aws_tag_key }}</property>
         <property name="confluence.cluster.aws.tag.value">{{ atl_hazelcast_network_aws_tag_value }}</property>
-        <property name="confluence.cluster.name">{{ atl_cluster_name }}</property>
         <property name="confluence.cluster.ttl">{{ atl_cluster_ttl }}</property>
+
+      {% elif atl_cluster_type == 'tcp_ip' %}
+        <property name="confluence.cluster.peers">{{ atl_cluster_peers }}</property>
+
+      {% elif atl_cluster_type == 'multicast' %}
+        <property name="confluence.cluster.address">{{ atl_cluster_address }}</property>
+        <property name="confluence.cluster.ttl">{{ atl_cluster_ttl }}</property>
+
       {% endif %}
 
     {% endif %}

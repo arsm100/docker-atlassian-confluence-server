@@ -267,3 +267,35 @@ def test_confluence_xml_cluster_aws(docker_cli, image):
     assert xml.xpath('//property[@name="confluence.cluster.aws.tag.value"]')[0].text == "atl_hazelcast_network_aws_tag_value"
     assert xml.xpath('//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
     assert xml.xpath('//property[@name="confluence.cluster.ttl"]')[0].text == "atl_cluster_ttl"
+
+def test_confluence_xml_cluster_multicast(docker_cli, image):
+    environment = {
+        'ATL_CLUSTER_TYPE': 'multicast',
+        'ATL_CLUSTER_NAME': 'atl_cluster_name',
+        'ATL_CLUSTER_TTL': 'atl_cluster_ttl',
+        'ATL_CLUSTER_ADDRESS': '99.99.99.99'
+    }
+    container = run_image(docker_cli, image, environment=environment)
+    wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
+    xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
+
+    assert xml.xpath('//property[@name="confluence.cluster"]')[0].text == "true"
+    assert xml.xpath('//property[@name="confluence.cluster.join.type"]')[0].text == "multicast"
+    assert xml.xpath('//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
+    assert xml.xpath('//property[@name="confluence.cluster.ttl"]')[0].text == "atl_cluster_ttl"
+    assert xml.xpath('//property[@name="confluence.cluster.address"]')[0].text == "99.99.99.99"
+
+def test_confluence_xml_cluster_tcp(docker_cli, image):
+    environment = {
+        'ATL_CLUSTER_TYPE': 'tcp_ip',
+        'ATL_CLUSTER_PEERS': '1.1.1.1,99.99.99.99',
+        'ATL_CLUSTER_NAME': 'atl_cluster_name',
+    }
+    container = run_image(docker_cli, image, environment=environment)
+    wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
+    xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
+
+    assert xml.xpath('//property[@name="confluence.cluster"]')[0].text == "true"
+    assert xml.xpath('//property[@name="confluence.cluster.join.type"]')[0].text == "tcp_ip"
+    assert xml.xpath('//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
+    assert xml.xpath('//property[@name="confluence.cluster.peers"]')[0].text == "1.1.1.1,99.99.99.99"
