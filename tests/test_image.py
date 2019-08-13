@@ -4,7 +4,7 @@ import io
 import tarfile
 import testinfra
 import time
-from lxml import etree
+import xml.etree.ElementTree as etree
 
 import requests
 
@@ -174,15 +174,15 @@ def test_seraph_defaults(docker_cli, image):
     wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml")
 
     xml = etree.fromstring(container.file('/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml').content)
-    param = xml.xpath('//param-name[text()="autologin.cookie.age"]') == []
+    #param = xml.findall('//param-name[text()="autologin.cookie.age"]') == []
+    param = xml.findall('.//param-name[.="autologin.cookie.age"]') == []
 
 def test_seraph_login_set(docker_cli, image):
     container = run_image(docker_cli, image, environment={"ATL_AUTOLOGIN_COOKIE_AGE": "TEST_VAL"})
     wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml")
 
     xml = etree.fromstring(container.file('/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml').content)
-    param = xml.xpath('//param-name[text()="autologin.cookie.age"]')[0].getnext()
-    assert param.text == "TEST_VAL"
+    assert xml.findall('.//param-value[.="TEST_VAL"]')[0].text == "TEST_VAL"
 
 
 def test_conf_init_set(docker_cli, image):
@@ -199,9 +199,9 @@ def test_confluence_xml_default(docker_cli, image):
     #_jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
 
     xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
-    assert xml.xpath('/confluence-configuration/buildNumber')[0].text == "0"
-    assert xml.xpath('/confluence-configuration/properties/property[@name="hibernate.connection.url"]') == []
-    assert xml.xpath('/confluence-configuration/properties/property[@name="confluence.cluster.home"]') == []
+    assert xml.findall('.//buildNumber')[0].text == "0"
+    assert xml.findall('.//property[@name="hibernate.connection.url"]') == []
+    assert xml.findall('.//property[@name="confluence.cluster.home"]') == []
 
 def test_confluence_xml_postgres(docker_cli, image):
     environment = {
@@ -214,21 +214,21 @@ def test_confluence_xml_postgres(docker_cli, image):
     wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/confluence-init.properties")
 
     xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
-    assert xml.xpath('//property[@name="hibernate.connection.url"]')[0].text == "atl_jdbc_url"
-    assert xml.xpath('//property[@name="hibernate.connection.username"]')[0].text == "atl_jdbc_user"
-    assert xml.xpath('//property[@name="hibernate.connection.password"]')[0].text == "atl_jdbc_password"
-    assert xml.xpath('//property[@name="confluence.database.choice"]')[0].text == "postgresql"
-    assert xml.xpath('//property[@name="hibernate.dialect"]')[0].text == "com.atlassian.confluence.impl.hibernate.dialect.PostgreSQLDialect"
-    assert xml.xpath('//property[@name="hibernate.connection.driver_class"]')[0].text == "org.postgresql.Driver"
+    assert xml.findall('.//property[@name="hibernate.connection.url"]')[0].text == "atl_jdbc_url"
+    assert xml.findall('.//property[@name="hibernate.connection.username"]')[0].text == "atl_jdbc_user"
+    assert xml.findall('.//property[@name="hibernate.connection.password"]')[0].text == "atl_jdbc_password"
+    assert xml.findall('.//property[@name="confluence.database.choice"]')[0].text == "postgresql"
+    assert xml.findall('.//property[@name="hibernate.dialect"]')[0].text == "com.atlassian.confluence.impl.hibernate.dialect.PostgreSQLDialect"
+    assert xml.findall('.//property[@name="hibernate.connection.driver_class"]')[0].text == "org.postgresql.Driver"
 
-    assert xml.xpath('//property[@name="hibernate.c3p0.min_size"]')[0].text == "20"
-    assert xml.xpath('//property[@name="hibernate.c3p0.max_size"]')[0].text == "100"
-    assert xml.xpath('//property[@name="hibernate.c3p0.timeout"]')[0].text == "30"
-    assert xml.xpath('//property[@name="hibernate.c3p0.idle_test_period"]')[0].text == "100"
-    assert xml.xpath('//property[@name="hibernate.c3p0.max_statements"]')[0].text == "0"
-    assert xml.xpath('//property[@name="hibernate.c3p0.validate"]')[0].text == "false"
-    assert xml.xpath('//property[@name="hibernate.c3p0.acquire_increment"]')[0].text == "1"
-    assert xml.xpath('//property[@name="hibernate.c3p0.preferredTestQuery"]')[0].text == "select 1"
+    assert xml.findall('.//property[@name="hibernate.c3p0.min_size"]')[0].text == "20"
+    assert xml.findall('.//property[@name="hibernate.c3p0.max_size"]')[0].text == "100"
+    assert xml.findall('.//property[@name="hibernate.c3p0.timeout"]')[0].text == "30"
+    assert xml.findall('.//property[@name="hibernate.c3p0.idle_test_period"]')[0].text == "100"
+    assert xml.findall('.//property[@name="hibernate.c3p0.max_statements"]')[0].text == "0"
+    assert xml.findall('.//property[@name="hibernate.c3p0.validate"]')[0].text == "false"
+    assert xml.findall('.//property[@name="hibernate.c3p0.acquire_increment"]')[0].text == "1"
+    assert xml.findall('.//property[@name="hibernate.c3p0.preferredTestQuery"]')[0].text == "select 1"
 
 def test_confluence_xml_postgres_all_set(docker_cli, image):
     environment = {
@@ -249,16 +249,16 @@ def test_confluence_xml_postgres_all_set(docker_cli, image):
     wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
 
     xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
-    assert xml.xpath('//property[@name="hibernate.connection.driver_class"]')[0].text == "org.postgresql.Driver"
-    assert xml.xpath('//property[@name="hibernate.dialect"]')[0].text == "com.atlassian.confluence.impl.hibernate.dialect.PostgreSQLDialect"
-    assert xml.xpath('//property[@name="hibernate.c3p0.min_size"]')[0].text == "x20"
-    assert xml.xpath('//property[@name="hibernate.c3p0.max_size"]')[0].text == "x100"
-    assert xml.xpath('//property[@name="hibernate.c3p0.timeout"]')[0].text == "x30"
-    assert xml.xpath('//property[@name="hibernate.c3p0.idle_test_period"]')[0].text == "x100"
-    assert xml.xpath('//property[@name="hibernate.c3p0.max_statements"]')[0].text == "x0"
-    assert xml.xpath('//property[@name="hibernate.c3p0.validate"]')[0].text == "xfalse"
-    assert xml.xpath('//property[@name="hibernate.c3p0.acquire_increment"]')[0].text == "x1"
-    assert xml.xpath('//property[@name="hibernate.c3p0.preferredTestQuery"]')[0].text == "xselect 1"
+    assert xml.findall('.//property[@name="hibernate.connection.driver_class"]')[0].text == "org.postgresql.Driver"
+    assert xml.findall('.//property[@name="hibernate.dialect"]')[0].text == "com.atlassian.confluence.impl.hibernate.dialect.PostgreSQLDialect"
+    assert xml.findall('.//property[@name="hibernate.c3p0.min_size"]')[0].text == "x20"
+    assert xml.findall('.//property[@name="hibernate.c3p0.max_size"]')[0].text == "x100"
+    assert xml.findall('.//property[@name="hibernate.c3p0.timeout"]')[0].text == "x30"
+    assert xml.findall('.//property[@name="hibernate.c3p0.idle_test_period"]')[0].text == "x100"
+    assert xml.findall('.//property[@name="hibernate.c3p0.max_statements"]')[0].text == "x0"
+    assert xml.findall('.//property[@name="hibernate.c3p0.validate"]')[0].text == "xfalse"
+    assert xml.findall('.//property[@name="hibernate.c3p0.acquire_increment"]')[0].text == "x1"
+    assert xml.findall('.//property[@name="hibernate.c3p0.preferredTestQuery"]')[0].text == "xselect 1"
 
 
 def test_confluence_xml_cluster_aws(docker_cli, image):
@@ -276,16 +276,16 @@ def test_confluence_xml_cluster_aws(docker_cli, image):
     wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
     xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
 
-    assert xml.xpath('//property[@name="confluence.cluster"]')[0].text == "true"
-    assert xml.xpath('//property[@name="confluence.cluster.join.type"]')[0].text == "aws"
+    assert xml.findall('.//property[@name="confluence.cluster"]')[0].text == "true"
+    assert xml.findall('.//property[@name="confluence.cluster.join.type"]')[0].text == "aws"
 
-    assert xml.xpath('//property[@name="confluence.cluster.aws.iam.role"]')[0].text == "atl_hazelcast_network_aws_iam_role"
-    assert xml.xpath('//property[@name="confluence.cluster.aws.region"]')[0].text == "atl_hazelcast_network_aws_iam_region"
-    assert xml.xpath('//property[@name="confluence.cluster.aws.host.header"]')[0].text == "atl_hazelcast_network_aws_host_header"
-    assert xml.xpath('//property[@name="confluence.cluster.aws.tag.key"]')[0].text == "atl_hazelcast_network_aws_tag_key"
-    assert xml.xpath('//property[@name="confluence.cluster.aws.tag.value"]')[0].text == "atl_hazelcast_network_aws_tag_value"
-    assert xml.xpath('//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
-    assert xml.xpath('//property[@name="confluence.cluster.ttl"]')[0].text == "atl_cluster_ttl"
+    assert xml.findall('.//property[@name="confluence.cluster.aws.iam.role"]')[0].text == "atl_hazelcast_network_aws_iam_role"
+    assert xml.findall('.//property[@name="confluence.cluster.aws.region"]')[0].text == "atl_hazelcast_network_aws_iam_region"
+    assert xml.findall('.//property[@name="confluence.cluster.aws.host.header"]')[0].text == "atl_hazelcast_network_aws_host_header"
+    assert xml.findall('.//property[@name="confluence.cluster.aws.tag.key"]')[0].text == "atl_hazelcast_network_aws_tag_key"
+    assert xml.findall('.//property[@name="confluence.cluster.aws.tag.value"]')[0].text == "atl_hazelcast_network_aws_tag_value"
+    assert xml.findall('.//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
+    assert xml.findall('.//property[@name="confluence.cluster.ttl"]')[0].text == "atl_cluster_ttl"
 
 def test_confluence_xml_cluster_multicast(docker_cli, image):
     environment = {
@@ -298,11 +298,11 @@ def test_confluence_xml_cluster_multicast(docker_cli, image):
     wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
     xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
 
-    assert xml.xpath('//property[@name="confluence.cluster"]')[0].text == "true"
-    assert xml.xpath('//property[@name="confluence.cluster.join.type"]')[0].text == "multicast"
-    assert xml.xpath('//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
-    assert xml.xpath('//property[@name="confluence.cluster.ttl"]')[0].text == "atl_cluster_ttl"
-    assert xml.xpath('//property[@name="confluence.cluster.address"]')[0].text == "99.99.99.99"
+    assert xml.findall('.//property[@name="confluence.cluster"]')[0].text == "true"
+    assert xml.findall('.//property[@name="confluence.cluster.join.type"]')[0].text == "multicast"
+    assert xml.findall('.//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
+    assert xml.findall('.//property[@name="confluence.cluster.ttl"]')[0].text == "atl_cluster_ttl"
+    assert xml.findall('.//property[@name="confluence.cluster.address"]')[0].text == "99.99.99.99"
 
 def test_confluence_xml_cluster_tcp(docker_cli, image):
     environment = {
@@ -314,7 +314,7 @@ def test_confluence_xml_cluster_tcp(docker_cli, image):
     wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
     xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
 
-    assert xml.xpath('//property[@name="confluence.cluster"]')[0].text == "true"
-    assert xml.xpath('//property[@name="confluence.cluster.join.type"]')[0].text == "tcp_ip"
-    assert xml.xpath('//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
-    assert xml.xpath('//property[@name="confluence.cluster.peers"]')[0].text == "1.1.1.1,99.99.99.99"
+    assert xml.findall('.//property[@name="confluence.cluster"]')[0].text == "true"
+    assert xml.findall('.//property[@name="confluence.cluster.join.type"]')[0].text == "tcp_ip"
+    assert xml.findall('.//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
+    assert xml.findall('.//property[@name="confluence.cluster.peers"]')[0].text == "1.1.1.1,99.99.99.99"
