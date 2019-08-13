@@ -108,6 +108,27 @@ def test_server_xml_defaults(docker_cli, image):
     assert connector.get('proxyName') == ''
     assert connector.get('proxyPort') == ''
 
+def test_server_xml_catalina_fallback(docker_cli, image):
+    environment = {
+        'CATALINA_CONNECTOR_PROXYNAME': 'PROXYNAME',
+        'CATALINA_CONNECTOR_PROXYPORT': 'PROXYPORT',
+        'CATALINA_CONNECTOR_SECURE': 'SECURE',
+        'CATALINA_CONNECTOR_SCHEME': 'SCHEME',
+        'CATALINA_CONTEXT_PATH': 'CONTEXT'
+    }
+    container = run_image(docker_cli, image, environment=environment)
+    _jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+
+    xml = etree.fromstring(container.file('/opt/atlassian/confluence/conf/server.xml').content)
+    connector = xml.find('.//Connector')
+    context = xml.find('.//Context')
+
+    assert connector.get('proxyName') == 'PROXYNAME'
+    assert connector.get('proxyPort') == 'PROXYPORT'
+    assert connector.get('scheme') == 'SCHEME'
+    assert connector.get('secure') == 'SECURE'
+    assert context.get('path') == 'CONTEXT'
+
 def test_server_xml_params(docker_cli, image):
     environment = {
         'ATL_TOMCAT_MGMT_PORT': '8006',

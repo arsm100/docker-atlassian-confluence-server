@@ -14,6 +14,11 @@ def set_perms(path, user, group, mode):
     shutil.chown(path, user=user, group=group)
     os.chmod(path, mode)
 
+# Setup Jinja2 for templating
+jenv = j2.Environment(
+    loader=j2.FileSystemLoader('/opt/atlassian/etc/'),
+    autoescape=j2.select_autoescape(['xml']))
+
 def gen_cfg(tmpl, target, env, user='root', group='root', mode=0o644):
     logging.info("Generating {} from template {}".format(target, tmpl))
     cfg = jenv.get_template(tmpl).render(env)
@@ -21,56 +26,27 @@ def gen_cfg(tmpl, target, env, user='root', group='root', mode=0o644):
         fd.write(cfg)
     set_perms(target, user, group, mode)
 
+logging.basicConfig(level=logging.DEBUG)
+
 
 ######################################################################
 # Setup inputs and outputs
 
-# Import all ATL_* and Dockerfile environment variables. We
-# lower-case these for compatability with Ansible template
-# convention. We handle default and legacy mappings below.
+# Import all ATL_* and Dockerfile environment variables. We lower-case
+# these for compatability with Ansible template convention. We also
+# support CATALINA variables from older versions of the Docker images
+# for backwards compatability, if the new version is not set.
 env = {k.lower(): v
        for k, v in os.environ.items()
-       if k.startswith(('ATL_', 'CONFLUENCE_', 'RUN_'))}
+       if k.startswith(('ATL_', 'CONFLUENCE_', 'RUN_', 'CATALINA_'))}
 
 # For compatability with the Ansible templates.
 env['atl_product_home'] = env['confluence_home']
 env['atl_product_home_shared'] = env.get('confluence_shared_home')
 
-# Setup Jinja2 for templating
-jenv = j2.Environment(
-    loader=j2.FileSystemLoader('/opt/atlassian/etc/'),
-    autoescape=j2.select_autoescape(['xml']))
-
-logging.basicConfig(level=logging.DEBUG)
-
 
 ######################################################################
 # Generate server.xml for Tomcat.
-
-defaults = {
-    # We support some variables from older versions of the Docker images
-    # for backwards compatability, if the new version is not set.
-    'atl_proxy_name': os.environ.get('CATALINA_CONNECTOR_PROXYNAME'),
-    'atl_proxy_port': os.environ.get('CATALINA_CONNECTOR_PROXYPORT'),
-    'atl_tomcat_secure': os.environ.get('CATALINA_CONNECTOR_SECURE', 'false'),
-    'atl_tomcat_scheme': os.environ.get('CATALINA_CONNECTOR_SCHEME', 'http'),
-    'atl_tomcat_contextpath': os.environ.get('CATALINA_CONTEXT_PATH'),
-
-    # Other default vals
-    'atl_tomcat_port': "8090",
-    'atl_tomcat_mgmt_port': "8000",
-    'atl_tomcat_maxthreads': "200",
-    'atl_tomcat_minsparethreads': "10",
-    'atl_tomcat_connectiontimeout': "20000",
-    'atl_tomcat_enablelookups': "false",
-    'atl_tomcat_protocol': "HTTP/1.1",
-    'atl_tomcat_redirectport': "8443",
-    'atl_tomcat_acceptcount': "10",
-}
-
-for key, defval in defaults.items():
-    if (key not in env) and defval:
-        env[key] = defval
 
 gen_cfg('server.xml.j2', env['confluence_install_dir']+'/conf/server.xml', env)
 
