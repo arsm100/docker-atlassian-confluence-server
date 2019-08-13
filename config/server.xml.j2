@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<Server port="{{ atl_tomcat_mgmt_port }}"
+<Server port="{{ atl_tomcat_mgmt_port | default('8000') }}"
         shutdown="SHUTDOWN">
 
   <Listener className="org.apache.catalina.startup.VersionLoggerListener"/>
@@ -12,18 +12,18 @@
 
   <Service name="Catalina">
 
-    <Connector port="{{ atl_tomcat_port }}"
-               maxThreads="{{ atl_tomcat_maxthreads }}"
-               minSpareThreads="{{ atl_tomcat_minsparethreads }}"
-               connectionTimeout="{{ atl_tomcat_connectiontimeout }}"
-               enableLookups="{{ atl_tomcat_enablelookups }}"
-               protocol="{{ atl_tomcat_protocol }}"
-               redirectPort="{{ atl_tomcat_redirectport }}"
-               acceptCount="{{ atl_tomcat_acceptcount }}"
-               secure="{{ atl_tomcat_secure }}"
-               scheme="{{ atl_tomcat_scheme }}"
-               proxyName="{{ atl_proxy_name }}"
-               proxyPort="{{ atl_proxy_port }}"
+    <Connector port="{{ atl_tomcat_port | default('8090') }}"
+               maxThreads="{{ atl_tomcat_maxthreads | default('200') }}"
+               minSpareThreads="{{ atl_tomcat_minsparethreads | default('10') }}"
+               connectionTimeout="{{ atl_tomcat_connectiontimeout | default('20000') }}"
+               enableLookups="{{ atl_tomcat_enablelookups | default('false') }}"
+               protocol="{{ atl_tomcat_protocol | default('HTTP/1.1') }}"
+               redirectPort="{{ atl_tomcat_redirectport | default('8443') }}"
+               acceptCount="{{ atl_tomcat_acceptcount | default('10') }}"
+               secure="{{ atl_tomcat_secure | default(catalina_connector_secure) | default('false') }}"
+               scheme="{{ atl_tomcat_scheme | default(catalina_connector_scheme) | default('http') }}"
+               proxyName="{{ atl_proxy_name | default(catalina_connector_proxyname) | default('') }}"
+               proxyPort="{{ atl_proxy_port | default(catalina_connector_proxyport) | default('') }}"
 
                relaxedPathChars="[]|"
                relaxedQueryChars="[]|{}^\`&quot;&lt;&gt;"
@@ -41,7 +41,7 @@
             unpackWARs="true"
             autoDeploy="false"
             startStopThreads="4">
-        <Context path="{{ atl_tomcat_contextpath }}"
+        <Context path="{{ atl_tomcat_contextpath | default(catalina_context_path) | default('') }}"
                  docBase="../confluence"
                  debug="0"
                  reloadable="false"

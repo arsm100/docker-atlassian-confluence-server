@@ -108,6 +108,27 @@ def test_server_xml_defaults(docker_cli, image):
     assert connector.get('proxyName') == ''
     assert connector.get('proxyPort') == ''
 
+def test_server_xml_catalina_fallback(docker_cli, image):
+    environment = {
+        'CATALINA_CONNECTOR_PROXYNAME': 'PROXYNAME',
+        'CATALINA_CONNECTOR_PROXYPORT': 'PROXYPORT',
+        'CATALINA_CONNECTOR_SECURE': 'SECURE',
+        'CATALINA_CONNECTOR_SCHEME': 'SCHEME',
+        'CATALINA_CONTEXT_PATH': 'CONTEXT'
+    }
+    container = run_image(docker_cli, image, environment=environment)
+    _jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+
+    xml = etree.fromstring(container.file('/opt/atlassian/confluence/conf/server.xml').content)
+    connector = xml.find('.//Connector')
+    context = xml.find('.//Context')
+
+    assert connector.get('proxyName') == 'PROXYNAME'
+    assert connector.get('proxyPort') == 'PROXYPORT'
+    assert connector.get('scheme') == 'SCHEME'
+    assert connector.get('secure') == 'SECURE'
+    assert context.get('path') == 'CONTEXT'
+
 def test_server_xml_params(docker_cli, image):
     environment = {
         'ATL_TOMCAT_MGMT_PORT': '8006',
@@ -182,6 +203,7 @@ def test_confluence_xml_default(docker_cli, image):
     xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
     assert xml.xpath('/confluence-configuration/buildNumber')[0].text == "0"
     assert xml.xpath('/confluence-configuration/properties/property[@name="hibernate.connection.url"]') == []
+    assert xml.xpath('/confluence-configuration/properties/property[@name="confluence.cluster.home"]') == []
 
 def test_confluence_xml_postgres(docker_cli, image):
     environment = {
@@ -226,10 +248,11 @@ def test_confluence_xml_postgres_all_set(docker_cli, image):
         'ATL_DB_VALIDATIONQUERY': 'xselect 1'
     }
     container = run_image(docker_cli, image, environment=environment)
-    wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/confluence-init.properties")
+    wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
 
     xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
-
+    assert xml.xpath('//property[@name="hibernate.connection.driver_class"]')[0].text == "org.postgresql.Driver"
+    assert xml.xpath('//property[@name="hibernate.dialect"]')[0].text == "com.atlassian.confluence.impl.hibernate.dialect.PostgreSQLDialect"
     assert xml.xpath('//property[@name="hibernate.c3p0.min_size"]')[0].text == "x20"
     assert xml.xpath('//property[@name="hibernate.c3p0.max_size"]')[0].text == "x100"
     assert xml.xpath('//property[@name="hibernate.c3p0.timeout"]')[0].text == "x30"
@@ -238,3 +261,62 @@ def test_confluence_xml_postgres_all_set(docker_cli, image):
     assert xml.xpath('//property[@name="hibernate.c3p0.validate"]')[0].text == "xfalse"
     assert xml.xpath('//property[@name="hibernate.c3p0.acquire_increment"]')[0].text == "x1"
     assert xml.xpath('//property[@name="hibernate.c3p0.preferredTestQuery"]')[0].text == "xselect 1"
+
+
+def test_confluence_xml_cluster_aws(docker_cli, image):
+    environment = {
+        'ATL_CLUSTER_TYPE': 'aws',
+        'ATL_HAZELCAST_NETWORK_AWS_IAM_ROLE': 'atl_hazelcast_network_aws_iam_role',
+        'ATL_HAZELCAST_NETWORK_AWS_IAM_REGION': 'atl_hazelcast_network_aws_iam_region',
+        'ATL_HAZELCAST_NETWORK_AWS_HOST_HEADER': 'atl_hazelcast_network_aws_host_header',
+        'ATL_HAZELCAST_NETWORK_AWS_TAG_KEY': 'atl_hazelcast_network_aws_tag_key',
+        'ATL_HAZELCAST_NETWORK_AWS_TAG_VALUE': 'atl_hazelcast_network_aws_tag_value',
+        'ATL_CLUSTER_NAME': 'atl_cluster_name',
+        'ATL_CLUSTER_TTL': 'atl_cluster_ttl'
+    }
+    container = run_image(docker_cli, image, environment=environment)
+    wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
+    xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
+
+    assert xml.xpath('//property[@name="confluence.cluster"]')[0].text == "true"
+    assert xml.xpath('//property[@name="confluence.cluster.join.type"]')[0].text == "aws"
+
+    assert xml.xpath('//property[@name="confluence.cluster.aws.iam.role"]')[0].text == "atl_hazelcast_network_aws_iam_role"
+    assert xml.xpath('//property[@name="confluence.cluster.aws.region"]')[0].text == "atl_hazelcast_network_aws_iam_region"
+    assert xml.xpath('//property[@name="confluence.cluster.aws.host.header"]')[0].text == "atl_hazelcast_network_aws_host_header"
+    assert xml.xpath('//property[@name="confluence.cluster.aws.tag.key"]')[0].text == "atl_hazelcast_network_aws_tag_key"
+    assert xml.xpath('//property[@name="confluence.cluster.aws.tag.value"]')[0].text == "atl_hazelcast_network_aws_tag_value"
+    assert xml.xpath('//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
+    assert xml.xpath('//property[@name="confluence.cluster.ttl"]')[0].text == "atl_cluster_ttl"
+
+def test_confluence_xml_cluster_multicast(docker_cli, image):
+    environment = {
+        'ATL_CLUSTER_TYPE': 'multicast',
+        'ATL_CLUSTER_NAME': 'atl_cluster_name',
+        'ATL_CLUSTER_TTL': 'atl_cluster_ttl',
+        'ATL_CLUSTER_ADDRESS': '99.99.99.99'
+    }
+    container = run_image(docker_cli, image, environment=environment)
+    wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
+    xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
+
+    assert xml.xpath('//property[@name="confluence.cluster"]')[0].text == "true"
+    assert xml.xpath('//property[@name="confluence.cluster.join.type"]')[0].text == "multicast"
+    assert xml.xpath('//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
+    assert xml.xpath('//property[@name="confluence.cluster.ttl"]')[0].text == "atl_cluster_ttl"
+    assert xml.xpath('//property[@name="confluence.cluster.address"]')[0].text == "99.99.99.99"
+
+def test_confluence_xml_cluster_tcp(docker_cli, image):
+    environment = {
+        'ATL_CLUSTER_TYPE': 'tcp_ip',
+        'ATL_CLUSTER_PEERS': '1.1.1.1,99.99.99.99',
+        'ATL_CLUSTER_NAME': 'atl_cluster_name',
+    }
+    container = run_image(docker_cli, image, environment=environment)
+    wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
+    xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
+
+    assert xml.xpath('//property[@name="confluence.cluster"]')[0].text == "true"
+    assert xml.xpath('//property[@name="confluence.cluster.join.type"]')[0].text == "tcp_ip"
+    assert xml.xpath('//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
+    assert xml.xpath('//property[@name="confluence.cluster.peers"]')[0].text == "1.1.1.1,99.99.99.99"
