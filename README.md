@@ -31,7 +31,7 @@ Start Atlassian Confluence Server:
     $> docker run -v /data/your-confluence-home:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 atlassian/confluence-server
  
 
-**Success**. Confluence is now available on [http://localhost:8090][3]*
+**Success**. Confluence is now available on <http://localhost:8090>*
  
 Please ensure your container has the necessary resources allocated to it.  We
 recommend 2GiB of memory allocated to accommodate the application server.  See
@@ -292,7 +292,6 @@ release-notes][13] for more information.
 
 [1]: https://www.atlassian.com/dam/wac/legacy/confluence_logo_landing.png
 [2]: https://docs.docker.com/userguide/dockervolumes/#mount-a-host-directory-as-a-data-volume
-[3]: http://localhost:8090
 [4]: https://confluence.atlassian.com/display/DOC/Supported+platforms
 [5]: https://confluence.atlassian.com/doc/confluence-data-center-technical-overview-790795847.html
 [6]: https://confluence.atlassian.com/doc/installing-confluence-data-center-203603.html
