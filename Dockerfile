@@ -1,5 +1,4 @@
 FROM adoptopenjdk/openjdk8:slim
-MAINTAINER Atlassian Confluence
 
 ENV RUN_USER							confluence
 ENV RUN_GROUP							confluence
