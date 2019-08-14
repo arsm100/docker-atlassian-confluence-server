@@ -284,7 +284,7 @@ install the latest 6.13.x version with AdoptOpenJDK 8.
 
 These Confluence Docker images are presented as a technical preview, and not
 recommended for critical production deployments. However if you are interested
-in deploying with containers will would be interesting in hearing your feedback.
+in deploying with containers we would be interested in hearing your feedback.
 
 Note that these images are built on the [AdoptOpenJDK][12] images. Prior to
 Confluence 6.13 OpenJDK was not a supported platform. See [the 6.13
