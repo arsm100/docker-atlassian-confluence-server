@@ -22,7 +22,7 @@ jenv = j2.Environment(
     autoescape=j2.select_autoescape(['xml']))
 
 def gen_cfg(tmpl, target, env, user='root', group='root', mode=0o644):
-    logging.info("Generating {} from template {}".format(target, tmpl))
+    logging.info(f"Generating {target} from template {tmpl}")
     cfg = jenv.get_template(tmpl).render(env)
     with open(target, 'w') as fd:
         fd.write(cfg)
@@ -49,25 +49,25 @@ env['atl_product_home_shared'] = env.get('confluence_shared_home')
 # Generate all configuration files for Confluence
 
 gen_cfg('server.xml.j2',
-        env['confluence_install_dir']+'/conf/server.xml', env)
+        f"{env['confluence_install_dir']}/conf/server.xml", env)
 
 gen_cfg('seraph-config.xml.j2',
-        env['confluence_install_dir']+'/confluence/WEB-INF/classes/seraph-config.xml', env)
+        f"{env['confluence_install_dir']}/confluence/WEB-INF/classes/seraph-config.xml", env)
 
 gen_cfg('confluence-init.properties.j2',
-        env['confluence_install_dir']+'/confluence/WEB-INF/classes/confluence-init.properties', env)
+        f"{env['confluence_install_dir']}/confluence/WEB-INF/classes/confluence-init.properties", env)
 
 gen_cfg('confluence.cfg.xml.j2',
-        env['confluence_home']+'/confluence.cfg.xml', env,
+        f"{env['confluence_home']}/confluence.cfg.xml", env,
         user=env['run_user'], group=env['run_group'], mode=0o640)
 
 
 ######################################################################
 # Start Confluence as the correct user
 
-start_cmd = "{}/bin/start-confluence.sh".format(env['confluence_install_dir'])
+start_cmd = f"{env['confluence_install_dir']}/bin/start-confluence.sh"
 if os.getuid() == 0:
-    logging.info("User is currently root. Will change directory ownership to {} then downgrade permissions".format(env['run_user']))
+    logging.info(f"User is currently root. Will change directory ownership to {env['run_user']} then downgrade permissions")
     set_perms(env['confluence_home'], env['run_user'], env['run_group'], 0o700)
 
     cmd = '/bin/su'
@@ -77,5 +77,5 @@ else:
     cmd = start_cmd
     args = [start_cmd] + sys.argv[1:]
 
-logging.info("Running Confluence with command '{}', arguments {}".format(cmd, args))
+logging.info(f"Running Confluence with command '{cmd}', arguments {args}")
 os.execv(cmd, args)

@@ -5,9 +5,12 @@ import tarfile
 import testinfra
 import time
 import xml.etree.ElementTree as etree
-
 import requests
 
+
+CONF_INSTALL = '/opt/atlassian/confluence'
+CONF_HOME = '/var/atlassian/application-data/confluence'
+CONF_SHARED_HOME = '/media/atl/confluence/shared-home'
 
 # Run an image and wrap it in a TestInfra host for convenience.
 # FIXME: There's probably a way to turn this into a fixture with parameters.
@@ -62,10 +65,10 @@ def test_jvm_args(docker_cli, image):
 def test_install_permissions(docker_cli, image):
     container = run_image(docker_cli, image)
 
-    assert container.file('/opt/atlassian/confluence/conf/server.xml').user == 'root'
+    assert container.file(f'{CONF_INSTALL}/conf/server.xml').user == 'root'
 
     for d in ['logs', 'work', 'temp']:
-        path = '/opt/atlassian/confluence/{}/'.format(d)
+        path = f'{CONF_INSTALL}/{d}/'
         assert container.file(path).user == 'confluence'
 
 
@@ -92,7 +95,7 @@ def test_server_xml_defaults(docker_cli, image):
     container = run_image(docker_cli, image)
     _jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
 
-    xml = etree.fromstring(container.file('/opt/atlassian/confluence/conf/server.xml').content)
+    xml = etree.fromstring(container.file(f'{CONF_INSTALL}/conf/server.xml').content)
     connector = xml.find('.//Connector')
     context = xml.find('.//Context')
 
@@ -119,7 +122,7 @@ def test_server_xml_catalina_fallback(docker_cli, image):
     container = run_image(docker_cli, image, environment=environment)
     _jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
 
-    xml = etree.fromstring(container.file('/opt/atlassian/confluence/conf/server.xml').content)
+    xml = etree.fromstring(container.file(f'{CONF_INSTALL}/conf/server.xml').content)
     connector = xml.find('.//Connector')
     context = xml.find('.//Context')
 
@@ -148,7 +151,7 @@ def test_server_xml_params(docker_cli, image):
     container = run_image(docker_cli, image, environment=environment)
     _jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
 
-    xml = etree.fromstring(container.file('/opt/atlassian/confluence/conf/server.xml').content)
+    xml = etree.fromstring(container.file(f'{CONF_INSTALL}/conf/server.xml').content)
     connector = xml.find('.//Connector')
     context = xml.find('.//Context')
 
@@ -171,34 +174,34 @@ def test_server_xml_params(docker_cli, image):
 
 def test_seraph_defaults(docker_cli, image):
     container = run_image(docker_cli, image)
-    wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml")
+    wait_for_file(container, f"{CONF_INSTALL}/confluence/WEB-INF/classes/seraph-config.xml")
 
-    xml = etree.fromstring(container.file('/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml').content)
+    xml = etree.fromstring(container.file(f'{CONF_INSTALL}/confluence/WEB-INF/classes/seraph-config.xml').content)
     #param = xml.findall('//param-name[text()="autologin.cookie.age"]') == []
     param = xml.findall('.//param-name[.="autologin.cookie.age"]') == []
 
 def test_seraph_login_set(docker_cli, image):
     container = run_image(docker_cli, image, environment={"ATL_AUTOLOGIN_COOKIE_AGE": "TEST_VAL"})
-    wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml")
+    wait_for_file(container, f"{CONF_INSTALL}/confluence/WEB-INF/classes/seraph-config.xml")
 
-    xml = etree.fromstring(container.file('/opt/atlassian/confluence/confluence/WEB-INF/classes/seraph-config.xml').content)
+    xml = etree.fromstring(container.file(f'{CONF_INSTALL}/confluence/WEB-INF/classes/seraph-config.xml').content)
     assert xml.findall('.//param-value[.="TEST_VAL"]')[0].text == "TEST_VAL"
 
 
 def test_conf_init_set(docker_cli, image):
     container = run_image(docker_cli, image, environment={"CONFLUENCE_HOME": "/tmp/"})
-    wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/confluence-init.properties")
+    wait_for_file(container, f"{CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties")
 
-    init = container.file('/opt/atlassian/confluence/confluence/WEB-INF/classes/confluence-init.properties')
+    init = container.file(f'{CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties')
     assert init.contains("confluence.home = /tmp/")
 
 
 def test_confluence_xml_default(docker_cli, image):
     container = run_image(docker_cli, image)
-    wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/confluence-init.properties")
+    wait_for_file(container, f"{CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties")
     #_jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
 
-    xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
+    xml = etree.fromstring(container.file(f'{CONF_HOME}/confluence.cfg.xml').content)
     assert xml.findall('.//buildNumber')[0].text == "0"
     assert xml.findall('.//property[@name="hibernate.connection.url"]') == []
     assert xml.findall('.//property[@name="confluence.cluster.home"]') == []
@@ -211,9 +214,9 @@ def test_confluence_xml_postgres(docker_cli, image):
         'ATL_JDBC_PASSWORD': 'atl_jdbc_password'
     }
     container = run_image(docker_cli, image, environment=environment)
-    wait_for_file(container, "/opt/atlassian/confluence/confluence/WEB-INF/classes/confluence-init.properties")
+    wait_for_file(container, f"{CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties")
 
-    xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
+    xml = etree.fromstring(container.file(f'{CONF_HOME}/confluence.cfg.xml').content)
     assert xml.findall('.//property[@name="hibernate.connection.url"]')[0].text == "atl_jdbc_url"
     assert xml.findall('.//property[@name="hibernate.connection.username"]')[0].text == "atl_jdbc_user"
     assert xml.findall('.//property[@name="hibernate.connection.password"]')[0].text == "atl_jdbc_password"
@@ -246,9 +249,9 @@ def test_confluence_xml_postgres_all_set(docker_cli, image):
         'ATL_DB_VALIDATIONQUERY': 'xselect 1'
     }
     container = run_image(docker_cli, image, environment=environment)
-    wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
+    wait_for_file(container, f"{CONF_HOME}/confluence.cfg.xml")
 
-    xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
+    xml = etree.fromstring(container.file(f'{CONF_HOME}/confluence.cfg.xml').content)
     assert xml.findall('.//property[@name="hibernate.connection.driver_class"]')[0].text == "org.postgresql.Driver"
     assert xml.findall('.//property[@name="hibernate.dialect"]')[0].text == "com.atlassian.confluence.impl.hibernate.dialect.PostgreSQLDialect"
     assert xml.findall('.//property[@name="hibernate.c3p0.min_size"]')[0].text == "x20"
@@ -273,8 +276,8 @@ def test_confluence_xml_cluster_aws(docker_cli, image):
         'ATL_CLUSTER_TTL': 'atl_cluster_ttl'
     }
     container = run_image(docker_cli, image, environment=environment)
-    wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
-    xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
+    wait_for_file(container, f"{CONF_HOME}/confluence.cfg.xml")
+    xml = etree.fromstring(container.file(f'{CONF_HOME}/confluence.cfg.xml').content)
 
     assert xml.findall('.//property[@name="confluence.cluster"]')[0].text == "true"
     assert xml.findall('.//property[@name="confluence.cluster.join.type"]')[0].text == "aws"
@@ -295,8 +298,8 @@ def test_confluence_xml_cluster_multicast(docker_cli, image):
         'ATL_CLUSTER_ADDRESS': '99.99.99.99'
     }
     container = run_image(docker_cli, image, environment=environment)
-    wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
-    xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
+    wait_for_file(container, f"{CONF_HOME}/confluence.cfg.xml")
+    xml = etree.fromstring(container.file(f'{CONF_HOME}/confluence.cfg.xml').content)
 
     assert xml.findall('.//property[@name="confluence.cluster"]')[0].text == "true"
     assert xml.findall('.//property[@name="confluence.cluster.join.type"]')[0].text == "multicast"
@@ -311,8 +314,8 @@ def test_confluence_xml_cluster_tcp(docker_cli, image):
         'ATL_CLUSTER_NAME': 'atl_cluster_name',
     }
     container = run_image(docker_cli, image, environment=environment)
-    wait_for_file(container, "/var/atlassian/application-data/confluence/confluence.cfg.xml")
-    xml = etree.fromstring(container.file('/var/atlassian/application-data/confluence/confluence.cfg.xml').content)
+    wait_for_file(container, f"{CONF_HOME}/confluence.cfg.xml")
+    xml = etree.fromstring(container.file(f'{CONF_HOME}/confluence.cfg.xml').content)
 
     assert xml.findall('.//property[@name="confluence.cluster"]')[0].text == "true"
     assert xml.findall('.//property[@name="confluence.cluster.join.type"]')[0].text == "tcp_ip"
