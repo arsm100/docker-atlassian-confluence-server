@@ -71,7 +71,7 @@ of the setup. They can be controlled via the below environment variables.
 
 * `ATL_TOMCAT_SCHEME` (default: http)
 
-   The protocol via which Confluenceis accessed. `CATALINA_CONNECTOR_SCHEME` is also
+   The protocol via which Confluence is accessed. `CATALINA_CONNECTOR_SCHEME` is also
    supported for backwards compatability.
 
 * `ATL_TOMCAT_SECURE` (default: false)
@@ -105,7 +105,7 @@ If you need to pass additional JVM arguments to Confluence such as specifying a 
    
 Example:
 
-    $> docker run -e JVM_SUPPORT_RECOMMENDED_ARGS=-Djavax.net.ssl.trustStore=/var/atlassian/application-data/confluence/cacerts -v confluenceVolume:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 atlassian/confluence-server
+    docker run -e JVM_SUPPORT_RECOMMENDED_ARGS=-Djavax.net.ssl.trustStore=/var/atlassian/application-data/confluence/cacerts -v confluenceVolume:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 atlassian/confluence-server
 
 ## Confluence-specific settings
 
@@ -195,7 +195,7 @@ information on the setting for each type see
 
    The time-to-live for cluster packets. Primarily of use in multicast clusters.
 
-#### AWS cluster settints
+#### AWS cluster settings
 
    The following should be populated from the AWS environment.
 
@@ -216,6 +216,7 @@ information on the setting for each type see
 
 * `ATL_CLUSTER_ADDRESS`
 
+   The multicast address the the cluster will communicate on.
 
 # Shared directory and user IDs
 
@@ -273,26 +274,11 @@ supported for use in production).
 
 For example, `atlassian/confluence-server:6.13-ubuntu-18.04-adoptopenjdk8` will
 install the latest 6.13.x version with AdoptOpenJDK 8.
-
-# Known Problems
-
-In Mac OS X with Docker version 1.11.0, when running with docker-machine, there
-is a bug where the directory specified for `CONFLUENCE_HOME` in a volume mount
-will not have the correct permission, and thus startup fails with a permission
-denied error:
-
-     Error writing state to confluence.cfg.xml
-     com.atlassian.config.ConfigurationException: Couldn't save confluence.cfg.xml to /var/atlassian/confluence-home directory.
-
-See https://github.com/docker/docker/issues/4023 for details.
-
-To work around this issue, use a different host operating system other than Mac
-OSX until a newer release of Docker fixes this issue.
  
 # Support
 
-These Confluence Docker images are presented as an early-access release, and not
-recommended for critical production deployments. However if have you an interest
+These Confluence Docker images are presented as a technical preview, and not
+recommended for critical production deployments. However if you are interested
 in deploying with containers will would be interesting in hearing your feedback.
 
 Note that these images are built on the
