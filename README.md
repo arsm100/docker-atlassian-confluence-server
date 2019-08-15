@@ -222,7 +222,7 @@ information on the setting for each type see [this page][7].
 
 * `ATL_CLUSTER_ADDRESS`
 
-   The multicast address the the cluster will communicate on.
+   The multicast address the cluster will communicate on.
 
 # Shared directory and user IDs
 
