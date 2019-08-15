@@ -40,10 +40,6 @@ env = {k.lower(): v
        for k, v in os.environ.items()
        if k.startswith(('ATL_', 'CONFLUENCE_', 'RUN_', 'CATALINA_'))}
 
-# For compatability with the Ansible templates.
-env['atl_product_home'] = env['confluence_home']
-env['atl_product_home_shared'] = env.get('confluence_shared_home')
-
 
 ######################################################################
 # Generate all configuration files for Confluence
