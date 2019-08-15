@@ -39,6 +39,7 @@
     {% if atl_cluster_type is defined %}
       <property name="confluence.cluster">true</property>
       <property name="confluence.cluster.name">{{ atl_cluster_name }}</property>
+      <property name="confluence.cluster.node.name">{{ atl_cluster_node_name }}</property>
       <property name="confluence.cluster.home">{{ atl_product_home_shared | default(confluence_shared_home) | default('') }}</property>
       <property name="shared-home">{{ atl_product_home_shared | default(confluence_shared_home) | default('') }}</property>
 
