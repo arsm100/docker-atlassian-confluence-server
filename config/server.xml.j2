@@ -13,7 +13,7 @@
   <Service name="Catalina">
 
     <Connector port="{{ atl_tomcat_port | default('8090') }}"
-               maxThreads="{{ atl_tomcat_maxthreads | default('200') }}"
+               maxThreads="{{ atl_tomcat_maxthreads | default('100') }}"
                minSpareThreads="{{ atl_tomcat_minsparethreads | default('10') }}"
                connectionTimeout="{{ atl_tomcat_connectiontimeout | default('20000') }}"
                enableLookups="{{ atl_tomcat_enablelookups | default('false') }}"

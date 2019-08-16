@@ -96,7 +96,7 @@ The following Tomcat/Catalina options are also supported. For more information,
 see https://tomcat.apache.org/tomcat-7.0-doc/config/index.html.
 
 * `ATL_TOMCAT_MGMT_PORT` (default: 8000)
-* `ATL_TOMCAT_MAXTHREADS` (default: 200)
+* `ATL_TOMCAT_MAXTHREADS` (default: 100)
 * `ATL_TOMCAT_MINSPARETHREADS` (default: 10)
 * `ATL_TOMCAT_CONNECTIONTIMEOUT` (default: 20000)
 * `ATL_TOMCAT_ENABLELOOKUPS` (default: false)
