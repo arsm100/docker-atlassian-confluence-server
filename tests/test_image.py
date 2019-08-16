@@ -100,7 +100,7 @@ def test_server_xml_defaults(docker_cli, image):
     context = xml.find('.//Context')
 
     assert connector.get('port') == '8090'
-    assert connector.get('maxThreads') == '200'
+    assert connector.get('maxThreads') == '100'
     assert connector.get('minSpareThreads') == '10'
     assert connector.get('connectionTimeout') == '20000'
     assert connector.get('enableLookups') == 'false'
