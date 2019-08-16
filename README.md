@@ -180,6 +180,10 @@ Center][6] for more information.
 Confluence Data Center allows clustering via various methods. For more
 information on the setting for each type see [this page][7].
 
+**NOTE:** The underlying network should be set-up to support the Confluence
+clustering type you are using. How to do this depends on the container
+management technology, and is beyond the scope of this documentation.
+
 #### Common cluster settings
 
 * `ATL_CLUSTER_TYPE`
