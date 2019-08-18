@@ -18,7 +18,6 @@ def docker_cli():
         for tag in container.image.tags:
             if tag.startswith(IMAGE_NAME):
                 container.remove(force=True)
-    
 
 
 @pytest.fixture(scope='module', params=DOCKERFILES)
