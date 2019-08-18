@@ -294,6 +294,11 @@ Note that these images are built on the [AdoptOpenJDK][12] images. Prior to
 Confluence 6.13 OpenJDK was not a supported platform. See [the 6.13
 release-notes][13] for more information.
 
+# License
+
+Copyright © 2019 Atlassian Corporation Pty Ltd.
+Licensed under the Apache License, Version 2.0.
+
 [1]: https://www.atlassian.com/dam/wac/legacy/confluence_logo_landing.png
 [2]: https://docs.docker.com/userguide/dockervolumes/#mount-a-host-directory-as-a-data-volume
 [4]: https://confluence.atlassian.com/display/DOC/Supported+platforms
