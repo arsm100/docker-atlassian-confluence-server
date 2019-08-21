@@ -21,7 +21,11 @@ jenv = j2.Environment(
     loader=j2.FileSystemLoader('/opt/atlassian/etc/'),
     autoescape=j2.select_autoescape(['xml']))
 
-def gen_cfg(tmpl, target, env, user='root', group='root', mode=0o644):
+def gen_cfg(tmpl, target, env, user='root', group='root', mode=0o644, overwrite=True):
+    if not overwrite and os.path.exists(target):
+        logging.info(f"{target} exists; skipping.")
+        return
+
     logging.info(f"Generating {target} from template {tmpl}")
     cfg = jenv.get_template(tmpl).render(env)
     with open(target, 'w') as fd:
@@ -55,7 +59,8 @@ gen_cfg('confluence-init.properties.j2',
 
 gen_cfg('confluence.cfg.xml.j2',
         f"{env['confluence_home']}/confluence.cfg.xml", env,
-        user=env['run_user'], group=env['run_group'], mode=0o640)
+        user=env['run_user'], group=env['run_group'], mode=0o640,
+        overwrite=False)
 
 
 ######################################################################
