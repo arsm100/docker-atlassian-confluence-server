@@ -251,7 +251,7 @@ supported by the environment variables above. In this case, it is possible to
 modify the base templates to add your own configuration. There are three main
 ways of doing this; modify our repository to your own image, build a new image
 from the existing one, or provide new templates at startup. We will briefly
-outline this methods here, but practice how you do this will depend on your
+outline this methods here, but in practice how you do this will depend on your
 needs.
 
 #### Building your own image
