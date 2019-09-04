@@ -170,6 +170,19 @@ The following variables are all must all be supplied if using this feature:
    * `oracle12c`
    * `postgresql`
 
+Note: Due to licensing restrictions Confluence does not ship with a MySQL or
+Oracle JDBC drivers. To use these databases you will need to copy a suitable
+driver into the container and restart it. For example, to copy the MySQL driver
+into a container named "confluence", you would do the following:
+
+    docker cp mysql-connector-java.x.y.z.jar confluence:/opt/atlassian/confluence/lib
+    docker restart confluence
+
+For more information see the [Database JDBC Drivers](https://confluence.atlassian.com/doc/database-jdbc-drivers-171742.html)
+page.
+
+### Optional database settings
+
 The following variables are for the database connection pool, and are
 optional.
 
