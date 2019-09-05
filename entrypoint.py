@@ -49,13 +49,16 @@ env = {k.lower(): v
 # Generate all configuration files for Confluence
 
 gen_cfg('server.xml.j2',
-        f"{env['confluence_install_dir']}/conf/server.xml", env)
+        f"{env['confluence_install_dir']}/conf/server.xml", env,
+        user=env['run_user'], group=env['run_group'])
 
 gen_cfg('seraph-config.xml.j2',
-        f"{env['confluence_install_dir']}/confluence/WEB-INF/classes/seraph-config.xml", env)
+        f"{env['confluence_install_dir']}/confluence/WEB-INF/classes/seraph-config.xml", env,
+        user=env['run_user'], group=env['run_group'])
 
 gen_cfg('confluence-init.properties.j2',
-        f"{env['confluence_install_dir']}/confluence/WEB-INF/classes/confluence-init.properties", env)
+        f"{env['confluence_install_dir']}/confluence/WEB-INF/classes/confluence-init.properties", env,
+        user=env['run_user'], group=env['run_group'])
 
 gen_cfg('confluence.cfg.xml.j2',
         f"{env['confluence_home']}/confluence.cfg.xml", env,
