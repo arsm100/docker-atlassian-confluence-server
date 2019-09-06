@@ -39,9 +39,6 @@ RUN addgroup -g ${RUN_GID} ${RUN_GROUP} \
     && chown -R ${RUN_USER}:${RUN_GROUP} ${CONFLUENCE_INSTALL_DIR}/logs \
     && chown -R ${RUN_USER}:${RUN_GROUP} ${CONFLUENCE_INSTALL_DIR}/temp \
     && chown -R ${RUN_USER}:${RUN_GROUP} ${CONFLUENCE_INSTALL_DIR}/work \
-    && chown ${RUN_USER}:${RUN_GROUP}    ${CONFLUENCE_INSTALL_DIR}/conf/server.xml \
-    && chown ${RUN_USER}:${RUN_GROUP}    ${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/classes/seraph-config.xml \
-    && chown ${RUN_USER}:${RUN_GROUP}    ${CONFLUENCE_INSTALL_DIR}/confluence/WEB-INF/classes/confluence-init.properties \
     && chown -R ${RUN_USER}:${RUN_GROUP} ${CONFLUENCE_HOME} \
     \
     && sed -i -e 's/-Xms\([0-9]\+[kmg]\) -Xmx\([0-9]\+[kmg]\)/-Xms\${JVM_MINIMUM_MEMORY:=\1} -Xmx\${JVM_MAXIMUM_MEMORY:=\2} \${JVM_SUPPORT_RECOMMENDED_ARGS} -Dconfluence.home=\${CONFLUENCE_HOME}/g' ${CONFLUENCE_INSTALL_DIR}/bin/setenv.sh

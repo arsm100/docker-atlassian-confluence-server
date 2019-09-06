@@ -67,9 +67,7 @@ def test_install_permissions(docker_cli, image):
 
     assert container.file(f'{CONF_INSTALL}').user == 'root'
 
-    for d in ['logs', 'work', 'temp', 'conf/server.xml',
-              'confluence/WEB-INF/classes/seraph-config.xml',
-              'confluence/WEB-INF/classes/confluence-init.properties']:
+    for d in ['logs', 'work', 'temp']:
         path = f'{CONF_INSTALL}/{d}'
         assert container.file(path).user == 'confluence'
 
