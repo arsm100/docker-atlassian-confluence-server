@@ -14,8 +14,8 @@ CONF_SHARED_HOME = '/media/atl/confluence/shared-home'
 
 # Run an image and wrap it in a TestInfra host for convenience.
 # FIXME: There's probably a way to turn this into a fixture with parameters.
-def run_image(docker_cli, image, environment={}, ports={}):
-    container = docker_cli.containers.run(image, environment=environment, ports=ports, detach=True)
+def run_image(docker_cli, image, **kwargs):
+    container = docker_cli.containers.run(image, detach=True, **kwargs)
     return testinfra.get_host("docker://"+container.id)
 
 # TestInfra's process command doesn't seem to work for arg matching
@@ -65,10 +65,10 @@ def test_jvm_args(docker_cli, image):
 def test_install_permissions(docker_cli, image):
     container = run_image(docker_cli, image)
 
-    assert container.file(f'{CONF_INSTALL}/conf/server.xml').user == 'root'
+    assert container.file(f'{CONF_INSTALL}').user == 'root'
 
     for d in ['logs', 'work', 'temp']:
-        path = f'{CONF_INSTALL}/{d}/'
+        path = f'{CONF_INSTALL}/{d}'
         assert container.file(path).user == 'confluence'
 
 
@@ -321,3 +321,15 @@ def test_confluence_xml_cluster_tcp(docker_cli, image):
     assert xml.findall('.//property[@name="confluence.cluster.join.type"]')[0].text == "tcp_ip"
     assert xml.findall('.//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
     assert xml.findall('.//property[@name="confluence.cluster.peers"]')[0].text == "1.1.1.1,99.99.99.99"
+
+def test_java_in_run_user_path(docker_cli, image):
+    RUN_USER = 'confluence'
+    container = run_image(docker_cli, image)
+    proc = container.run(f'su -c "which java" {RUN_USER}')
+    assert len(proc.stdout) > 0
+
+def test_non_root_user(docker_cli, image):
+    RUN_UID = 2002
+    RUN_GID = 2002
+    container = run_image(docker_cli, image, user=f'{RUN_UID}:{RUN_GID}')
+    jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")

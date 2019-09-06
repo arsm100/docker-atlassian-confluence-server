@@ -53,7 +53,7 @@ pipelines:
           script:
             - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
             - >
-              docker build -t atlassian/confluence-server:${DOCKER_TAG} 
+              docker build -t atlassian/confluence-server:${DOCKER_TAG}
               -f Dockerfile-alpine
               --build-arg CONFLUENCE_VERSION=${CONFLUENCE_VERSION} .
             - docker push atlassian/confluence-server:${DOCKER_TAG}
@@ -86,6 +86,13 @@ pipelines:
             - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
             - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
             - python /usr/src/app/run.py --update
+      - step:
+          name: Update README
+          image: python:3.7-alpine3.9
+          script:
+            - pip install -q requests
+            - export DOCKER_REPO='atlassian/confluence-server'
+            - python bin/push-readme.py
   pull-requests:
     '**':
       - step:
