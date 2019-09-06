@@ -303,6 +303,18 @@ of options available:
 * Under Linux, the UID can be remapped using
   [user namespace remapping][8].
 
+To preserve strict permissions for certain configuration files, this container starts as
+`root` to perform bootstrapping before running Confluence under a non-privileged user
+account. If you wish to start the container as a non-root user, please note that Tomcat
+configuration, and the bootstrapping of seraph-config.xml (SSO) &
+confluence-init.properties (overriding `$CONFLUENCE_HOME`) will be skipped and a warning
+will be logged. You may still apply custom configuration in this situation by mounting a
+custom file directly, e.g. by mounting your own server.xml file directly to
+`/opt/atlassian/confluence/conf/server.xml`
+
+Database and Clustering bootstrapping will work as expected when starting this container
+as a non-root user.
+
 # Upgrade
 
 To upgrade to a more recent version of Confluence Server you can simply stop the
