@@ -2,7 +2,7 @@
 
 Confluence Server is where you create, organise and discuss work with your
 team. Capture the knowledge that's too often lost in email inboxes and shared
-network drives in Confluence – where it's easy to find, use, and update. Give
+network drives in Confluence - where it's easy to find, use, and update. Give
 every team, project, or department its own space to create the things they need,
 whether it's meeting notes, product requirements, file lists, or project plans,
 you can get more done in Confluence.
@@ -372,7 +372,7 @@ release-notes][13] for more information.
 
 # License
 
-Copyright © 2019 Atlassian Corporation Pty Ltd.
+Copyright Â© 2019 Atlassian Corporation Pty Ltd.
 Licensed under the Apache License, Version 2.0.
 
 [1]: https://www.atlassian.com/dam/wac/legacy/confluence_logo_landing.png
