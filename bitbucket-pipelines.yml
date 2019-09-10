@@ -8,7 +8,8 @@ pipelines:
           services:
             - docker
           script:
-            - export BASE_VERSION='6'
+            - export START_VERSION='6'
+            - export END_VERSION='8'
             - export DEFAULT_RELEASE='false'
             - export DOCKER_REPO='atlassian/confluence-server'
             - export DOCKERFILE='Dockerfile-alpine'
@@ -23,7 +24,8 @@ pipelines:
           services:
             - docker
           script:
-            - export BASE_VERSION='6'
+            - export START_VERSION='6'
+            - export END_VERSION='8'
             - export DEFAULT_RELEASE='true'
             - export DOCKER_REPO='atlassian/confluence-server'
             - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
@@ -66,7 +68,8 @@ pipelines:
           services:
             - docker
           script:
-            - export BASE_VERSION='6'
+            - export START_VERSION='6'
+            - export END_VERSION='8'
             - export DEFAULT_RELEASE='false'
             - export DOCKER_REPO='atlassian/confluence-server'
             - export DOCKERFILE='Dockerfile-alpine'
@@ -81,7 +84,8 @@ pipelines:
           services:
             - docker
           script:
-            - export BASE_VERSION='6'
+            - export START_VERSION='6'
+            - export END_VERSION='8'
             - export DEFAULT_RELEASE='true'
             - export DOCKER_REPO='atlassian/confluence-server'
             - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
