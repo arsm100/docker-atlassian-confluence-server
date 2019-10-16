@@ -9,7 +9,7 @@ pipelines:
             - docker
           script:
             - export START_VERSION='6'
-            - export END_VERSION='8'
+            - export END_VERSION='7'
             - export DEFAULT_RELEASE='false'
             - export DOCKER_REPO='atlassian/confluence-server'
             - export DOCKERFILE='Dockerfile-alpine'
@@ -20,21 +20,37 @@ pipelines:
             - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
             - python /usr/src/app/run.py --create
       - step:
-          name: Confluence Ubuntu
+          name: Confluence Ubuntu JDK 8
           services:
             - docker
           script:
             - export START_VERSION='6'
-            - export END_VERSION='8'
+            - export END_VERSION='7.1'
             - export DEFAULT_RELEASE='true'
             - export DOCKER_REPO='atlassian/confluence-server'
+            - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk/openjdk8:slim'
             - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
             - export MAC_PRODUCT_KEY='confluence'
             - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
             - export CONCURRENT_BUILDS='3'
             - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
             - python /usr/src/app/run.py --create
-    ubuntu-custom-release:
+      - step:
+          name: Confluence Ubuntu JDK 11
+          services:
+            - docker
+          script:
+            - export START_VERSION='7.1'
+            - export END_VERSION='8'
+            - export DEFAULT_RELEASE='true'
+            - export DOCKER_REPO='atlassian/confluence-server'
+            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
+            - export MAC_PRODUCT_KEY='confluence'
+            - export TAG_SUFFIXES='jdk11,ubuntu'
+            - export CONCURRENT_BUILDS='3'
+            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+            - python /usr/src/app/run.py --create
+    custom-release:
       - variables:
           - name: CONFLUENCE_VERSION
           - name: DOCKER_TAG
@@ -45,20 +61,6 @@ pipelines:
             - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
             - >
               docker build -t atlassian/confluence-server:${DOCKER_TAG}
-              --build-arg CONFLUENCE_VERSION=${CONFLUENCE_VERSION} .
-            - docker push atlassian/confluence-server:${DOCKER_TAG}
-    alpine-custom-release:
-      - variables:
-          - name: CONFLUENCE_VERSION
-          - name: DOCKER_TAG
-      - step:
-          services:
-            - docker
-          script:
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - >
-              docker build -t atlassian/confluence-server:${DOCKER_TAG}
-              -f Dockerfile-alpine
               --build-arg CONFLUENCE_VERSION=${CONFLUENCE_VERSION} .
             - docker push atlassian/confluence-server:${DOCKER_TAG}
   branches:
@@ -69,7 +71,7 @@ pipelines:
             - docker
           script:
             - export START_VERSION='6'
-            - export END_VERSION='8'
+            - export END_VERSION='7'
             - export DEFAULT_RELEASE='false'
             - export DOCKER_REPO='atlassian/confluence-server'
             - export DOCKERFILE='Dockerfile-alpine'
@@ -80,17 +82,33 @@ pipelines:
             - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
             - python /usr/src/app/run.py --update
       - step:
-          name: Confluence Ubuntu
+          name: Confluence Ubuntu JDK 8
           services:
             - docker
           script:
             - export START_VERSION='6'
+            - export END_VERSION='7.1'
+            - export DEFAULT_RELEASE='true'
+            - export DOCKER_REPO='atlassian/confluence-server'
+            - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk/openjdk8:slim'
+            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
+            - export MAC_PRODUCT_KEY='confluence'
+            - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
+            - export CONCURRENT_BUILDS='3'
+            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+            - python /usr/src/app/run.py --update
+      - step:
+          name: Confluence Ubuntu JDK 11
+          services:
+            - docker
+          script:
+            - export START_VERSION='7.1'
             - export END_VERSION='8'
             - export DEFAULT_RELEASE='true'
             - export DOCKER_REPO='atlassian/confluence-server'
             - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
             - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
+            - export TAG_SUFFIXES='jdk11,ubuntu'
             - export CONCURRENT_BUILDS='3'
             - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
             - python /usr/src/app/run.py --update
