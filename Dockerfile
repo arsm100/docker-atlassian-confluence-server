@@ -1,4 +1,5 @@
-FROM adoptopenjdk/openjdk8:slim
+FROM ARG BASE_IMAGE=adoptopenjdk/openjdk11:slim
+FROM $BASE_IMAGE
 
 ENV RUN_USER							confluence
 ENV RUN_GROUP							confluence
