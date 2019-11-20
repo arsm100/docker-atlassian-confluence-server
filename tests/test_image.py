@@ -1,62 +1,22 @@
 import pytest
 
-import io
-import tarfile
-import testinfra
-import time
-import xml.etree.ElementTree as etree
-import requests
+from helpers import get_app_home, get_app_install_dir, get_bootstrap_proc, get_procs, \
+    parse_properties, parse_xml, run_image, wait_for_http_response, wait_for_proc
 
 
-CONF_INSTALL = '/opt/atlassian/confluence'
-CONF_HOME = '/var/atlassian/application-data/confluence'
-CONF_SHARED_HOME = '/media/atl/confluence/shared-home'
 
-# Run an image and wrap it in a TestInfra host for convenience.
-# FIXME: There's probably a way to turn this into a fixture with parameters.
-def run_image(docker_cli, image, **kwargs):
-    container = docker_cli.containers.run(image, detach=True, **kwargs)
-    return testinfra.get_host("docker://"+container.id)
-
-# TestInfra's process command doesn't seem to work for arg matching
-def get_procs(container):
-    ps = container.run('ps -axo args')
-    return ps.stdout.split('\n')
-
-def wait_for_proc(container, proc_str, max_wait=10):
-    waited = 0
-    while waited < max_wait:
-        procs = list(filter(lambda p: proc_str in p, get_procs(container)))
-        if len(procs) > 0:
-            return procs[0]
-        time.sleep(0.1)
-        waited += 0.1
-
-    raise TimeoutError("Failed to find target process")
-
-def wait_for_file(container, path, max_wait=10):
-    waited = 0
-    while waited < max_wait:
-        if container.file(path).exists:
-            return
-        time.sleep(0.1)
-        waited += 0.1
-
-    raise TimeoutError("Failed to find target process")
-
-
-######################################################################
-# Tests
-
-def test_jvm_args(docker_cli, image):
+def test_jvm_args(docker_cli, image, run_user):
     environment = {
         'JVM_MINIMUM_MEMORY': '383m',
         'JVM_MAXIMUM_MEMORY': '2047m',
         'JVM_SUPPORT_RECOMMENDED_ARGS': '-verbose:gc',
     }
-    container = run_image(docker_cli, image, environment=environment)
-    jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
-
+    container = run_image(docker_cli, image, user=run_user, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+    
+    procs_list = get_procs(container)
+    jvm = [proc for proc in procs_list if get_bootstrap_proc(container) in proc][0]
+    
     assert f'-Xms{environment.get("JVM_MINIMUM_MEMORY")}' in jvm
     assert f'-Xmx{environment.get("JVM_MAXIMUM_MEMORY")}' in jvm
     assert environment.get('JVM_SUPPORT_RECOMMENDED_ARGS') in jvm
@@ -65,37 +25,27 @@ def test_jvm_args(docker_cli, image):
 def test_install_permissions(docker_cli, image):
     container = run_image(docker_cli, image)
 
-    assert container.file(f'{CONF_INSTALL}').user == 'root'
+    assert container.file(f'{get_app_install_dir(container)}').user == 'root'
 
     for d in ['logs', 'work', 'temp']:
-        path = f'{CONF_INSTALL}/{d}'
+        path = f'{get_app_install_dir(container)}/{d}'
         assert container.file(path).user == 'confluence'
 
 
-def test_first_run_state(docker_cli, image):
+def test_first_run_state(docker_cli, image, run_user):
     PORT = 8090
-    container = run_image(docker_cli, image, ports={PORT: PORT})
-    jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
-
-    for i in range(20):
-        try:
-            r = requests.get(f'http://localhost:{PORT}/status')
-        except requests.exceptions.ConnectionError:
-            pass
-        else:
-            if r.status_code == 200:
-                state = r.json().get('state')
-                assert state in ('STARTING', 'FIRST_RUN')
-                return
-        time.sleep(1)
-    raise TimeoutError
+    URL = f'http://localhost:{PORT}/status'
+    
+    container = run_image(docker_cli, image, user=run_user, ports={PORT: PORT})
+    
+    wait_for_http_response(URL, expected_status=200, expected_state=('STARTING', 'FIRST_RUN'))
 
 
 def test_server_xml_defaults(docker_cli, image):
     container = run_image(docker_cli, image)
-    _jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
 
-    xml = etree.fromstring(container.file(f'{CONF_INSTALL}/conf/server.xml').content)
+    xml = parse_xml(container, f'{get_app_install_dir(container)}/conf/server.xml')
     connector = xml.find('.//Connector')
     context = xml.find('.//Context')
 
@@ -111,6 +61,7 @@ def test_server_xml_defaults(docker_cli, image):
     assert connector.get('proxyName') == ''
     assert connector.get('proxyPort') == ''
 
+
 def test_server_xml_catalina_fallback(docker_cli, image):
     environment = {
         'CATALINA_CONNECTOR_PROXYNAME': 'PROXYNAME',
@@ -120,9 +71,9 @@ def test_server_xml_catalina_fallback(docker_cli, image):
         'CATALINA_CONTEXT_PATH': 'CONTEXT'
     }
     container = run_image(docker_cli, image, environment=environment)
-    _jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
 
-    xml = etree.fromstring(container.file(f'{CONF_INSTALL}/conf/server.xml').content)
+    xml = parse_xml(container, f'{get_app_install_dir(container)}/conf/server.xml')
     connector = xml.find('.//Connector')
     context = xml.find('.//Context')
 
@@ -131,6 +82,7 @@ def test_server_xml_catalina_fallback(docker_cli, image):
     assert connector.get('scheme') == 'SCHEME'
     assert connector.get('secure') == 'SECURE'
     assert context.get('path') == 'CONTEXT'
+
 
 def test_server_xml_params(docker_cli, image):
     environment = {
@@ -149,9 +101,9 @@ def test_server_xml_params(docker_cli, image):
         'ATL_TOMCAT_CONTEXTPATH': '/myconf',
     }
     container = run_image(docker_cli, image, environment=environment)
-    _jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
 
-    xml = etree.fromstring(container.file(f'{CONF_INSTALL}/conf/server.xml').content)
+    xml = parse_xml(container, f'{get_app_install_dir(container)}/conf/server.xml')
     connector = xml.find('.//Connector')
     context = xml.find('.//Context')
 
@@ -174,49 +126,49 @@ def test_server_xml_params(docker_cli, image):
 
 def test_seraph_defaults(docker_cli, image):
     container = run_image(docker_cli, image)
-    wait_for_file(container, f"{CONF_INSTALL}/confluence/WEB-INF/classes/seraph-config.xml")
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
 
-    xml = etree.fromstring(container.file(f'{CONF_INSTALL}/confluence/WEB-INF/classes/seraph-config.xml').content)
-    #param = xml.findall('//param-name[text()="autologin.cookie.age"]') == []
+    xml = parse_xml(container, f'{get_app_install_dir(container)}/confluence/WEB-INF/classes/seraph-config.xml')
     param = xml.findall('.//param-name[.="autologin.cookie.age"]') == []
+
 
 def test_seraph_login_set(docker_cli, image):
     container = run_image(docker_cli, image, environment={"ATL_AUTOLOGIN_COOKIE_AGE": "TEST_VAL"})
-    wait_for_file(container, f"{CONF_INSTALL}/confluence/WEB-INF/classes/seraph-config.xml")
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
 
-    xml = etree.fromstring(container.file(f'{CONF_INSTALL}/confluence/WEB-INF/classes/seraph-config.xml').content)
+    xml = parse_xml(container, f'{get_app_install_dir(container)}/confluence/WEB-INF/classes/seraph-config.xml')
     assert xml.findall('.//param-value[.="TEST_VAL"]')[0].text == "TEST_VAL"
 
 
 def test_conf_init_set(docker_cli, image):
     container = run_image(docker_cli, image, environment={"CONFLUENCE_HOME": "/tmp/"})
-    wait_for_file(container, f"{CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties")
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
 
-    init = container.file(f'{CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties')
+    init = container.file(f'{get_app_install_dir(container)}/confluence/WEB-INF/classes/confluence-init.properties')
     assert init.contains("confluence.home = /tmp/")
 
 
 def test_confluence_xml_default(docker_cli, image):
     container = run_image(docker_cli, image)
-    wait_for_file(container, f"{CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties")
-    #_jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
 
-    xml = etree.fromstring(container.file(f'{CONF_HOME}/confluence.cfg.xml').content)
+    xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
     assert xml.findall('.//buildNumber')[0].text == "0"
     assert xml.findall('.//property[@name="hibernate.connection.url"]') == []
     assert xml.findall('.//property[@name="confluence.cluster.home"]') == []
 
-def test_confluence_xml_postgres(docker_cli, image):
+
+def test_confluence_xml_postgres(docker_cli, image, run_user):
     environment = {
         'ATL_DB_TYPE': 'postgresql',
         'ATL_JDBC_URL': 'atl_jdbc_url',
         'ATL_JDBC_USER': 'atl_jdbc_user',
         'ATL_JDBC_PASSWORD': 'atl_jdbc_password'
     }
-    container = run_image(docker_cli, image, environment=environment)
-    wait_for_file(container, f"{CONF_INSTALL}/confluence/WEB-INF/classes/confluence-init.properties")
-
-    xml = etree.fromstring(container.file(f'{CONF_HOME}/confluence.cfg.xml').content)
+    container = run_image(docker_cli, image, user=run_user, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+    
+    xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
     assert xml.findall('.//property[@name="hibernate.connection.url"]')[0].text == "atl_jdbc_url"
     assert xml.findall('.//property[@name="hibernate.connection.username"]')[0].text == "atl_jdbc_user"
     assert xml.findall('.//property[@name="hibernate.connection.password"]')[0].text == "atl_jdbc_password"
@@ -233,7 +185,8 @@ def test_confluence_xml_postgres(docker_cli, image):
     assert xml.findall('.//property[@name="hibernate.c3p0.acquire_increment"]')[0].text == "1"
     assert xml.findall('.//property[@name="hibernate.c3p0.preferredTestQuery"]')[0].text == "select 1"
 
-def test_confluence_xml_postgres_all_set(docker_cli, image):
+
+def test_confluence_xml_postgres_all_set(docker_cli, image, run_user):
     environment = {
         'ATL_DB_TYPE': 'postgresql',
         'ATL_JDBC_URL': 'atl_jdbc_url',
@@ -248,10 +201,10 @@ def test_confluence_xml_postgres_all_set(docker_cli, image):
         'ATL_DB_ACQUIREINCREMENT': 'x1',
         'ATL_DB_VALIDATIONQUERY': 'xselect 1'
     }
-    container = run_image(docker_cli, image, environment=environment)
-    wait_for_file(container, f"{CONF_HOME}/confluence.cfg.xml")
+    container = run_image(docker_cli, image, user=run_user, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
 
-    xml = etree.fromstring(container.file(f'{CONF_HOME}/confluence.cfg.xml').content)
+    xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
     assert xml.findall('.//property[@name="hibernate.connection.driver_class"]')[0].text == "org.postgresql.Driver"
     assert xml.findall('.//property[@name="hibernate.dialect"]')[0].text == "com.atlassian.confluence.impl.hibernate.dialect.PostgreSQLDialect"
     assert xml.findall('.//property[@name="hibernate.c3p0.min_size"]')[0].text == "x20"
@@ -264,7 +217,7 @@ def test_confluence_xml_postgres_all_set(docker_cli, image):
     assert xml.findall('.//property[@name="hibernate.c3p0.preferredTestQuery"]')[0].text == "xselect 1"
 
 
-def test_confluence_xml_cluster_aws(docker_cli, image):
+def test_confluence_xml_cluster_aws(docker_cli, image, run_user):
     environment = {
         'ATL_CLUSTER_TYPE': 'aws',
         'ATL_HAZELCAST_NETWORK_AWS_IAM_ROLE': 'atl_hazelcast_network_aws_iam_role',
@@ -275,9 +228,10 @@ def test_confluence_xml_cluster_aws(docker_cli, image):
         'ATL_CLUSTER_NAME': 'atl_cluster_name',
         'ATL_CLUSTER_TTL': 'atl_cluster_ttl'
     }
-    container = run_image(docker_cli, image, environment=environment)
-    wait_for_file(container, f"{CONF_HOME}/confluence.cfg.xml")
-    xml = etree.fromstring(container.file(f'{CONF_HOME}/confluence.cfg.xml').content)
+    container = run_image(docker_cli, image, user=run_user, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+    
+    xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
 
     assert xml.findall('.//property[@name="confluence.cluster"]')[0].text == "true"
     assert xml.findall('.//property[@name="confluence.cluster.join.type"]')[0].text == "aws"
@@ -290,16 +244,18 @@ def test_confluence_xml_cluster_aws(docker_cli, image):
     assert xml.findall('.//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
     assert xml.findall('.//property[@name="confluence.cluster.ttl"]')[0].text == "atl_cluster_ttl"
 
-def test_confluence_xml_cluster_multicast(docker_cli, image):
+
+def test_confluence_xml_cluster_multicast(docker_cli, image, run_user):
     environment = {
         'ATL_CLUSTER_TYPE': 'multicast',
         'ATL_CLUSTER_NAME': 'atl_cluster_name',
         'ATL_CLUSTER_TTL': 'atl_cluster_ttl',
         'ATL_CLUSTER_ADDRESS': '99.99.99.99'
     }
-    container = run_image(docker_cli, image, environment=environment)
-    wait_for_file(container, f"{CONF_HOME}/confluence.cfg.xml")
-    xml = etree.fromstring(container.file(f'{CONF_HOME}/confluence.cfg.xml').content)
+    container = run_image(docker_cli, image, user=run_user, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+    
+    xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
 
     assert xml.findall('.//property[@name="confluence.cluster"]')[0].text == "true"
     assert xml.findall('.//property[@name="confluence.cluster.join.type"]')[0].text == "multicast"
@@ -307,26 +263,30 @@ def test_confluence_xml_cluster_multicast(docker_cli, image):
     assert xml.findall('.//property[@name="confluence.cluster.ttl"]')[0].text == "atl_cluster_ttl"
     assert xml.findall('.//property[@name="confluence.cluster.address"]')[0].text == "99.99.99.99"
 
-def test_confluence_xml_cluster_tcp(docker_cli, image):
+
+def test_confluence_xml_cluster_tcp(docker_cli, image, run_user):
     environment = {
         'ATL_CLUSTER_TYPE': 'tcp_ip',
         'ATL_CLUSTER_PEERS': '1.1.1.1,99.99.99.99',
         'ATL_CLUSTER_NAME': 'atl_cluster_name',
     }
-    container = run_image(docker_cli, image, environment=environment)
-    wait_for_file(container, f"{CONF_HOME}/confluence.cfg.xml")
-    xml = etree.fromstring(container.file(f'{CONF_HOME}/confluence.cfg.xml').content)
+    container = run_image(docker_cli, image, user=run_user, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+    
+    xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
 
     assert xml.findall('.//property[@name="confluence.cluster"]')[0].text == "true"
     assert xml.findall('.//property[@name="confluence.cluster.join.type"]')[0].text == "tcp_ip"
     assert xml.findall('.//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
     assert xml.findall('.//property[@name="confluence.cluster.peers"]')[0].text == "1.1.1.1,99.99.99.99"
 
+
 def test_java_in_run_user_path(docker_cli, image):
     RUN_USER = 'confluence'
     container = run_image(docker_cli, image)
     proc = container.run(f'su -c "which java" {RUN_USER}')
     assert len(proc.stdout) > 0
+
 
 def test_non_root_user(docker_cli, image):
     RUN_UID = 2002
