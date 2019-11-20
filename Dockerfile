@@ -16,7 +16,7 @@ WORKDIR $CONFLUENCE_HOME
 EXPOSE 8090
 EXPOSE 8091
 
-CMD ["/entrypoint.py", "-fg"]
+CMD ["/entrypoint.py"]
 ENTRYPOINT ["/sbin/tini", "--"]
 
 RUN apt-get update \
