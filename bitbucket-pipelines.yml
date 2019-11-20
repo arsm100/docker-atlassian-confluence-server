@@ -8,6 +8,7 @@ pipelines:
           services:
             - docker
           script:
+            - git submodule update --init --recursive
             - export START_VERSION='6'
             - export END_VERSION='7'
             - export DEFAULT_RELEASE='false'
@@ -24,6 +25,7 @@ pipelines:
           services:
             - docker
           script:
+            - git submodule update --init --recursive
             - export START_VERSION='6'
             - export END_VERSION='7.1'
             - export DEFAULT_RELEASE='true'
@@ -40,6 +42,7 @@ pipelines:
           services:
             - docker
           script:
+            - git submodule update --init --recursive
             - export START_VERSION='7.1'
             - export END_VERSION='8'
             - export DEFAULT_RELEASE='true'
@@ -58,6 +61,7 @@ pipelines:
           services:
             - docker
           script:
+            - git submodule update --init --recursive
             - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
             - >
               docker build -t atlassian/confluence-server:${DOCKER_TAG}
@@ -70,6 +74,7 @@ pipelines:
           services:
             - docker
           script:
+            - git submodule update --init --recursive
             - export START_VERSION='6'
             - export END_VERSION='7'
             - export DEFAULT_RELEASE='false'
@@ -86,6 +91,7 @@ pipelines:
           services:
             - docker
           script:
+            - git submodule update --init --recursive
             - export START_VERSION='6'
             - export END_VERSION='7.1'
             - export DEFAULT_RELEASE='true'
@@ -102,6 +108,7 @@ pipelines:
           services:
             - docker
           script:
+            - git submodule update --init --recursive
             - export START_VERSION='7.1'
             - export END_VERSION='8'
             - export DEFAULT_RELEASE='true'
@@ -116,9 +123,11 @@ pipelines:
           name: Update README
           image: python:3.7-alpine3.9
           script:
+            - apk add --no-cache git
+            - git submodule update --init --recursive
             - pip install -q requests
             - export DOCKER_REPO='atlassian/confluence-server'
-            - python bin/push-readme.py
+            - python shared-components/image/push-readme.py
   pull-requests:
     '**':
       - step:
@@ -126,8 +135,18 @@ pipelines:
           services:
             - docker
           script:
-            - pip install -q -r tests/test-requirements.txt
+            - apk add --no-cache git
+            - git submodule update --init --recursive
+            - pip install -q -r shared-components/tests/requirements.txt
+            - export PYTHONPATH=./shared-components/tests:$PYTHONPATH
+            - export DOCKERFILE='Dockerfile'
+            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
+            - export MAC_PRODUCT_KEY='confluence'
             - py.test tests/
+            - py.test shared-components/tests/
+            - export DOCKERFILE='Dockerfile-alpine'
+            - py.test tests/
+            - py.test shared-components/tests/
 definitions:
   services:
     docker:

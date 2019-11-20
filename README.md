@@ -255,6 +255,13 @@ management technology, and is beyond the scope of this documentation.
 
    The multicast address the cluster will communicate on.
 
+## Container Configuration
+
+* `SET_PERMISSIONS` (default: true)
+
+   Define whether to set home directory permissions on startup. Set to `false` to disable
+   this behaviour.
+
 ## Advanced Configuration
 
 As mentioned at the top of this section, the settings from the environment are
