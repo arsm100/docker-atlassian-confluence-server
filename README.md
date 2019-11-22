@@ -255,6 +255,13 @@ management technology, and is beyond the scope of this documentation.
 
    The multicast address the cluster will communicate on.
 
+## Container Configuration
+
+* `SET_PERMISSIONS` (default: true)
+
+   Define whether to set home directory permissions on startup. Set to `false` to disable
+   this behaviour.
+
 ## Advanced Configuration
 
 As mentioned at the top of this section, the settings from the environment are
@@ -359,6 +366,45 @@ supported for use in production).
 
 For example, `atlassian/confluence-server:6.13-ubuntu-18.04-adoptopenjdk8` will
 install the latest 6.13.x version with AdoptOpenJDK 8.
+
+# Troubleshooting
+
+These images include built-in scripts to assist in performing common JVM diagnostic tasks.
+
+## Thread dumps
+
+`/opt/atlassian/support/thread-dumps.sh` can be run via `docker exec` to easily trigger the collection of thread
+dumps from the containerized application. For example:
+
+    docker exec my_container /opt/atlassian/support/thread-dumps.sh
+
+By default this script will collect 10 thread dumps at 5 second intervals. This can
+be overridden by passing a custom value for the count and interval, by using `-c` / `--count`
+and `-i` / `--interval` respectively. For example, to collect 20 thread dumps at 3 second intervals:
+
+    docker exec my_container /opt/atlassian/support/thread-dumps.sh --count 20 --interval 3
+
+Thread dumps will be written to `$APP_HOME/thread_dumps/<date>`.
+
+Note: By default this script will also capture output from top run in 'Thread-mode'. This can
+be disabled by passing `-n` / `--no-top`
+
+## Heap dump
+
+`/opt/atlassian/support/heap-dump.sh` can be run via `docker exec` to easily trigger the collection of a heap
+dump from the containerized application. For example:
+
+    docker exec my_container /opt/atlassian/support/heap-dump.sh
+
+A heap dump will be written to `$APP_HOME/heap.bin`. If a file already exists at this
+location, use `-f` / `--force` to overwrite the existing heap dump file.
+
+## Manual diagnostics
+
+The `jcmd` utility is also included in these images and can be used by starting a `bash` shell
+in the running container:
+
+    docker exec -it my_container /bin/bash
 
 # Support
 
