@@ -1,4 +1,4 @@
-[Atlassian Confluence Server][1]
+![Atlassian Confluence Server](https://wac-cdn.atlassian.com/dam/jcr:5d1374c2-276f-4bca-9ce4-813aba614b7a/confluence-icon-gradient-blue.svg?cdnVersion=696)
 
 Confluence Server is where you create, organise and discuss work with your
 team. Capture the knowledge that's too often lost in email inboxes and shared
@@ -24,7 +24,7 @@ running.
 
 For the directory in the environmental variable `CONFLUENCE_HOME` that is used
 to store Confluence data (amongst other things) we recommend mounting a host
-directory as a [data volume][2]:
+directory as a [data volume][1]:
 
 Additionally, if running Confluence in Data Center mode it is required that a
 shared filesystem is mounted. The mountpoint (inside the container) can be
@@ -39,7 +39,7 @@ Start Atlassian Confluence Server:
 
 Please ensure your container has the necessary resources allocated to it.  We
 recommend 2GiB of memory allocated to accommodate the application server.  See
-[Supported Platforms][4] for further information.
+[Supported Platforms][3] for further information.
 
 _* Note: If you are using `docker-machine` on Mac OS X, please use `open http://$(docker-machine ip default):8090` instead._
 
@@ -197,15 +197,15 @@ optional.
 
 ## Data Center configuration
 
-This docker image can be run as part of a [Data Center][5] cluster. You can
+This docker image can be run as part of a [Data Center][4] cluster. You can
 specify the following properties to start Confluence as a Data Center node,
 instead of manually configuring a cluster. See [Installing Confluence Data
-Center][6] for more information.
+Center][5] for more information.
 
 ### Cluster configuration
 
 Confluence Data Center allows clustering via various methods. For more
-information on the setting for each type see [this page][7].
+information on the setting for each type see [this page][6].
 
 **NOTE:** The underlying network should be set-up to support the Confluence
 clustering type you are using. How to do this depends on the container
@@ -308,7 +308,7 @@ of options available:
 
 * The Docker image can be rebuilt with a different UID.
 * Under Linux, the UID can be remapped using
-  [user namespace remapping][8].
+  [user namespace remapping][7].
 
 To preserve strict permissions for certain configuration files, this container starts as
 `root` to perform bootstrapping before running Confluence under a non-privileged user
@@ -344,11 +344,11 @@ files in the Confluence Server home directory. In that case it is sufficient to
 create a backup archive of the directory on the host that is used as a volume
 (`/data/your-confluence-home` in the example above).
 
-Confluence's [automatic backup][9] is currently supported in the Docker
-setup. You can also use the [Production Backup Strategy][10] approach if you're
+Confluence's [automatic backup][8] is currently supported in the Docker
+setup. You can also use the [Production Backup Strategy][9] approach if you're
 using an external database.
 
-Read more about data recovery and backups: [Site Backup and Restore][11]
+Read more about data recovery and backups: [Site Backup and Restore][10]
 
 # Versioning
 
@@ -412,24 +412,23 @@ These Confluence Docker images are presented as a technical preview, and not
 recommended for critical production deployments. However if you are interested
 in deploying with containers we would be interested in hearing your feedback.
 
-Note that these images are built on the [AdoptOpenJDK][12] images. Prior to
+Note that these images are built on the [AdoptOpenJDK][11] images. Prior to
 Confluence 6.13 OpenJDK was not a supported platform. See [the 6.13
-release-notes][13] for more information.
+release-notes][12] for more information.
 
 # License
 
 Copyright © 2019 Atlassian Corporation Pty Ltd.
 Licensed under the Apache License, Version 2.0.
 
-[1]: https://www.atlassian.com/dam/wac/legacy/confluence_logo_landing.png
-[2]: https://docs.docker.com/userguide/dockervolumes/#mount-a-host-directory-as-a-data-volume
-[4]: https://confluence.atlassian.com/display/DOC/Supported+platforms
-[5]: https://confluence.atlassian.com/doc/confluence-data-center-technical-overview-790795847.html
-[6]: https://confluence.atlassian.com/doc/installing-confluence-data-center-203603.html
-[7]: https://confluence.atlassian.com/doc/change-node-discovery-from-multicast-to-tcp-ip-or-aws-792297728.html#ChangeNodeDiscoveryfromMulticasttoTCP/IPorAWS-TochangefromTCP/IPtomulticast
-[8]: https://docs.docker.com/engine/security/userns-remap/
-[9]: https://confluence.atlassian.com/display/DOC/Configuring+Backups
-[10]: https://confluence.atlassian.com/display/DOC/Production+Backup+Strategy
-[11]: https://confluence.atlassian.com/display/DOC/Site+Backup+and+Restore
-[12]: https://adoptopenjdk.net/
-[13]: https://confluence.atlassian.com/doc/confluence-6-13-release-notes-959288785.html
+[1]: https://docs.docker.com/userguide/dockervolumes/#mount-a-host-directory-as-a-data-volume
+[3]: https://confluence.atlassian.com/display/DOC/Supported+platforms
+[4]: https://confluence.atlassian.com/doc/confluence-data-center-technical-overview-790795847.html
+[5]: https://confluence.atlassian.com/doc/installing-confluence-data-center-203603.html
+[6]: https://confluence.atlassian.com/doc/change-node-discovery-from-multicast-to-tcp-ip-or-aws-792297728.html#ChangeNodeDiscoveryfromMulticasttoTCP/IPorAWS-TochangefromTCP/IPtomulticast
+[7]: https://docs.docker.com/engine/security/userns-remap/
+[8]: https://confluence.atlassian.com/display/DOC/Configuring+Backups
+[9]: https://confluence.atlassian.com/display/DOC/Production+Backup+Strategy
+[10]: https://confluence.atlassian.com/display/DOC/Site+Backup+and+Restore
+[11]: https://adoptopenjdk.net/
+[12]: https://confluence.atlassian.com/doc/confluence-6-13-release-notes-959288785.html
