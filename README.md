@@ -411,10 +411,9 @@ in the running container:
 For product support, go to
 [support.atlassian.com](https://support.atlassian.com/). 
 
-Note that these images are built on the
-[AdoptOpenJDK](https://adoptopenjdk.net/) images. Prior to Confluence 6.13
-OpenJDK was not a supported platform. See [the 6.13 release-notes][12] for more
-information.
+Note that these images are built on the [AdoptOpenJDK](https://adoptopenjdk.net/) images. Prior to
+Confluence 6.13 OpenJDK was not a supported platform. See [the 6.13
+release-notes][12] for more information.
 
 # License
 
@@ -430,5 +429,4 @@ Licensed under the Apache License, Version 2.0.
 [8]: https://confluence.atlassian.com/display/DOC/Configuring+Backups
 [9]: https://confluence.atlassian.com/display/DOC/Production+Backup+Strategy
 [10]: https://confluence.atlassian.com/display/DOC/Site+Backup+and+Restore
-[11]: https://adoptopenjdk.net/
 [12]: https://confluence.atlassian.com/doc/confluence-6-13-release-notes-959288785.html
