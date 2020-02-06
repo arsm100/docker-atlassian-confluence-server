@@ -409,7 +409,7 @@ in the running container:
 # Support
 
 For product support, go to
-[support.atlassian.com](https://support.atlassian.com/). 
+[support.atlassian.com](https://support.atlassian.com/confluence-server/). 
 
 Note that these images are built on the [AdoptOpenJDK](https://adoptopenjdk.net/) images. Prior to
 Confluence 6.13 OpenJDK was not a supported platform. See [the 6.13
