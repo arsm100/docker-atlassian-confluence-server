@@ -408,17 +408,16 @@ in the running container:
 
 # Support
 
-These Confluence Docker images are presented as a technical preview, and not
-recommended for critical production deployments. However if you are interested
-in deploying with containers we would be interested in hearing your feedback.
+For product support, go to
+[support.atlassian.com](https://support.atlassian.com/confluence-server/). 
 
-Note that these images are built on the [AdoptOpenJDK][11] images. Prior to
+Note that these images are built on the [AdoptOpenJDK](https://adoptopenjdk.net/) images. Prior to
 Confluence 6.13 OpenJDK was not a supported platform. See [the 6.13
 release-notes][12] for more information.
 
 # License
 
-Copyright © 2019 Atlassian Corporation Pty Ltd.
+Copyright © 2020 Atlassian Corporation Pty Ltd.
 Licensed under the Apache License, Version 2.0.
 
 [1]: https://docs.docker.com/userguide/dockervolumes/#mount-a-host-directory-as-a-data-volume
@@ -430,5 +429,4 @@ Licensed under the Apache License, Version 2.0.
 [8]: https://confluence.atlassian.com/display/DOC/Configuring+Backups
 [9]: https://confluence.atlassian.com/display/DOC/Production+Backup+Strategy
 [10]: https://confluence.atlassian.com/display/DOC/Site+Backup+and+Restore
-[11]: https://adoptopenjdk.net/
 [12]: https://confluence.atlassian.com/doc/confluence-6-13-release-notes-959288785.html
