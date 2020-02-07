@@ -9,7 +9,7 @@ def test_jvm_args(docker_cli, image, run_user):
     environment = {
         'JVM_MINIMUM_MEMORY': '383m',
         'JVM_MAXIMUM_MEMORY': '2047m',
-        'JVM_RESERVED_CODE_CACHE_SIZE': '384m',
+        'JVM_RESERVED_CODE_CACHE_SIZE': '383m',
         'JVM_SUPPORT_RECOMMENDED_ARGS': '-verbose:gc',
     }
     container = run_image(docker_cli, image, user=run_user, environment=environment)
