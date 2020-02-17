@@ -68,6 +68,10 @@ variables.
 
    The maximum heap size of the JVM
 
+* `JVM_RESERVED_CODE_CACHE_SIZE` (default: 256m)
+
+    The reserved code cache size of the JVM
+
 ## Tomcat and Reverse Proxy Settings
 
 If Confluence is run behind a reverse proxy server (e.g. a load-balancer or
