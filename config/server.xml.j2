@@ -50,8 +50,10 @@
           <Manager pathname=""/>
           <Valve className="org.apache.catalina.valves.StuckThreadDetectionValve"
                  threshold="60"/>
+        {% if atl_access_log == 'true' %}  
           <Valve className="org.apache.catalina.valves.AccessLogValve" requestAttributesEnabled="true" directory="logs" prefix="confluence_access" suffix=".log" rotatable="true" pattern="%h %{X-AUSERNAME}o %t &quot;%r&quot; %s %b %D %U %I &quot;%{User-Agent}i&quot;" />
           <Valve className="org.apache.catalina.valves.RemoteIpValve" proxiesHeader="x-forwarded-by" internalProxies="{{ atl_proxy_internal_ips | default('') }}" remoteIpHeader="x-forwarded-for" protocolHeader="x-forwarded-proto" requestAttributesEnabled="true" resolveHosts="false" />
+        {% endif %}
         </Context>
 
         <Context path="${confluence.context.path}/synchrony-proxy"

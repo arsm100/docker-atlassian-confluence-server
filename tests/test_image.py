@@ -50,8 +50,7 @@ def test_server_xml_defaults(docker_cli, image):
     xml = parse_xml(container, f'{get_app_install_dir(container)}/conf/server.xml')
     connector = xml.find('.//Connector')
     context = xml.find('.//Context')
-    valve = xml.find(".//Context/Valve[@className='org.apache.catalina.valves.RemoteIpValve']")
-
+    
     assert connector.get('port') == '8090'
     assert connector.get('maxThreads') == '100'
     assert connector.get('minSpareThreads') == '10'
@@ -63,8 +62,7 @@ def test_server_xml_defaults(docker_cli, image):
     assert connector.get('scheme') == 'http'
     assert connector.get('proxyName') == ''
     assert connector.get('proxyPort') == ''
-    assert valve.get('internalProxies') == ''
-
+    
 def test_server_xml_catalina_fallback(docker_cli, image):
     environment = {
         'CATALINA_CONNECTOR_PROXYNAME': 'PROXYNAME',
@@ -101,7 +99,6 @@ def test_server_xml_params(docker_cli, image):
         'ATL_TOMCAT_SCHEME': 'https',
         'ATL_PROXY_NAME': 'conf.atlassian.com',
         'ATL_PROXY_PORT': '443',
-        'ATL_PROXY_INTERNAL_IPS': '192.168.1.1',
         'ATL_TOMCAT_CONTEXTPATH': '/myconf',
     }
     container = run_image(docker_cli, image, environment=environment)
@@ -110,8 +107,7 @@ def test_server_xml_params(docker_cli, image):
     xml = parse_xml(container, f'{get_app_install_dir(container)}/conf/server.xml')
     connector = xml.find('.//Connector')
     context = xml.find('.//Context')
-    valve = xml.find(".//Context/Valve[@className='org.apache.catalina.valves.RemoteIpValve']")    
-
+    
     assert xml.get('port') == environment.get('ATL_TOMCAT_MGMT_PORT')
 
     assert connector.get('port') == environment.get('ATL_TOMCAT_PORT')
@@ -125,8 +121,6 @@ def test_server_xml_params(docker_cli, image):
     assert connector.get('scheme') == environment.get('ATL_TOMCAT_SCHEME')
     assert connector.get('proxyName') == environment.get('ATL_PROXY_NAME')
     assert connector.get('proxyPort') == environment.get('ATL_PROXY_PORT')
-
-    assert valve.get('internalProxies') == environment.get('ATL_PROXY_INTERNAL_IPS')
 
     assert context.get('path') == environment.get('ATL_TOMCAT_CONTEXTPATH')
 
@@ -287,6 +281,18 @@ def test_confluence_xml_cluster_tcp(docker_cli, image, run_user):
     assert xml.findall('.//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
     assert xml.findall('.//property[@name="confluence.cluster.peers"]')[0].text == "1.1.1.1,99.99.99.99"
 
+def test_confluence_xml_access_log(docker_cli, image, run_user):
+    environment = {
+        'ATL_ACCESS_LOG': 'true',
+        'ATL_PROXY_INTERNAL_IPS': '192.168.1.1',
+    }
+    container = run_image(docker_cli, image, user=run_user, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+    
+    xml = parse_xml(container, f'{get_app_home(container)}/server.cfg.xml')
+    valve = xml.find(".//Context/Valve[@className='org.apache.catalina.valves.RemoteIpValve']")
+
+    assert valve.get('internalProxies') == environment.get('ATL_PROXY_INTERNAL_IPS')
 
 def test_java_in_run_user_path(docker_cli, image):
     RUN_USER = 'confluence'
