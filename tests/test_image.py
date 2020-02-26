@@ -283,8 +283,8 @@ def test_confluence_xml_cluster_tcp(docker_cli, image, run_user):
 
 def test_confluence_xml_access_log(docker_cli, image, run_user):
     environment = {
-        'ATL_ACCESS_LOG': 'true',
-        'ATL_PROXY_INTERNAL_IPS': '192.168.1.1',
+        'ATL_TOMCAT_ACCESS_LOG': 'true',
+        'ATL_TOMCAT_PROXY_INTERNAL_IPS': '192.168.1.1',
     }
     container = run_image(docker_cli, image, user=run_user, environment=environment)
     _jvm = wait_for_proc(container, get_bootstrap_proc(container))
@@ -292,7 +292,7 @@ def test_confluence_xml_access_log(docker_cli, image, run_user):
     xml = parse_xml(container, f'{get_app_home(container)}/server.cfg.xml')
     valve = xml.find(".//Context/Valve[@className='org.apache.catalina.valves.RemoteIpValve']")
 
-    assert valve.get('internalProxies') == environment.get('ATL_PROXY_INTERNAL_IPS')
+    assert valve.get('internalProxies') == environment.get('ATL_TOMCAT_PROXY_INTERNAL_IPS')
 
 def test_java_in_run_user_path(docker_cli, image):
     RUN_USER = 'confluence'
