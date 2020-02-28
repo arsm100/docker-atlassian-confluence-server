@@ -14,10 +14,10 @@ def test_jvm_args(docker_cli, image, run_user):
     }
     container = run_image(docker_cli, image, user=run_user, environment=environment)
     _jvm = wait_for_proc(container, get_bootstrap_proc(container))
-    
+
     procs_list = get_procs(container)
     jvm = [proc for proc in procs_list if get_bootstrap_proc(container) in proc][0]
-    
+
     assert f'-Xms{environment.get("JVM_MINIMUM_MEMORY")}' in jvm
     assert f'-Xmx{environment.get("JVM_MAXIMUM_MEMORY")}' in jvm
     assert f'-XX:ReservedCodeCacheSize={environment.get("JVM_RESERVED_CODE_CACHE_SIZE")}' in jvm
@@ -37,9 +37,9 @@ def test_install_permissions(docker_cli, image):
 def test_first_run_state(docker_cli, image, run_user):
     PORT = 8090
     URL = f'http://localhost:{PORT}/status'
-    
+
     container = run_image(docker_cli, image, user=run_user, ports={PORT: PORT})
-    
+
     wait_for_http_response(URL, expected_status=200, expected_state=('STARTING', 'FIRST_RUN'))
 
 
@@ -50,7 +50,7 @@ def test_server_xml_defaults(docker_cli, image):
     xml = parse_xml(container, f'{get_app_install_dir(container)}/conf/server.xml')
     connector = xml.find('.//Connector')
     context = xml.find('.//Context')
-    
+
     assert connector.get('port') == '8090'
     assert connector.get('maxThreads') == '100'
     assert connector.get('minSpareThreads') == '10'
@@ -62,7 +62,7 @@ def test_server_xml_defaults(docker_cli, image):
     assert connector.get('scheme') == 'http'
     assert connector.get('proxyName') == ''
     assert connector.get('proxyPort') == ''
-    
+
 def test_server_xml_catalina_fallback(docker_cli, image):
     environment = {
         'CATALINA_CONNECTOR_PROXYNAME': 'PROXYNAME',
@@ -107,7 +107,7 @@ def test_server_xml_params(docker_cli, image):
     xml = parse_xml(container, f'{get_app_install_dir(container)}/conf/server.xml')
     connector = xml.find('.//Connector')
     context = xml.find('.//Context')
-    
+
     assert xml.get('port') == environment.get('ATL_TOMCAT_MGMT_PORT')
 
     assert connector.get('port') == environment.get('ATL_TOMCAT_PORT')
@@ -168,7 +168,7 @@ def test_confluence_xml_postgres(docker_cli, image, run_user):
     }
     container = run_image(docker_cli, image, user=run_user, environment=environment)
     _jvm = wait_for_proc(container, get_bootstrap_proc(container))
-    
+
     xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
     assert xml.findall('.//property[@name="hibernate.connection.url"]')[0].text == "atl_jdbc_url"
     assert xml.findall('.//property[@name="hibernate.connection.username"]')[0].text == "atl_jdbc_user"
@@ -231,7 +231,7 @@ def test_confluence_xml_cluster_aws(docker_cli, image, run_user):
     }
     container = run_image(docker_cli, image, user=run_user, environment=environment)
     _jvm = wait_for_proc(container, get_bootstrap_proc(container))
-    
+
     xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
 
     assert xml.findall('.//property[@name="confluence.cluster"]')[0].text == "true"
@@ -255,7 +255,7 @@ def test_confluence_xml_cluster_multicast(docker_cli, image, run_user):
     }
     container = run_image(docker_cli, image, user=run_user, environment=environment)
     _jvm = wait_for_proc(container, get_bootstrap_proc(container))
-    
+
     xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
 
     assert xml.findall('.//property[@name="confluence.cluster"]')[0].text == "true"
@@ -273,7 +273,7 @@ def test_confluence_xml_cluster_tcp(docker_cli, image, run_user):
     }
     container = run_image(docker_cli, image, user=run_user, environment=environment)
     _jvm = wait_for_proc(container, get_bootstrap_proc(container))
-    
+
     xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
 
     assert xml.findall('.//property[@name="confluence.cluster"]')[0].text == "true"
@@ -288,7 +288,7 @@ def test_confluence_xml_access_log(docker_cli, image, run_user):
     }
     container = run_image(docker_cli, image, user=run_user, environment=environment)
     _jvm = wait_for_proc(container, get_bootstrap_proc(container))
-    
+
     xml = parse_xml(container, f'{get_app_home(container)}/server.cfg.xml')
     valve = xml.find(".//Context/Valve[@className='org.apache.catalina.valves.RemoteIpValve']")
 
