@@ -50,7 +50,7 @@ def test_server_xml_defaults(docker_cli, image):
     xml = parse_xml(container, f'{get_app_install_dir(container)}/conf/server.xml')
     connector = xml.find('.//Connector')
     context = xml.find('.//Context')
-
+    
     assert connector.get('port') == '8090'
     assert connector.get('maxThreads') == '100'
     assert connector.get('minSpareThreads') == '10'
@@ -62,8 +62,7 @@ def test_server_xml_defaults(docker_cli, image):
     assert connector.get('scheme') == 'http'
     assert connector.get('proxyName') == ''
     assert connector.get('proxyPort') == ''
-
-
+    
 def test_server_xml_catalina_fallback(docker_cli, image):
     environment = {
         'CATALINA_CONNECTOR_PROXYNAME': 'PROXYNAME',
@@ -108,7 +107,7 @@ def test_server_xml_params(docker_cli, image):
     xml = parse_xml(container, f'{get_app_install_dir(container)}/conf/server.xml')
     connector = xml.find('.//Connector')
     context = xml.find('.//Context')
-
+    
     assert xml.get('port') == environment.get('ATL_TOMCAT_MGMT_PORT')
 
     assert connector.get('port') == environment.get('ATL_TOMCAT_PORT')
@@ -282,6 +281,18 @@ def test_confluence_xml_cluster_tcp(docker_cli, image, run_user):
     assert xml.findall('.//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
     assert xml.findall('.//property[@name="confluence.cluster.peers"]')[0].text == "1.1.1.1,99.99.99.99"
 
+def test_confluence_xml_access_log(docker_cli, image, run_user):
+    environment = {
+        'ATL_TOMCAT_ACCESS_LOG': 'true',
+        'ATL_TOMCAT_PROXY_INTERNAL_IPS': '192.168.1.1',
+    }
+    container = run_image(docker_cli, image, user=run_user, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+    
+    xml = parse_xml(container, f'{get_app_home(container)}/server.cfg.xml')
+    valve = xml.find(".//Context/Valve[@className='org.apache.catalina.valves.RemoteIpValve']")
+
+    assert valve.get('internalProxies') == environment.get('ATL_TOMCAT_PROXY_INTERNAL_IPS')
 
 def test_java_in_run_user_path(docker_cli, image):
     RUN_USER = 'confluence'
