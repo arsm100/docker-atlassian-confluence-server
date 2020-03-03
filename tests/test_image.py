@@ -124,6 +124,18 @@ def test_server_xml_params(docker_cli, image):
 
     assert context.get('path') == environment.get('ATL_TOMCAT_CONTEXTPATH')
 
+def test_server_xml_access_log(docker_cli, image):
+    environment = {
+        'ATL_TOMCAT_ACCESS_LOG': 'true',
+        'ATL_TOMCAT_PROXY_INTERNAL_IPS': '192.168.1.1',
+    }
+
+    container = run_image(docker_cli, image, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+
+    xml = parse_xml(container, f'{get_app_install_dir(container)}/conf/server.xml')
+    valve = xml.find('.//Context/Valve[@className="org.apache.catalina.valves.RemoteIpValve"]')
+    assert valve.get('internalProxies') == environment.get('ATL_TOMCAT_PROXY_INTERNAL_IPS')
 
 def test_seraph_defaults(docker_cli, image):
     container = run_image(docker_cli, image)
@@ -280,19 +292,6 @@ def test_confluence_xml_cluster_tcp(docker_cli, image, run_user):
     assert xml.findall('.//property[@name="confluence.cluster.join.type"]')[0].text == "tcp_ip"
     assert xml.findall('.//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
     assert xml.findall('.//property[@name="confluence.cluster.peers"]')[0].text == "1.1.1.1,99.99.99.99"
-
-def test_confluence_xml_access_log(docker_cli, image, run_user):
-    environment = {
-        'ATL_TOMCAT_ACCESS_LOG': 'true',
-        'ATL_TOMCAT_PROXY_INTERNAL_IPS': '192.168.1.1',
-    }
-    container = run_image(docker_cli, image, user=run_user, environment=environment)
-    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
-
-    xml = parse_xml(container, f'{get_app_home(container)}/server.cfg.xml')
-    valve = xml.find(".//Context/Valve[@className='org.apache.catalina.valves.RemoteIpValve']")
-
-    assert valve.get('internalProxies') == environment.get('ATL_TOMCAT_PROXY_INTERNAL_IPS')
 
 def test_java_in_run_user_path(docker_cli, image):
     RUN_USER = 'confluence'
