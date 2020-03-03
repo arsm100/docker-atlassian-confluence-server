@@ -428,6 +428,10 @@ Note that these images are built on the [AdoptOpenJDK](https://adoptopenjdk.net/
 Confluence 6.13 OpenJDK was not a supported platform. See [the 6.13
 release-notes][12] for more information.
 
+# Contribution
+
+See the [contributing guideline](CONTRIBUTING.md) if you are contributing from outside Atlassian.
+
 # License
 
 Copyright © 2020 Atlassian Corporation Pty Ltd.
