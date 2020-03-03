@@ -304,4 +304,4 @@ def test_non_root_user(docker_cli, image):
     RUN_UID = 2002
     RUN_GID = 2002
     container = run_image(docker_cli, image, user=f'{RUN_UID}:{RUN_GID}')
-    jvm = wait_for_proc(container, "org.apache.catalina.startup.Bootstrap")
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
