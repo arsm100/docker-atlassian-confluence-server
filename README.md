@@ -110,6 +110,15 @@ of the setup. They can be controlled via the below environment variables.
    The context path the application is served over. `CATALINA_CONTEXT_PATH` is
    also supported for backwards compatability.
 
+* `ATL_TOMCAT_ACCESS_LOG` (default: false)
+
+   Whether to enable Tomcat access logging; set to `true` to enable. *NOTE*:
+   These logs are written to the Container internal volume by default (under
+   `/opt/atlassian/confluence/logs/`); these are rotated but not removed, and
+   will grow indefinitely. If you enable this functionality it is recommended
+   that you map the directory to a volume and perform log ingestion/cleanup with
+   external tools.
+
 The following Tomcat/Catalina options are also supported. For more information,
 see https://tomcat.apache.org/tomcat-7.0-doc/config/index.html.
 
@@ -418,6 +427,10 @@ For product support, go to
 Note that these images are built on the [AdoptOpenJDK](https://adoptopenjdk.net/) images. Prior to
 Confluence 6.13 OpenJDK was not a supported platform. See [the 6.13
 release-notes][12] for more information.
+
+# Contribution
+
+See the [contributing guideline](CONTRIBUTING.md) if you are contributing from outside Atlassian.
 
 # License
 
