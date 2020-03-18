@@ -129,6 +129,7 @@ see https://tomcat.apache.org/tomcat-7.0-doc/config/index.html.
 * `ATL_TOMCAT_ENABLELOOKUPS` (default: false)
 * `ATL_TOMCAT_PROTOCOL` (default: HTTP/1.1)
 * `ATL_TOMCAT_ACCEPTCOUNT` (default: 10)
+* `ATL_TOMCAT_MAXHTTPHEADERSIZE` (default: 8192)
 
 ## JVM configuration
 
@@ -422,7 +423,7 @@ in the running container:
 # Support
 
 For product support, go to
-[support.atlassian.com](https://support.atlassian.com/confluence-server/). 
+[support.atlassian.com](https://support.atlassian.com/confluence-server/).
 
 Note that these images are built on the [AdoptOpenJDK](https://adoptopenjdk.net/) images. Prior to
 Confluence 6.13 OpenJDK was not a supported platform. See [the 6.13
