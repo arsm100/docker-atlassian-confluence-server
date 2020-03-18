@@ -62,6 +62,7 @@ def test_server_xml_defaults(docker_cli, image):
     assert connector.get('scheme') == 'http'
     assert connector.get('proxyName') == ''
     assert connector.get('proxyPort') == ''
+    assert connector.get('maxHttpHeaderSize') == '8192'
 
 def test_server_xml_catalina_fallback(docker_cli, image):
     environment = {
@@ -99,6 +100,7 @@ def test_server_xml_params(docker_cli, image):
         'ATL_TOMCAT_SCHEME': 'https',
         'ATL_PROXY_NAME': 'conf.atlassian.com',
         'ATL_PROXY_PORT': '443',
+        'ATL_TOMCAT_MAXHTTPHEADERSIZE': '8193',
         'ATL_TOMCAT_CONTEXTPATH': '/myconf',
     }
     container = run_image(docker_cli, image, environment=environment)
@@ -121,6 +123,7 @@ def test_server_xml_params(docker_cli, image):
     assert connector.get('scheme') == environment.get('ATL_TOMCAT_SCHEME')
     assert connector.get('proxyName') == environment.get('ATL_PROXY_NAME')
     assert connector.get('proxyPort') == environment.get('ATL_PROXY_PORT')
+    assert connector.get('maxHttpHeaderSize') == environment.get('ATL_TOMCAT_MAXHTTPHEADERSIZE')
 
     assert context.get('path') == environment.get('ATL_TOMCAT_CONTEXTPATH')
 
