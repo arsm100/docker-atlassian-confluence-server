@@ -53,7 +53,7 @@ pipelines:
                 - export TAG_SUFFIXES='jdk11,ubuntu'
                 - export CONCURRENT_BUILDS='3'
                 - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --create
+                - python /usr/src/app/run.py --create --create-eap
     custom-release:
       - variables:
           - name: CONFLUENCE_VERSION
