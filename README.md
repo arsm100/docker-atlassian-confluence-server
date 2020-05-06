@@ -189,7 +189,7 @@ Oracle JDBC drivers. To use these databases you will need to copy a suitable
 driver into the container and restart it. For example, to copy the MySQL driver
 into a container named "confluence", you would do the following:
 
-    docker cp mysql-connector-java.x.y.z.jar confluence:/opt/atlassian/confluence/lib
+    docker cp mysql-connector-java.x.y.z.jar confluence:/opt/atlassian/confluence/confluence/WEB-INF/lib
     docker restart confluence
 
 For more information see the [Database JDBC Drivers](https://confluence.atlassian.com/doc/database-jdbc-drivers-171742.html)
