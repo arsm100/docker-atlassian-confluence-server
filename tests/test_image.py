@@ -308,3 +308,17 @@ def test_non_root_user(docker_cli, image):
     RUN_GID = 2002
     container = run_image(docker_cli, image, user=f'{RUN_UID}:{RUN_GID}')
     _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+
+
+def test_jvm_support_recommended_args_order(docker_cli, image):
+    ENABLE_PRINTGCDETAILS = '-XX:+PrintGCDetails'
+    DISABLE_PRINTGCDETAILS = '-XX:-PrintGCDetails'
+    environment = {
+        'JVM_SUPPORT_RECOMMENDED_ARGS': ENABLE_PRINTGCDETAILS,
+    }
+    container = run_image(docker_cli, image, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+
+    procs_list = get_procs(container)
+    jvm = [proc for proc in procs_list if get_bootstrap_proc(container) in proc][0]
+    assert jvm.index(ENABLE_PRINTGCDETAILS) > jvm.index(DISABLE_PRINTGCDETAILS)
