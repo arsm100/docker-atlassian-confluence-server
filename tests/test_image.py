@@ -172,6 +172,15 @@ def test_confluence_xml_default(docker_cli, image):
     assert xml.findall('.//buildNumber')[0].text == "0"
     assert xml.findall('.//property[@name="hibernate.connection.url"]') == []
     assert xml.findall('.//property[@name="confluence.cluster.home"]') == []
+    assert xml.findall('.//property[@name="lucene.index.dir"]')[0].text == '${confluenceHome}/index'
+
+
+def test_confluence_lucene_index(docker_cli, image):
+    container = run_image(docker_cli, image, environment={'ATL_LUCENE_INDEX_DIR': '/some/other/dir'})
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+
+    xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
+    assert xml.findall('.//property[@name="lucene.index.dir"]')[0].text == '/some/other/dir'
 
 
 def test_confluence_xml_postgres(docker_cli, image, run_user):
