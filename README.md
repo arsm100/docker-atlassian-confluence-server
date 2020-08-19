@@ -156,6 +156,11 @@ Example:
    should be writable by the user `confluence`. See note below about UID
    mappings.
 
+* `ATL_LUCENE_INDEX_DIR`
+
+  The directory where [Lucene](https://lucene.apache.org/) search indexes should
+  be stored. Defaults to `index` under the Confluence home directory.
+
 ## Database configuration
 
 It is optionally possible to configure the database from the environment,
