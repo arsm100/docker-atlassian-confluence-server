@@ -336,7 +336,7 @@ def test_jvm_fallback_fonts(docker_cli, image):
     container = run_image(docker_cli, image)
     _jvm = wait_for_proc(container, get_bootstrap_proc(container))
 
-    init = container.file("/opt/java/openjdk/lib/fonts/fallback/NotoSansGujarati-Regular.ttf")
-    assert init.exists
-    assert init.is_symlink
-    assert init.linked_to == '/usr/share/fonts/truetype/noto/NotoSansGujarati-Regular.ttf'
+    font = container.file("/opt/java/openjdk/lib/fonts/fallback/NotoSansGujarati-Regular.ttf")
+    assert font.exists
+    assert font.is_symlink
+    assert font.linked_to == '/usr/share/fonts/truetype/noto/NotoSansGujarati-Regular.ttf'
