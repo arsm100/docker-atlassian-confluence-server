@@ -19,8 +19,9 @@ EXPOSE 8091
 CMD ["/entrypoint.py"]
 ENTRYPOINT ["/sbin/tini", "--"]
 
-RUN apk add --no-cache ca-certificates wget curl openssh bash procps openssl perl tini python3 py3-jinja2 \
-                       ttf-dejavu `apk search -qe 'font-noto*'`
+RUN apk update \
+    && apk add --no-cache ca-certificates wget curl openssh bash procps openssl perl tini python3 py3-jinja2 ttf-dejavu `apk search -qe 'font-noto*'` \
+    && rm -f /var/cache/apk/APKINDEX*
 
 # Workaround for AdoptOpenJDK Alpine fontconfig bug
 RUN ln -s /usr/lib/libfontconfig.so.1 /usr/lib/libfontconfig.so \
