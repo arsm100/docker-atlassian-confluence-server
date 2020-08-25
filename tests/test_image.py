@@ -40,7 +40,7 @@ def test_first_run_state(docker_cli, image, run_user):
 
     container = run_image(docker_cli, image, user=run_user, ports={PORT: PORT})
 
-    wait_for_http_response(URL, expected_status=200, expected_state=('STARTING', 'FIRST_RUN'))
+    wait_for_http_response(URL, expected_status=200, expected_state=('STARTING', 'FIRST_RUN'), max_wait=120)
 
 
 def test_server_xml_defaults(docker_cli, image):
