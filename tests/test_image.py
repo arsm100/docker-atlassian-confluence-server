@@ -40,7 +40,7 @@ def test_first_run_state(docker_cli, image, run_user):
 
     container = run_image(docker_cli, image, user=run_user, ports={PORT: PORT})
 
-    wait_for_http_response(URL, expected_status=200, expected_state=('STARTING', 'FIRST_RUN'))
+    wait_for_http_response(URL, expected_status=200, expected_state=('STARTING', 'FIRST_RUN'), max_wait=120)
 
 
 def test_server_xml_defaults(docker_cli, image):
@@ -331,3 +331,11 @@ def test_jvm_support_recommended_args_order(docker_cli, image):
     procs_list = get_procs(container)
     jvm = [proc for proc in procs_list if get_bootstrap_proc(container) in proc][0]
     assert jvm.index(ENABLE_PRINTGCDETAILS) > jvm.index(DISABLE_PRINTGCDETAILS)
+
+def test_jvm_fallback_fonts(docker_cli, image):
+    container = run_image(docker_cli, image)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+
+    font = container.file("/opt/java/openjdk/lib/fonts/fallback/NotoSansGujarati-Regular.ttf")
+    assert font.exists
+    assert font.is_symlink
