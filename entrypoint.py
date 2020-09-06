@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3 -B
 
 from entrypoint_helpers import env, gen_cfg, str2bool, start_app
 

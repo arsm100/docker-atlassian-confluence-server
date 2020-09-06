@@ -11,6 +11,8 @@
     <property name="webwork.multipart.saveDir">${localHome}/temp</property>
     <property name="attachments.dir">${confluenceHome}/attachments</property>
 
+    <property name="lucene.index.dir">{{ atl_lucene_index_dir | default('${confluenceHome}/index') }}</property>
+
     {% if atl_jdbc_url is defined %}
       {% set databases =  {
            "mysql": ["com.mysql.jdbc.Driver", "MySQLDialect"],

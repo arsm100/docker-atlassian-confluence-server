@@ -40,7 +40,7 @@ def test_first_run_state(docker_cli, image, run_user):
 
     container = run_image(docker_cli, image, user=run_user, ports={PORT: PORT})
 
-    wait_for_http_response(URL, expected_status=200, expected_state=('STARTING', 'FIRST_RUN'))
+    wait_for_http_response(URL, expected_status=200, expected_state=('STARTING', 'FIRST_RUN'), max_wait=120)
 
 
 def test_server_xml_defaults(docker_cli, image):
@@ -172,6 +172,15 @@ def test_confluence_xml_default(docker_cli, image):
     assert xml.findall('.//buildNumber')[0].text == "0"
     assert xml.findall('.//property[@name="hibernate.connection.url"]') == []
     assert xml.findall('.//property[@name="confluence.cluster.home"]') == []
+    assert xml.findall('.//property[@name="lucene.index.dir"]')[0].text == '${confluenceHome}/index'
+
+
+def test_confluence_lucene_index(docker_cli, image):
+    container = run_image(docker_cli, image, environment={'ATL_LUCENE_INDEX_DIR': '/some/other/dir'})
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+
+    xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
+    assert xml.findall('.//property[@name="lucene.index.dir"]')[0].text == '/some/other/dir'
 
 
 def test_confluence_xml_postgres(docker_cli, image, run_user):
@@ -333,3 +342,11 @@ def test_jvm_support_recommended_args_order(docker_cli, image):
     procs_list = get_procs(container)
     jvm = [proc for proc in procs_list if get_bootstrap_proc(container) in proc][0]
     assert jvm.index(ENABLE_PRINTGCDETAILS) > jvm.index(DISABLE_PRINTGCDETAILS)
+
+def test_jvm_fallback_fonts(docker_cli, image):
+    container = run_image(docker_cli, image)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+
+    font = container.file("/opt/java/openjdk/lib/fonts/fallback/NotoSansGujarati-Regular.ttf")
+    assert font.exists
+    assert font.is_symlink
