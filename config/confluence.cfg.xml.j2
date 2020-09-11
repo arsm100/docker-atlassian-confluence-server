@@ -66,5 +66,9 @@
 
     {% endif %}
 
+    {% if atl_license_key is defined %}
+      <property name="atlassian.license.message">{{ atl_license_key }}</property>
+    {% endif %}
+
   </properties>
 </confluence-configuration>

@@ -161,6 +161,10 @@ Example:
   The directory where [Lucene](https://lucene.apache.org/) search indexes should
   be stored. Defaults to `index` under the Confluence home directory.
 
+* `ATL_LICENSE_KEY` (from Confluence 7.8 onwards)
+
+  The Confluence license string. Providing this will remove the need to supply it through the web startup screen.
+  
 ## Database configuration
 
 It is optionally possible to configure the database from the environment,

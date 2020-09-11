@@ -305,6 +305,17 @@ def test_confluence_xml_cluster_tcp(docker_cli, image, run_user):
     assert xml.findall('.//property[@name="confluence.cluster.name"]')[0].text == "atl_cluster_name"
     assert xml.findall('.//property[@name="confluence.cluster.peers"]')[0].text == "1.1.1.1,99.99.99.99"
 
+def test_confluence_xml_license(docker_cli, image, run_user):
+    environment = {
+        'ATL_LICENSE_KEY': 'mylicense',
+    }
+    container = run_image(docker_cli, image, user=run_user, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+
+    xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
+
+    assert xml.findall('.//property[@name="atlassian.license.message"]')[0].text == "mylicense"
+
 def test_java_in_run_user_path(docker_cli, image):
     RUN_USER = 'confluence'
     container = run_image(docker_cli, image)
