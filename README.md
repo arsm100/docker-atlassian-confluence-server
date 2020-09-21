@@ -375,7 +375,7 @@ Read more about data recovery and backups: [Site Backup and Restore][10]
 
 # Versioning
 
-The `latest` tag matches the most recent release of Atlassian Confluence Server.
+The `latest` tag matches the most recent official release of Atlassian Confluence Server.
 So `atlassian/confluence-server:latest` will use the newest stable version of
 Confluence Server available.
 
@@ -383,9 +383,9 @@ Alternatively, you can use a specific minor version of Confluence Server by
 using a version number tag: `atlassian/confluence-server:6.13`. This will
 install the latest `6.13.x` version that is available.
 
-For the latest developer (EAP) release use
-`atlassian/confluence-server:eap`. This will install our latest milestone (not
-supported for use in production).
+We also publish docker images for our [EAP releases](https://www.atlassian.com/software/confluence/download-eap) (not
+supported for use in production). The tag for EAP releases is the EAP version.
+For example to get the `7.8.0-beta1` EAP release, use `atlassian/confluence-server:7.8.0-beta1`.
 
 For example, `atlassian/confluence-server:6.13-ubuntu-18.04-adoptopenjdk8` will
 install the latest 6.13.x version with AdoptOpenJDK 8.
