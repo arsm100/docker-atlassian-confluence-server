@@ -17,15 +17,11 @@ EXPOSE 8090
 EXPOSE 8091
 
 CMD ["/entrypoint.py"]
-ENTRYPOINT ["/sbin/tini", "--"]
+ENTRYPOINT ["/usr/bin/tini", "--"]
 
 RUN apt-get update && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends fontconfig fonts-noto python3 python3-jinja2 \
+    && apt-get install -y --no-install-recommends fontconfig fonts-noto python3 python3-jinja2 tini \
     && apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
-
-ARG TINI_VERSION=v0.18.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /sbin/tini
-RUN chmod +x /sbin/tini
 
 ARG CONFLUENCE_VERSION
 ARG DOWNLOAD_URL=https://product-downloads.atlassian.com/software/confluence/downloads/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz
