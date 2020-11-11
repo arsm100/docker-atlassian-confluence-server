@@ -165,6 +165,12 @@ Example:
 
   The Confluence license string. Providing this will remove the need to supply it through the web startup screen.
   
+* `CONFLUENCE_LOG_STDOUT` (from Confluence 7.9 onwards) `[true, false]`
+
+  Prior to Confluence version 7.9.0, the log files are stored in the `logs` folder in Confluence home. From version 
+  7.9.0, the logs are printed to the `stdout` by default. This makes it possible to fetch the log messages
+  via `docker logs <CONTAINER_ID>`. You can revert to log into the `logs` folder by setting this variable to `true`.
+  
 ## Database configuration
 
 It is optionally possible to configure the database from the environment,
