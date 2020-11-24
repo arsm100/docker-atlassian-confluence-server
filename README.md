@@ -165,11 +165,13 @@ Example:
 
   The Confluence license string. Providing this will remove the need to supply it through the web startup screen.
   
-* `CONFLUENCE_LOG_STDOUT` (from Confluence 7.9 onwards) `[true, false]`
+* *use with caution* `CONFLUENCE_LOG_STDOUT` `[true, false]`  (from Confluence 7.9 onwards)
 
-  Prior to Confluence version 7.9.0, the log files are stored in the `logs` folder in Confluence home. From version 
-  7.9.0, the logs are printed to the `stdout` by default. This makes it possible to fetch the log messages
-  via `docker logs <CONTAINER_ID>`. You can revert to log into the `logs` folder by setting this variable to `true`.
+  Prior to Confluence version 7.9.0, the log files are always stored in the `logs` folder in Confluence home. From version 
+  7.9.0, the logs can be printed directly to the `stdout` and don't use the file at all. This makes it possible to fetch the log messages
+  via `docker logs <CONTAINER_ID>`. In this setup we recommend using some log aggregation tooling (e.g. AWS Cloudwatch or ELK stack).
+  
+  **Beware, if enabled, the support ZIP produced by the Troubleshooting and Support plugin doesn't contain the application logs.**
   
 ## Database configuration
 
