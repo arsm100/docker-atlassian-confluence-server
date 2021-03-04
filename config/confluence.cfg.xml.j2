@@ -13,12 +13,14 @@
 
     <property name="lucene.index.dir">{{ atl_lucene_index_dir | default('${confluenceHome}/index') }}</property>
 
+    {# We need mappings for "oracle12c" and "oracle" to remain backwards compatible with Confluence 7.3.0 and earlier. Oracle 19c support was added in Confluence 7.3.1 and changed the database type name for oracle databases from "oracle12c" to "oracle" #}
     {% if atl_jdbc_url is defined %}
       {% set databases =  {
            "mysql": ["com.mysql.jdbc.Driver", "MySQLDialect"],
            "postgresql": ["org.postgresql.Driver", "PostgreSQLDialect"],
            "mssql": ["com.microsoft.sqlserver.jdbc.SQLServerDriver", "SQLServerDialect"],
-           "oracle12c": ["oracle.jdbc.driver.OracleDriver", "OracleDialect"]
+           "oracle12c": ["oracle.jdbc.driver.OracleDriver", "OracleDialect"],
+           "oracle": ["oracle.jdbc.driver.OracleDriver", "OracleDialect"]
           } %}
       <property name="confluence.database.choice">{{ atl_db_type }}</property>
 
