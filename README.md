@@ -198,7 +198,8 @@ The following variables are all must all be supplied if using this feature:
 
    * `mssql`
    * `mysql`
-   * `oracle12c`
+   * `oracle12c` (Confluence 7.3.0 or earlier only)
+   * `oracle` (Confluence 7.3.1 or later only. Compatible with Oracle 12c and Oracle 19c)
    * `postgresql`
 
 Note: Due to licensing restrictions Confluence does not ship with a MySQL or
