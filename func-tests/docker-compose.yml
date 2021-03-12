@@ -1,0 +1,44 @@
+version: '3.5'
+
+services:
+  postgresql:
+    build:
+      context: ./postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - 'POSTGRES_DB=confluence'
+      - 'POSTGRES_USER=confluence'
+      - 'POSTGRES_PASSWORD=confluence'
+      - 'POSTGRES_ENCODING=utf-8'
+      - 'POSTGRES_COLLATE=utf-8'
+      - 'POSTGRES_COLLATE_TYPE=utf-8'
+      - "LANG=utf-8"
+
+  confluence:
+    build:
+      context: ./confluence
+    depends_on:
+      - postgresql
+    ports:
+      - '8090:8090'
+    command: >
+      bash -c '
+          if grep -oh 'Alpine' < /etc/os-release ; then apk update && apk add netcat-openbsd; else apt-get update -y && apt-get install -y netcat;  fi &&
+          /opt/atlassian/support/waitport postgresql 5432 &&
+          chown -R confluence.confluence  /var/atlassian/application-data/confluence/ &&
+          /entrypoint.py
+      '
+
+  smoketests:
+    build:
+      context: ./smoketests/
+    environment:
+      - CONFLUENCE_BASE_URL=http://confluence:8090
+      - CONFLUENCE_ADMIN=${CONFLUENCE_ADMIN}
+      - CONFLUENCE_ADMIN_PWD=${CONFLUENCE_ADMIN_PWD}
+    command: >
+      bash -c '
+          ./bin/confluence-wait &&
+          pytest -v
+      '

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+latest_image=$(docker images --format "{{.ID}} {{.CreatedAt}}" | sort -rk 2 | awk 'NR==1{print $1}')
+
+TEST_TARGET_IMAGE=${1:-$latest_image}
+DIR=$(dirname "$0")
+export TEST_TARGET_IMAGE
+export DIR
+
+# Assumes this script is in the func-tests base dir
+cd "$DIR" || exit
+
+if [ -z "$CONFLUENCE_TEST_LICENSE" ]; then
+    echo "You need to define CONFLUENCE_TEST_LICENSE env variable"
+    exit 1
+fi
+
+unzip -o confluence-home-6.0.1.zip -d confluence
+# NOTE: This expects the license to have been injected
+sh ./confluence/inject-license
+
+docker-compose rm -f && \
+docker-compose up --force-recreate --always-recreate-deps  --abort-on-container-exit --exit-code-from smoketests
+

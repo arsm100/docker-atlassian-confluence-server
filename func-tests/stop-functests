@@ -1,0 +1,8 @@
+#!/bin/bash
+
+DIR=$(dirname "$0")
+export DIR
+
+cd "$DIR" || exit
+
+docker-compose down

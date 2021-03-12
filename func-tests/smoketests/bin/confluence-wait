@@ -1,0 +1,27 @@
+#!/bin/bash
+
+max=60
+sleep_interval=5
+
+echo "Waiting for Confluence to come up at $CONFLUENCE_BASE_URL..."
+
+for i in $(seq $max); do
+    # Confluence emits `302` during startup, `200` when ready:
+    status=$(curl -u "$CONFLUENCE_ADMIN":"$CONFLUENCE_ADMIN_PWD" -s -o /dev/null -w "%{http_code}" "$CONFLUENCE_BASE_URL"/status)
+    echo Confluence returned "$status"
+    if [[ $status == "200" ]]; then
+        echo OK
+        echo Confluence is up and running
+        exit 0
+    elif [[ $status -ge "500" ]]; then
+        echo ERROR
+        echo Confluence failed to start due to a server error
+        exit 1
+    fi
+
+    /bin/sleep $sleep_interval
+
+done
+
+echo Confluence failed to startup within $((max * sleep_interval)) seconds
+exit 1
