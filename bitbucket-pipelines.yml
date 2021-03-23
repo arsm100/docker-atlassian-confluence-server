@@ -1,3 +1,8 @@
+---
+# NOTE: This file is generated from `bitbucket-pipelines.yml.j2` via `pipelines-generator.py`:
+#
+#     python3 pipelines-generator.py > bitbucket-pipelines.yml
+
 image: atlassian/docker-release-maker:latest
 definitions:
   services:
@@ -8,291 +13,1743 @@ options:
   size: 2x
 
 pipelines:
+
+  branches:
+    ######################################################################
+    # Master branch: Do full release for each image flavour
+    ######################################################################
+    master:
+      - step:
+          name: Check if pipelines config is up-to-date...
+          script:
+            - python3 pipelines-generator.py > bitbucket-piplines.yml.expected && diff bitbucket-pipelines.yml bitbucket-piplines.yml.expected
+
+      - parallel:
+
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 1
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='0'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 2
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='1'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 3
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='2'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 4
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='3'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 5
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='4'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 6
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='5'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 7
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='6'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 8
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='7'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 9
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='8'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 10
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='9'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 11
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='10'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 12
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='11'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 1
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='0'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 2
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='1'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 3
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='2'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 4
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='3'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 5
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='4'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 6
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='5'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 7
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='6'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 8
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='7'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 9
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='8'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 10
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='9'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 11
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='10'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 12
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='11'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 1
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='0'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 2
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='1'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 3
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='2'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 4
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='3'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 5
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='4'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 6
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='5'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 7
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='6'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 8
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='7'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 9
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='8'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 10
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='9'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 11
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='10'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 12
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --update
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='11'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+      - step:
+          name: Update README
+          image: python:3.7-alpine3.9
+          script:
+            - apk add --no-cache git
+            - git submodule update --init --recursive
+            - pip install -q requests
+            - export DOCKER_REPO='atlassian/confluence-server'
+            - python shared-components/image/push-readme.py
+
   custom:
     ######################################################################
     # Custom: Do full release for each image flavour
     ######################################################################
     new-releases:
-      - step:
-          name: Confluence Alpine (Batch 1)
-          services:
-            - docker
-          script:
-            - git submodule update --init --recursive
-            - export START_VERSION='6'
-            - export END_VERSION='7'
-            - export JOB_OFFSET='0'
-            - export JOBS_TOTAL='5'
-            - export DEFAULT_RELEASE='false'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE='Dockerfile-alpine'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-            - export CONCURRENT_BUILDS='1'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create
-      - step:
-          name: Confluence Alpine (Batch 2)
-          services:
-            - docker
-          script:
-            - git submodule update --init --recursive
-            - export START_VERSION='6'
-            - export END_VERSION='7'
-            - export JOB_OFFSET='1'
-            - export JOBS_TOTAL='5'
-            - export DEFAULT_RELEASE='false'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE='Dockerfile-alpine'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-            - export CONCURRENT_BUILDS='1'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create
-      - step:
-          name: Confluence Alpine (Batch 3)
-          services:
-            - docker
-          script:
-            - git submodule update --init --recursive
-            - export START_VERSION='6'
-            - export END_VERSION='7'
-            - export JOB_OFFSET='2'
-            - export JOBS_TOTAL='5'
-            - export DEFAULT_RELEASE='false'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE='Dockerfile-alpine'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-            - export CONCURRENT_BUILDS='1'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create
-      - step:
-          name: Confluence Alpine (Batch 4)
-          services:
-            - docker
-          script:
-            - git submodule update --init --recursive
-            - export START_VERSION='6'
-            - export END_VERSION='7'
-            - export JOB_OFFSET='3'
-            - export JOBS_TOTAL='5'
-            - export DEFAULT_RELEASE='false'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE='Dockerfile-alpine'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-            - export CONCURRENT_BUILDS='1'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create
-      - step:
-          name: Confluence Alpine (Batch 5)
-          services:
-            - docker
-          script:
-            - git submodule update --init --recursive
-            - export START_VERSION='6'
-            - export END_VERSION='7'
-            - export JOB_OFFSET='4'
-            - export JOBS_TOTAL='5'
-            - export DEFAULT_RELEASE='false'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE='Dockerfile-alpine'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-            - export CONCURRENT_BUILDS='1'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create
-      - step:
-          name: Confluence Ubuntu JDK 8 (Batch 1)
-          services:
-            - docker
-          script:
-            - git submodule update --init --recursive
-            - export START_VERSION='6'
-            - export END_VERSION='7.1'
-            - export JOB_OFFSET='0'
-            - export JOBS_TOTAL='5'
-            - export DEFAULT_RELEASE='true'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-            - export CONCURRENT_BUILDS='1'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create
-      - step:
-          name: Confluence Ubuntu JDK 8 (Batch 2)
-          services:
-            - docker
-          script:
-            - git submodule update --init --recursive
-            - export START_VERSION='6'
-            - export END_VERSION='7.1'
-            - export JOB_OFFSET='1'
-            - export JOBS_TOTAL='5'
-            - export DEFAULT_RELEASE='true'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-            - export CONCURRENT_BUILDS='1'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create
-      - step:
-          name: Confluence Ubuntu JDK 8 (Batch 3)
-          services:
-            - docker
-          script:
-            - git submodule update --init --recursive
-            - export START_VERSION='6'
-            - export END_VERSION='7.1'
-            - export JOB_OFFSET='2'
-            - export JOBS_TOTAL='5'
-            - export DEFAULT_RELEASE='true'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-            - export CONCURRENT_BUILDS='1'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create
-      - step:
-          name: Confluence Ubuntu JDK 8 (Batch 5)
-          services:
-            - docker
-          script:
-            - git submodule update --init --recursive
-            - export START_VERSION='6'
-            - export END_VERSION='7.1'
-            - export JOB_OFFSET='3'
-            - export JOBS_TOTAL='5'
-            - export DEFAULT_RELEASE='true'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-            - export CONCURRENT_BUILDS='1'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create
-      - step:
-          name: Confluence Ubuntu JDK 8 (Batch 5)
-          services:
-            - docker
-          script:
-            - git submodule update --init --recursive
-            - export START_VERSION='6'
-            - export END_VERSION='7.1'
-            - export JOB_OFFSET='4'
-            - export JOBS_TOTAL='5'
-            - export DEFAULT_RELEASE='true'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-            - export CONCURRENT_BUILDS='1'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create
-      - step:
-          name: Confluence Ubuntu JDK 11 (Batch 1)
-          services:
-            - docker
-          script:
-            - git submodule update --init --recursive
-            - export START_VERSION='7.1'
-            - export END_VERSION='8'
-            - export JOB_OFFSET='0'
-            - export JOBS_TOTAL='5'
-            - export DEFAULT_RELEASE='true'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='jdk11,ubuntu'
-            - export CONCURRENT_BUILDS='1'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create --create-eap
-      - step:
-          name: Confluence Ubuntu JDK 11 (Batch 2)
-          services:
-            - docker
-          script:
-            - git submodule update --init --recursive
-            - export START_VERSION='7.1'
-            - export END_VERSION='8'
-            - export JOB_OFFSET='1'
-            - export JOBS_TOTAL='5'
-            - export DEFAULT_RELEASE='true'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='jdk11,ubuntu'
-            - export CONCURRENT_BUILDS='1'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create --create-eap
-      - step:
-          name: Confluence Ubuntu JDK 11 (Batch 3)
-          services:
-            - docker
-          script:
-            - git submodule update --init --recursive
-            - export START_VERSION='7.1'
-            - export END_VERSION='8'
-            - export JOB_OFFSET='2'
-            - export JOBS_TOTAL='5'
-            - export DEFAULT_RELEASE='true'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='jdk11,ubuntu'
-            - export CONCURRENT_BUILDS='1'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create --create-eap
-      - step:
-          name: Confluence Ubuntu JDK 11 (Batch 4)
-          services:
-            - docker
-          script:
-            - git submodule update --init --recursive
-            - export START_VERSION='7.1'
-            - export END_VERSION='8'
-            - export JOB_OFFSET='3'
-            - export JOBS_TOTAL='5'
-            - export DEFAULT_RELEASE='true'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='jdk11,ubuntu'
-            - export CONCURRENT_BUILDS='1'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create --create-eap
-      - step:
-          name: Confluence Ubuntu JDK 11 (Batch 5)
-          services:
-            - docker
-          script:
-            - git submodule update --init --recursive
-            - export START_VERSION='7.1'
-            - export END_VERSION='8'
-            - export JOB_OFFSET='4'
-            - export JOBS_TOTAL='5'
-            - export DEFAULT_RELEASE='true'
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - export TAG_SUFFIXES='jdk11,ubuntu'
-            - export CONCURRENT_BUILDS='1'
-            - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-            - python /usr/src/app/run.py --create --create-eap
+
+      - parallel:
+
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 1
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='0'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 2
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='1'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 3
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='2'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 4
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='3'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 5
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='4'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 6
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='5'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 7
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='6'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 8
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='7'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 9
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='8'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 10
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='9'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 11
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='10'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Alpine JDK 8 - Batch 12
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7'
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='11'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 1
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='0'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 2
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='1'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 3
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='2'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 4
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='3'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 5
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='4'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 6
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='5'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 7
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='6'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 8
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='7'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 9
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='8'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 10
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='9'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 11
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='10'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 8 - Batch 12
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='6'
+                  --end-version='7.1'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='11'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 1
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='0'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 2
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='1'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 3
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='2'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 4
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='3'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 5
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='4'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 6
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='5'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 7
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='6'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 8
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='7'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 9
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='8'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 10
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='9'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 11
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='10'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
+        - step:
+            name: Confluence Ubuntu JDK 11 - Batch 12
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+              - >
+                python ../docker-release-maker/make-releases.py 
+                  --create
+                  --start-version='7.1'
+                  --end-version='8'
+                  --default-release
+                  --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot'
+                  --dockerfile-version-arg='CONFLUENCE_VERSION'
+                  --mac-product-key='confluence'
+                  --tag-suffixes=''
+                  --concurrent-builds='1'
+                  --job-offset='11'
+                  --jobs-total='12'
+                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert'
+                  --push
+ 
+
     custom-release:
       - variables:
           - name: CONFLUENCE_VERSION
@@ -309,675 +1766,8 @@ pipelines:
             - snyk auth @SNYK_TOKEN
             - snyk container test atlassian/confluence-server:${DOCKER_TAG} --severity-threshold=high
             - docker push atlassian/confluence-server:${DOCKER_TAG}
-  branches:
-    ######################################################################
-    # Master branch: Do full release for each image flavour
-    ######################################################################
-    master:
-      - parallel:
-          - step:
-              name: Confluence Alpine(Batch 1)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7'
-                - export JOB_OFFSET='0'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='false'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE='Dockerfile-alpine'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Alpine(Batch 2)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7'
-                - export JOB_OFFSET='1'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='false'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE='Dockerfile-alpine'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Alpine(Batch 3)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7'
-                - export JOB_OFFSET='2'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='false'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE='Dockerfile-alpine'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Alpine(Batch 4)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7'
-                - export JOB_OFFSET='3'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='false'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE='Dockerfile-alpine'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Alpine(Batch 5)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7'
-                - export JOB_OFFSET='4'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='false'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE='Dockerfile-alpine'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Alpine(Batch 6)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7'
-                - export JOB_OFFSET='5'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='false'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE='Dockerfile-alpine'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Alpine(Batch 7)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7'
-                - export JOB_OFFSET='6'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='false'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE='Dockerfile-alpine'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Alpine(Batch 8)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7'
-                - export JOB_OFFSET='7'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='false'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE='Dockerfile-alpine'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Alpine(Batch 9)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7'
-                - export JOB_OFFSET='8'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='false'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE='Dockerfile-alpine'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Alpine(Batch 10)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7'
-                - export JOB_OFFSET='9'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='false'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE='Dockerfile-alpine'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Alpine(Batch 11)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7'
-                - export JOB_OFFSET='10'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='false'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE='Dockerfile-alpine'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Alpine(Batch 12)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7'
-                - export JOB_OFFSET='11'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='false'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE='Dockerfile-alpine'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='alpine,alpine-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 8(Batch 1)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7.1'
-                - export JOB_OFFSET='0'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 8(Batch 2)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7.1'
-                - export JOB_OFFSET='1'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 8(Batch 3)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7.1'
-                - export JOB_OFFSET='2'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 8(Batch 4)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7.1'
-                - export JOB_OFFSET='3'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 8(Batch 5)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7.1'
-                - export JOB_OFFSET='4'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 8(Batch 6)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7.1'
-                - export JOB_OFFSET='5'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 8(Batch 7)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7.1'
-                - export JOB_OFFSET='6'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 8(Batch 8)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7.1'
-                - export JOB_OFFSET='7'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 8(Batch 9)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7.1'
-                - export JOB_OFFSET='8'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 8(Batch 10)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7.1'
-                - export JOB_OFFSET='9'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 8(Batch 11)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7.1'
-                - export JOB_OFFSET='10'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 8(Batch 12)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='6'
-                - export END_VERSION='7.1'
-                - export JOB_OFFSET='11'
-                - export JOBS_TOTAL='12'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_BUILDARGS='BASE_IMAGE=adoptopenjdk:8-hotspot'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 11(Batch 1)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='7.1'
-                - export END_VERSION='8'
-                - export JOB_OFFSET='0'
-                - export JOBS_TOTAL='11'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='jdk11,ubuntu'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 11(Batch 2)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='7.1'
-                - export END_VERSION='8'
-                - export JOB_OFFSET='1'
-                - export JOBS_TOTAL='11'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='jdk11,ubuntu'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 11(Batch 3)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='7.1'
-                - export END_VERSION='8'
-                - export JOB_OFFSET='2'
-                - export JOBS_TOTAL='11'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='jdk11,ubuntu'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 11(Batch 4)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='7.1'
-                - export END_VERSION='8'
-                - export JOB_OFFSET='3'
-                - export JOBS_TOTAL='11'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='jdk11,ubuntu'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 11(Batch 5)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='7.1'
-                - export END_VERSION='8'
-                - export JOB_OFFSET='4'
-                - export JOBS_TOTAL='11'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='jdk11,ubuntu'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 11(Batch 6)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='7.1'
-                - export END_VERSION='8'
-                - export JOB_OFFSET='5'
-                - export JOBS_TOTAL='11'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='jdk11,ubuntu'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 11(Batch 7)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='7.1'
-                - export END_VERSION='8'
-                - export JOB_OFFSET='6'
-                - export JOBS_TOTAL='11'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='jdk11,ubuntu'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 11(Batch 8)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='7.1'
-                - export END_VERSION='8'
-                - export JOB_OFFSET='7'
-                - export JOBS_TOTAL='11'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='jdk11,ubuntu'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 11(Batch 9)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='7.1'
-                - export END_VERSION='8'
-                - export JOB_OFFSET='8'
-                - export JOBS_TOTAL='11'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='jdk11,ubuntu'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 11(Batch 10)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='7.1'
-                - export END_VERSION='8'
-                - export JOB_OFFSET='9'
-                - export JOBS_TOTAL='11'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='jdk11,ubuntu'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-          - step:
-              name: Confluence Ubuntu JDK 11(Batch 11)
-              services:
-                - docker
-              script:
-                - git submodule update --init --recursive
-                - export START_VERSION='7.1'
-                - export END_VERSION='8'
-                - export JOB_OFFSET='10'
-                - export JOBS_TOTAL='11'
-                - export DEFAULT_RELEASE='true'
-                - export DOCKER_REPO='atlassian/confluence-server'
-                - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-                - export MAC_PRODUCT_KEY='confluence'
-                - export TAG_SUFFIXES='jdk11,ubuntu'
-                - export CONCURRENT_BUILDS='1'
-                - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-                - python /usr/src/app/run.py --update
-      - step:
-          name: Update README
-          image: python:3.7-alpine3.9
-          script:
-            - apk add --no-cache git
-            - git submodule update --init --recursive
-            - pip install -q requests
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - python shared-components/image/push-readme.py
+
+
   pull-requests:
     ######################################################################
     # All other branches & PRs; run unit tests & functional tests
