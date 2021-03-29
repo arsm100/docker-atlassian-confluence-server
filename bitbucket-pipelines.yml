@@ -39,6 +39,7 @@ pipelines:
                   --update \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -46,7 +47,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='0' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -62,6 +63,7 @@ pipelines:
                   --update \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -69,7 +71,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='1' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -85,6 +87,7 @@ pipelines:
                   --update \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -92,7 +95,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='2' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -108,6 +111,7 @@ pipelines:
                   --update \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -115,7 +119,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='3' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -131,6 +135,7 @@ pipelines:
                   --update \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -138,7 +143,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='4' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -154,6 +159,7 @@ pipelines:
                   --update \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -161,7 +167,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='5' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -177,6 +183,7 @@ pipelines:
                   --update \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -184,7 +191,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='6' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -200,6 +207,7 @@ pipelines:
                   --update \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -207,7 +215,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='7' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -223,6 +231,7 @@ pipelines:
                   --update \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -230,7 +239,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='8' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -246,6 +255,7 @@ pipelines:
                   --update \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -253,7 +263,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='9' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -269,6 +279,7 @@ pipelines:
                   --update \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -276,7 +287,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='10' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -292,6 +303,7 @@ pipelines:
                   --update \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -299,7 +311,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='11' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -316,6 +328,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -323,7 +336,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='0' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -340,6 +353,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -347,7 +361,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='1' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -364,6 +378,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -371,7 +386,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='2' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -388,6 +403,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -395,7 +411,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='3' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -412,6 +428,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -419,7 +436,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='4' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -436,6 +453,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -443,7 +461,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='5' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -460,6 +478,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -467,7 +486,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='6' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -484,6 +503,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -491,7 +511,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='7' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -508,6 +528,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -515,7 +536,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='8' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -532,6 +553,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -539,7 +561,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='9' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -556,6 +578,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -563,7 +586,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='10' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -580,6 +603,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -587,7 +611,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='11' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -604,6 +628,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -611,7 +636,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='0' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -628,6 +653,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -635,7 +661,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='1' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -652,6 +678,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -659,7 +686,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='2' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -676,6 +703,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -683,7 +711,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='3' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -700,6 +728,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -707,7 +736,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='4' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -724,6 +753,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -731,7 +761,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='5' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -748,6 +778,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -755,7 +786,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='6' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -772,6 +803,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -779,7 +811,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='7' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -796,6 +828,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -803,7 +836,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='8' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -820,6 +853,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -827,7 +861,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='9' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -844,6 +878,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -851,7 +886,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='10' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -868,6 +903,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -875,7 +911,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='11' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -910,6 +946,7 @@ pipelines:
                   --create \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -917,7 +954,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='0' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -933,6 +970,7 @@ pipelines:
                   --create \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -940,7 +978,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='1' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -956,6 +994,7 @@ pipelines:
                   --create \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -963,7 +1002,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='2' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -979,6 +1018,7 @@ pipelines:
                   --create \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -986,7 +1026,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='3' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1002,6 +1042,7 @@ pipelines:
                   --create \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1009,7 +1050,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='4' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1025,6 +1066,7 @@ pipelines:
                   --create \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1032,7 +1074,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='5' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1048,6 +1090,7 @@ pipelines:
                   --create \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1055,7 +1098,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='6' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1071,6 +1114,7 @@ pipelines:
                   --create \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1078,7 +1122,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='7' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1094,6 +1138,7 @@ pipelines:
                   --create \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1101,7 +1146,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='8' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1117,6 +1162,7 @@ pipelines:
                   --create \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1124,7 +1170,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='9' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1140,6 +1186,7 @@ pipelines:
                   --create \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1147,7 +1194,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='10' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1163,6 +1210,7 @@ pipelines:
                   --create \
                   --start-version='6' \
                   --end-version='7' \
+                  --dockerfile='Dockerfile-alpine' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1170,7 +1218,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='11' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1187,6 +1235,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1194,7 +1243,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='0' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1211,6 +1260,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1218,7 +1268,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='1' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1235,6 +1285,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1242,7 +1293,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='2' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1259,6 +1310,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1266,7 +1318,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='3' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1283,6 +1335,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1290,7 +1343,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='4' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1307,6 +1360,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1314,7 +1368,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='5' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1331,6 +1385,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1338,7 +1393,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='6' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1355,6 +1410,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1362,7 +1418,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='7' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1379,6 +1435,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1386,7 +1443,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='8' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1403,6 +1460,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1410,7 +1468,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='9' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1427,6 +1485,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1434,7 +1493,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='10' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1451,6 +1510,7 @@ pipelines:
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1458,7 +1518,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='11' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1475,6 +1535,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1482,7 +1543,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='0' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1499,6 +1560,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1506,7 +1568,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='1' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1523,6 +1585,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1530,7 +1593,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='2' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1547,6 +1610,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1554,7 +1618,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='3' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1571,6 +1635,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1578,7 +1643,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='4' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1595,6 +1660,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1602,7 +1668,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='5' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1619,6 +1685,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1626,7 +1693,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='6' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1643,6 +1710,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1650,7 +1718,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='7' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1667,6 +1735,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1674,7 +1743,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='8' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1691,6 +1760,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1698,7 +1768,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='9' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1715,6 +1785,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1722,7 +1793,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='10' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 
@@ -1739,6 +1810,7 @@ pipelines:
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
+                  --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -1746,7 +1818,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='11' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluenec-servert' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
                   --push
  
 

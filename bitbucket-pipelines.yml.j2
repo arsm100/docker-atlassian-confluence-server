@@ -45,6 +45,7 @@ pipelines:
                   {% if appdata.default_release %}
                   --default-release \
                   {% endif %}
+                  --dockerfile='{{ appdata.dockerfile }}' \
                   --dockerfile-buildargs='BASE_IMAGE={{ appdata.base_image }}' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
@@ -96,6 +97,7 @@ pipelines:
                   {% if appdata.default_release %}
                   --default-release \
                   {% endif %}
+                  --dockerfile='{{ appdata.dockerfile }}' \
                   --dockerfile-buildargs='BASE_IMAGE={{ appdata.base_image }}' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
