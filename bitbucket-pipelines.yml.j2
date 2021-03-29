@@ -49,7 +49,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE={{ appdata.base_image }}' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='{{ tag_suffixes|join(',') }}' \
+                  --tag-suffixes='{{ appdata.tag_suffixes|join(',') }}' \
                   --concurrent-builds='1' \
                   --job-offset='{{ offset }}' \
                   --jobs-total='{{ batches }}' \
@@ -101,7 +101,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE={{ appdata.base_image }}' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='{{ tag_suffixes|join(',') }}' \
+                  --tag-suffixes='{{ appdata.tag_suffixes|join(',') }}' \
                   --concurrent-builds='1' \
                   --job-offset='{{ offset }}' \
                   --jobs-total='{{ batches }}' \

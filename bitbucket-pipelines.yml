@@ -43,7 +43,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='0' \
                   --jobs-total='12' \
@@ -67,7 +67,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='1' \
                   --jobs-total='12' \
@@ -91,7 +91,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='2' \
                   --jobs-total='12' \
@@ -115,7 +115,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='3' \
                   --jobs-total='12' \
@@ -139,7 +139,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='4' \
                   --jobs-total='12' \
@@ -163,7 +163,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='5' \
                   --jobs-total='12' \
@@ -187,7 +187,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='6' \
                   --jobs-total='12' \
@@ -211,7 +211,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='7' \
                   --jobs-total='12' \
@@ -235,7 +235,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='8' \
                   --jobs-total='12' \
@@ -259,7 +259,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='9' \
                   --jobs-total='12' \
@@ -283,7 +283,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='10' \
                   --jobs-total='12' \
@@ -307,7 +307,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='11' \
                   --jobs-total='12' \
@@ -332,7 +332,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='0' \
                   --jobs-total='12' \
@@ -357,7 +357,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='1' \
                   --jobs-total='12' \
@@ -382,7 +382,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='2' \
                   --jobs-total='12' \
@@ -407,7 +407,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='3' \
                   --jobs-total='12' \
@@ -432,7 +432,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='4' \
                   --jobs-total='12' \
@@ -457,7 +457,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='5' \
                   --jobs-total='12' \
@@ -482,7 +482,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='6' \
                   --jobs-total='12' \
@@ -507,7 +507,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='7' \
                   --jobs-total='12' \
@@ -532,7 +532,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='8' \
                   --jobs-total='12' \
@@ -557,7 +557,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='9' \
                   --jobs-total='12' \
@@ -582,7 +582,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='10' \
                   --jobs-total='12' \
@@ -607,7 +607,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='11' \
                   --jobs-total='12' \
@@ -632,7 +632,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='0' \
                   --jobs-total='12' \
@@ -657,7 +657,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='1' \
                   --jobs-total='12' \
@@ -682,7 +682,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='2' \
                   --jobs-total='12' \
@@ -707,7 +707,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='3' \
                   --jobs-total='12' \
@@ -732,7 +732,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='4' \
                   --jobs-total='12' \
@@ -757,7 +757,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='5' \
                   --jobs-total='12' \
@@ -782,7 +782,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='6' \
                   --jobs-total='12' \
@@ -807,7 +807,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='7' \
                   --jobs-total='12' \
@@ -832,7 +832,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='8' \
                   --jobs-total='12' \
@@ -857,7 +857,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='9' \
                   --jobs-total='12' \
@@ -882,7 +882,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='10' \
                   --jobs-total='12' \
@@ -907,7 +907,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='11' \
                   --jobs-total='12' \
@@ -950,7 +950,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='0' \
                   --jobs-total='12' \
@@ -974,7 +974,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='1' \
                   --jobs-total='12' \
@@ -998,7 +998,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='2' \
                   --jobs-total='12' \
@@ -1022,7 +1022,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='3' \
                   --jobs-total='12' \
@@ -1046,7 +1046,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='4' \
                   --jobs-total='12' \
@@ -1070,7 +1070,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='5' \
                   --jobs-total='12' \
@@ -1094,7 +1094,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='6' \
                   --jobs-total='12' \
@@ -1118,7 +1118,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='7' \
                   --jobs-total='12' \
@@ -1142,7 +1142,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='8' \
                   --jobs-total='12' \
@@ -1166,7 +1166,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='9' \
                   --jobs-total='12' \
@@ -1190,7 +1190,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='10' \
                   --jobs-total='12' \
@@ -1214,7 +1214,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk/openjdk8:alpine' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='alpine,alpine-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='11' \
                   --jobs-total='12' \
@@ -1239,7 +1239,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='0' \
                   --jobs-total='12' \
@@ -1264,7 +1264,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='1' \
                   --jobs-total='12' \
@@ -1289,7 +1289,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='2' \
                   --jobs-total='12' \
@@ -1314,7 +1314,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='3' \
                   --jobs-total='12' \
@@ -1339,7 +1339,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='4' \
                   --jobs-total='12' \
@@ -1364,7 +1364,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='5' \
                   --jobs-total='12' \
@@ -1389,7 +1389,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='6' \
                   --jobs-total='12' \
@@ -1414,7 +1414,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='7' \
                   --jobs-total='12' \
@@ -1439,7 +1439,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='8' \
                   --jobs-total='12' \
@@ -1464,7 +1464,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='9' \
                   --jobs-total='12' \
@@ -1489,7 +1489,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='10' \
                   --jobs-total='12' \
@@ -1514,7 +1514,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:8-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk8,jdk8,ubuntu,ubuntu-18.04-adoptopenjdk8' \
                   --concurrent-builds='1' \
                   --job-offset='11' \
                   --jobs-total='12' \
@@ -1539,7 +1539,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='0' \
                   --jobs-total='12' \
@@ -1564,7 +1564,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='1' \
                   --jobs-total='12' \
@@ -1589,7 +1589,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='2' \
                   --jobs-total='12' \
@@ -1614,7 +1614,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='3' \
                   --jobs-total='12' \
@@ -1639,7 +1639,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='4' \
                   --jobs-total='12' \
@@ -1664,7 +1664,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='5' \
                   --jobs-total='12' \
@@ -1689,7 +1689,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='6' \
                   --jobs-total='12' \
@@ -1714,7 +1714,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='7' \
                   --jobs-total='12' \
@@ -1739,7 +1739,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='8' \
                   --jobs-total='12' \
@@ -1764,7 +1764,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='9' \
                   --jobs-total='12' \
@@ -1789,7 +1789,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='10' \
                   --jobs-total='12' \
@@ -1814,7 +1814,7 @@ pipelines:
                   --dockerfile-buildargs='BASE_IMAGE=adoptopenjdk:11-hotspot' \
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
-                  --tag-suffixes='' \
+                  --tag-suffixes='adoptopenjdk11,jdk11,ubuntu,ubuntu-18.04-adoptopenjdk11' \
                   --concurrent-builds='1' \
                   --job-offset='11' \
                   --jobs-total='12' \
