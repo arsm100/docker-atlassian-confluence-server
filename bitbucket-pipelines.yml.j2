@@ -38,7 +38,7 @@ pipelines:
               - git submodule update --init --recursive
               - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
               - >
-                python make-releases.py 
+                python  /usr/src/app/make-releases.py
                   --update
                   --start-version='{{ appdata.start_version }}'
                   --end-version='{{ appdata.end_version }}'
@@ -89,7 +89,7 @@ pipelines:
               - git submodule update --init --recursive
               - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
               - >
-                python make-releases.py 
+                python /usr/src/app/make-releases.py
                   --create
                   --start-version='{{ appdata.start_version }}'
                   --end-version='{{ appdata.end_version }}'
