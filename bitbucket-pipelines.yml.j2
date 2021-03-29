@@ -38,21 +38,21 @@ pipelines:
               - git submodule update --init --recursive
               - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
               - >
-                python  /usr/src/app/make-releases.py
-                  --update
-                  --start-version='{{ appdata.start_version }}'
-                  --end-version='{{ appdata.end_version }}'
+                python  /usr/src/app/make-releases.py \
+                  --update \
+                  --start-version='{{ appdata.start_version }}' \
+                  --end-version='{{ appdata.end_version }}' \
                   {% if appdata.default_release %}
-                  --default-release
+                  --default-release \
                   {% endif %}
-                  --dockerfile-buildargs='BASE_IMAGE={{ appdata.base_image }}'
-                  --dockerfile-version-arg='CONFLUENCE_VERSION'
-                  --mac-product-key='confluence'
-                  --tag-suffixes='{{ tag_suffixes|join(',') }}'
-                  --concurrent-builds='1'
-                  --job-offset='{{ offset }}'
-                  --jobs-total='{{ batches }}'
-                  --docker-repos='{{ appdata.docker_repos|join(',') }}'
+                  --dockerfile-buildargs='BASE_IMAGE={{ appdata.base_image }}' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='{{ tag_suffixes|join(',') }}' \
+                  --concurrent-builds='1' \
+                  --job-offset='{{ offset }}' \
+                  --jobs-total='{{ batches }}' \
+                  --docker-repos='{{ appdata.docker_repos|join(',') }}' \
                   --push
  
     {% endfor %}
@@ -89,21 +89,21 @@ pipelines:
               - git submodule update --init --recursive
               - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
               - >
-                python /usr/src/app/make-releases.py
-                  --create
-                  --start-version='{{ appdata.start_version }}'
-                  --end-version='{{ appdata.end_version }}'
+                python /usr/src/app/make-releases.py \
+                  --create \
+                  --start-version='{{ appdata.start_version }}' \
+                  --end-version='{{ appdata.end_version }}' \
                   {% if appdata.default_release %}
-                  --default-release
+                  --default-release \
                   {% endif %}
-                  --dockerfile-buildargs='BASE_IMAGE={{ appdata.base_image }}'
-                  --dockerfile-version-arg='CONFLUENCE_VERSION'
-                  --mac-product-key='confluence'
-                  --tag-suffixes='{{ tag_suffixes|join(',') }}'
-                  --concurrent-builds='1'
-                  --job-offset='{{ offset }}'
-                  --jobs-total='{{ batches }}'
-                  --docker-repos='{{ appdata.docker_repos|join(',') }}'
+                  --dockerfile-buildargs='BASE_IMAGE={{ appdata.base_image }}' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='{{ tag_suffixes|join(',') }}' \
+                  --concurrent-builds='1' \
+                  --job-offset='{{ offset }}' \
+                  --jobs-total='{{ batches }}' \
+                  --docker-repos='{{ appdata.docker_repos|join(',') }}' \
                   --push
  
     {% endfor %}
