@@ -22,7 +22,7 @@ running.
 
 *NOTE*: This Docker image is published as both `atlassian/confluence` and
 `atlassian/confluence-server`. These are the same image, but the `-server`
-version is kept for backwards-compatibility with older installations. For new
+version is deprecated and only kept for backwards-compatibility; for new
 installations it is recommended to use the shorter name.
 
 # Quick Start
