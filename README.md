@@ -20,6 +20,11 @@ You can find the repository for this Dockerfile at <https://hub.docker.com/r/atl
 This Docker container makes it easy to get an instance of Confluence up and
 running.
 
+*NOTE*: This Docker image is published as both `atlassian/confluence` and
+`atlassian/confluence-server`. These are the same image, but the `-server`
+version is deprecated and only kept for backwards-compatibility; for new
+installations it is recommended to use the shorter name.
+
 # Quick Start
 
 For the directory in the environmental variable `CONFLUENCE_HOME` that is used
@@ -32,7 +37,7 @@ configured with `CONFLUENCE_SHARED_HOME`.
 
 Start Atlassian Confluence Server:
 
-    docker run -v /data/your-confluence-home:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 atlassian/confluence-server
+    docker run -v /data/your-confluence-home:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 atlassian/confluence
 
 
 **Success**. Confluence is now available on <http://localhost:8090>*
@@ -142,7 +147,7 @@ custom trust store, you can add them via the below environment variable
 
 Example:
 
-    docker run -e JVM_SUPPORT_RECOMMENDED_ARGS=-Djavax.net.ssl.trustStore=/var/atlassian/application-data/confluence/cacerts -v confluenceVolume:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 atlassian/confluence-server
+    docker run -e JVM_SUPPORT_RECOMMENDED_ARGS=-Djavax.net.ssl.trustStore=/var/atlassian/application-data/confluence/cacerts -v confluenceVolume:/var/atlassian/application-data/confluence --name="confluence" -d -p 8090:8090 -p 8091:8091 atlassian/confluence
 
 ## Confluence-specific settings
 
@@ -317,7 +322,7 @@ needs.
 
 #### Build a new image from the existing one
 
-* Create a new `Dockerfile`, which starts with the line e.g: `FROM atlassian/confluence-server:latest`.
+* Create a new `Dockerfile`, which starts with the line e.g: `FROM atlassian/confluence:latest`.
 * Use a `COPY` line to overwrite the provided templates.
 * Build, push and deploy the new image as above.
 
@@ -385,18 +390,18 @@ Read more about data recovery and backups: [Site Backup and Restore][10]
 # Versioning
 
 The `latest` tag matches the most recent official release of Atlassian Confluence Server.
-So `atlassian/confluence-server:latest` will use the newest stable version of
+So `atlassian/confluence:latest` will use the newest stable version of
 Confluence Server available.
 
 Alternatively, you can use a specific minor version of Confluence Server by
-using a version number tag: `atlassian/confluence-server:6.13`. This will
+using a version number tag: `atlassian/confluence:6.13`. This will
 install the latest `6.13.x` version that is available.
 
 We also publish docker images for our [EAP releases](https://www.atlassian.com/software/confluence/download-eap) (not
 supported for use in production). The tag for EAP releases is the EAP version.
-For example to get the `7.8.0-beta1` EAP release, use `atlassian/confluence-server:7.8.0-beta1`.
+For example to get the `7.8.0-beta1` EAP release, use `atlassian/confluence:7.8.0-beta1`.
 
-For example, `atlassian/confluence-server:6.13-ubuntu-18.04-adoptopenjdk8` will
+For example, `atlassian/confluence:6.13-ubuntu-18.04-adoptopenjdk8` will
 install the latest 6.13.x version with AdoptOpenJDK 8.
 
 # Troubleshooting
