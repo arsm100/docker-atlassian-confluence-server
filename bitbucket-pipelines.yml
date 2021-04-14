@@ -1872,5 +1872,5 @@ pipelines:
             - export CONFLUENCE_VERSION=`curl -s https://marketplace.atlassian.com/rest/2/products/key/confluence/versions/latest | jq -r .name`
             - docker build --build-arg CONFLUENCE_VERSION=${CONFLUENCE_VERSION} -t test-image .
             - export IS_RELEASE=false
-            - /usr/src/app/integration_test.sh test-image $IS_RELEASE
+            - /usr/src/app/post_build.sh test-image $IS_RELEASE
 
