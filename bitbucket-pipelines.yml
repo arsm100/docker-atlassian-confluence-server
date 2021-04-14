@@ -1847,6 +1847,7 @@ pipelines:
     ######################################################################
     '**':
       - step:
+          name: Run unit tests
           image: python:3.7-alpine3.9
           services:
             - docker
@@ -1858,12 +1859,13 @@ pipelines:
             - export DOCKERFILE='Dockerfile'
             - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
             - export MAC_PRODUCT_KEY='confluence'
-            - py.test tests/
-            - py.test shared-components/tests/
+            - py.test -v tests/
+            - py.test -v shared-components/tests/
             - export DOCKERFILE='Dockerfile-alpine'
-            - py.test tests/
-            - py.test shared-components/tests/
+            - py.test -v tests/
+            - py.test -v shared-components/tests/
       - step:
+          name: Run integration tests
           services:
             - docker
           script:
@@ -1872,5 +1874,5 @@ pipelines:
             - export CONFLUENCE_VERSION=`curl -s https://marketplace.atlassian.com/rest/2/products/key/confluence/versions/latest | jq -r .name`
             - docker build --build-arg CONFLUENCE_VERSION=${CONFLUENCE_VERSION} -t test-image .
             - export IS_RELEASE=false
-            - /usr/src/app/integration_test.sh test-image $IS_RELEASE
+            - /usr/src/app/post_build.sh test-image $IS_RELEASE
 
