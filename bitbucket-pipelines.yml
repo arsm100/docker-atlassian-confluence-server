@@ -1847,6 +1847,7 @@ pipelines:
     ######################################################################
     '**':
       - step:
+          name: Run unit tests
           image: python:3.7-alpine3.9
           services:
             - docker
@@ -1864,6 +1865,7 @@ pipelines:
             - py.test tests/
             - py.test shared-components/tests/
       - step:
+          name: Run integration tests
           services:
             - docker
           script:
