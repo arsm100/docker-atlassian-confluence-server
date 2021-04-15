@@ -1,6 +1,9 @@
 ARG BASE_IMAGE=adoptopenjdk:11-hotspot
 FROM $BASE_IMAGE
 
+LABEL maintainer="dc-deployments@atlassian.com"
+LABEL securitytxt="https://www.atlassian.com/.well-known/security.txt"
+
 ENV RUN_USER                                        confluence
 ENV RUN_GROUP                                       confluence
 ENV RUN_UID                                         2002
@@ -21,7 +24,7 @@ EXPOSE 8091
 CMD ["/entrypoint.py"]
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
-RUN apt-get update && apt-get upgrade -y \
+RUN apt-get update \
     && apt-get install -y --no-install-recommends fontconfig fonts-noto python3 python3-jinja2 tini \
     && apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 
