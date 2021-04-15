@@ -1,0 +1,4 @@
+ignored:
+  - DL3006 # Version tagging
+  - DL3008 # Pinning
+  - DL4006 # Pipefail
