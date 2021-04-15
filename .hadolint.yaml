@@ -1,4 +1,6 @@
 ignored:
+  - DL3005 # Package upgrades
+  - DL3017 # Package upgrades
   - DL3006 # Version tagging
   - DL3008 # Pinning
   - DL3018 # Pinning
