@@ -23,6 +23,7 @@ CMD ["/entrypoint.py"]
 ENTRYPOINT ["/sbin/tini", "--"]
 
 RUN apk update \
+    && apk upgrade \
     && apk add --no-cache ca-certificates wget curl openssh bash procps openssl perl tini python3 py3-jinja2 ttf-dejavu `apk search -qe 'font-noto*'` \
     && rm -f /var/cache/apk/APKINDEX*
 
