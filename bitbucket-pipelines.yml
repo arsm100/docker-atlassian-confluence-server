@@ -944,6 +944,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7' \
                   --dockerfile='Dockerfile-alpine' \
@@ -968,6 +969,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7' \
                   --dockerfile='Dockerfile-alpine' \
@@ -992,6 +994,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7' \
                   --dockerfile='Dockerfile-alpine' \
@@ -1016,6 +1019,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7' \
                   --dockerfile='Dockerfile-alpine' \
@@ -1040,6 +1044,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7' \
                   --dockerfile='Dockerfile-alpine' \
@@ -1064,6 +1069,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7' \
                   --dockerfile='Dockerfile-alpine' \
@@ -1088,6 +1094,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7' \
                   --dockerfile='Dockerfile-alpine' \
@@ -1112,6 +1119,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7' \
                   --dockerfile='Dockerfile-alpine' \
@@ -1136,6 +1144,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7' \
                   --dockerfile='Dockerfile-alpine' \
@@ -1160,6 +1169,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7' \
                   --dockerfile='Dockerfile-alpine' \
@@ -1184,6 +1194,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7' \
                   --dockerfile='Dockerfile-alpine' \
@@ -1208,6 +1219,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7' \
                   --dockerfile='Dockerfile-alpine' \
@@ -1232,6 +1244,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
@@ -1257,6 +1270,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
@@ -1282,6 +1296,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
@@ -1307,6 +1322,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
@@ -1332,6 +1348,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
@@ -1357,6 +1374,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
@@ -1382,6 +1400,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
@@ -1407,6 +1426,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
@@ -1432,6 +1452,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
@@ -1457,6 +1478,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
@@ -1482,6 +1504,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
@@ -1507,6 +1530,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='6' \
                   --end-version='7.1' \
                   --default-release \
@@ -1532,6 +1556,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
@@ -1557,6 +1582,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
@@ -1582,6 +1608,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
@@ -1607,6 +1634,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
@@ -1632,6 +1660,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
@@ -1657,6 +1686,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
@@ -1682,6 +1712,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
@@ -1707,6 +1738,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
@@ -1732,6 +1764,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
@@ -1757,6 +1790,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
@@ -1782,6 +1816,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
@@ -1807,6 +1842,7 @@ pipelines:
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
+                  --create-eap \
                   --start-version='7.1' \
                   --end-version='8' \
                   --default-release \
