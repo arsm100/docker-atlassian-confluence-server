@@ -152,9 +152,6 @@ pipelines:
             - export MAC_PRODUCT_KEY='confluence'
             - py.test -v tests/
             - py.test -v shared-components/tests/
-            - export DOCKERFILE='Dockerfile-alpine'
-            - py.test -v tests/
-            - py.test -v shared-components/tests/
       - step:
           name: Run integration tests
           services:
