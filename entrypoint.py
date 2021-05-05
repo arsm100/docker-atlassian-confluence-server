@@ -1,6 +1,6 @@
 #!/usr/bin/python3 -B
 
-from entrypoint_helpers import env, gen_cfg, str2bool, start_app
+from entrypoint_helpers import env, gen_cfg, str2bool, exec_app
 
 
 RUN_USER = env['run_user']
@@ -16,4 +16,4 @@ gen_cfg('confluence-init.properties.j2',
 gen_cfg('confluence.cfg.xml.j2', f'{CONFLUENCE_HOME}/confluence.cfg.xml',
         user=RUN_USER, group=RUN_GROUP, overwrite=False)
 
-start_app(f'{CONFLUENCE_INSTALL_DIR}/bin/start-confluence.sh -fg', CONFLUENCE_HOME, name='Confluence')
+exec_app([f'{CONFLUENCE_INSTALL_DIR}/bin/start-confluence.sh', '-fg'], CONFLUENCE_HOME, name='Confluence')
