@@ -452,6 +452,8 @@ Note that these images are built on the [AdoptOpenJDK](https://adoptopenjdk.net/
 Confluence 6.13 OpenJDK was not a supported platform. See [the 6.13
 release-notes][12] for more information.
 
+Alpine builds are available for Confluence 6.x releases, however they are no longer supported.
+
 # Contribution
 
 See the [contributing guideline](CONTRIBUTING.md) if you are contributing from outside Atlassian.
