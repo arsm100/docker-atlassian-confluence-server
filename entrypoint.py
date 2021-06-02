@@ -16,4 +16,5 @@ gen_cfg('confluence-init.properties.j2',
 gen_cfg('confluence.cfg.xml.j2', f'{CONFLUENCE_HOME}/confluence.cfg.xml',
         user=RUN_USER, group=RUN_GROUP, overwrite=False)
 
-exec_app([f'{CONFLUENCE_INSTALL_DIR}/bin/start-confluence.sh', '-fg'], CONFLUENCE_HOME, name='Confluence')
+exec_app([f'{CONFLUENCE_INSTALL_DIR}/bin/start-confluence.sh', '-fg'], CONFLUENCE_HOME,
+         name='Confluence', env_cleanup=True)
