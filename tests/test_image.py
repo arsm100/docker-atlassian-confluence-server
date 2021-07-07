@@ -70,14 +70,15 @@ def test_server_xml_defaults(docker_cli, image):
     assert connector.get('connectionTimeout') == '20000'
     assert connector.get('enableLookups') == 'false'
     assert connector.get('protocol') == 'org.apache.coyote.http11.Http11NioProtocol'
+    assert connector.get('redirectPort') == '8443'
     assert connector.get('acceptCount') == '10'
-    assert connector.get('URIEncoding') == 'UTF-8'
-    assert connector.get('debug') == '0'
     assert connector.get('secure') == 'false'
     assert connector.get('scheme') == 'http'
     assert connector.get('proxyName') == ''
     assert connector.get('proxyPort') == ''
     assert connector.get('maxHttpHeaderSize') == '8192'
+
+    assert context.get('path') == ''
 
 def test_server_xml_catalina_fallback(docker_cli, image):
     environment = {
@@ -110,6 +111,7 @@ def test_server_xml_params(docker_cli, image):
         'ATL_TOMCAT_CONNECTIONTIMEOUT': '20001',
         'ATL_TOMCAT_ENABLELOOKUPS': 'true',
         'ATL_TOMCAT_PROTOCOL': 'HTTP/2',
+        'ATL_TOMCAT_REDIRECTPORT': '8444',
         'ATL_TOMCAT_ACCEPTCOUNT': '11',
         'ATL_TOMCAT_SECURE': 'true',
         'ATL_TOMCAT_SCHEME': 'https',
@@ -117,8 +119,6 @@ def test_server_xml_params(docker_cli, image):
         'ATL_PROXY_PORT': '443',
         'ATL_TOMCAT_MAXHTTPHEADERSIZE': '8193',
         'ATL_TOMCAT_CONTEXTPATH': '/myconf',
-        'ATL_TOMCAT_URI_ENCODING': 'ISO-8859-1',
-        'ATL_TOMCAT_DEBUG':'1',
     }
     container = run_image(docker_cli, image, environment=environment)
     _jvm = wait_for_proc(container, get_bootstrap_proc(container))
@@ -135,14 +135,13 @@ def test_server_xml_params(docker_cli, image):
     assert connector.get('connectionTimeout') == environment.get('ATL_TOMCAT_CONNECTIONTIMEOUT')
     assert connector.get('enableLookups') == environment.get('ATL_TOMCAT_ENABLELOOKUPS')
     assert connector.get('protocol') == environment.get('ATL_TOMCAT_PROTOCOL')
+    assert connector.get('redirectPort') == environment.get('ATL_TOMCAT_REDIRECTPORT')
     assert connector.get('acceptCount') == environment.get('ATL_TOMCAT_ACCEPTCOUNT')
     assert connector.get('secure') == environment.get('ATL_TOMCAT_SECURE')
     assert connector.get('scheme') == environment.get('ATL_TOMCAT_SCHEME')
     assert connector.get('proxyName') == environment.get('ATL_PROXY_NAME')
     assert connector.get('proxyPort') == environment.get('ATL_PROXY_PORT')
     assert connector.get('maxHttpHeaderSize') == environment.get('ATL_TOMCAT_MAXHTTPHEADERSIZE')
-    assert connector.get('URIEncoding') == environment.get('ATL_TOMCAT_URI_ENCODING')
-    assert connector.get('debug') == environment.get('ATL_TOMCAT_DEBUG')
 
     assert context.get('path') == environment.get('ATL_TOMCAT_CONTEXTPATH')
 
