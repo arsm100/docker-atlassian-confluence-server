@@ -73,7 +73,7 @@ def test_server_xml_defaults(docker_cli, image):
     assert connector.get('redirectPort') == '8443'
     assert connector.get('acceptCount') == '10'
     assert connector.get('debug') == '0'
-    assert connector.get('URIEncoding') == '0'
+    assert connector.get('URIEncoding') == 'UTF-8'
     assert connector.get('secure') == 'false'
     assert connector.get('scheme') == 'http'
     assert connector.get('proxyName') == ''
