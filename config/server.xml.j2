@@ -19,7 +19,13 @@
                scheme="{{ atl_tomcat_scheme | default(catalina_connector_scheme) | default('http') }}"
                proxyName="{{ atl_proxy_name | default(catalina_connector_proxyname) | default('') }}"
                proxyPort="{{ atl_proxy_port | default(catalina_connector_proxyport) | default('') }}"
-               maxHttpHeaderSize="{{ atl_tomcat_maxhttpheadersize | default('8192') }}" />
+               maxHttpHeaderSize="{{ atl_tomcat_maxhttpheadersize | default('8192') }}"
+
+               relaxedPathChars="[]|"
+               relaxedQueryChars="[]|{}^\`&quot;&lt;&gt;"
+               bindOnInit="false"
+               useBodyEncodingForURI="true"
+               disableUploadTimeout="true" />
 
 
 
