@@ -72,6 +72,8 @@ def test_server_xml_defaults(docker_cli, image):
     assert connector.get('protocol') == 'org.apache.coyote.http11.Http11NioProtocol'
     assert connector.get('redirectPort') == '8443'
     assert connector.get('acceptCount') == '10'
+    assert connector.get('debug') == '0'
+    assert connector.get('URIEncoding') == '0'
     assert connector.get('secure') == 'false'
     assert connector.get('scheme') == 'http'
     assert connector.get('proxyName') == ''
@@ -113,6 +115,8 @@ def test_server_xml_params(docker_cli, image):
         'ATL_TOMCAT_PROTOCOL': 'HTTP/2',
         'ATL_TOMCAT_REDIRECTPORT': '8444',
         'ATL_TOMCAT_ACCEPTCOUNT': '11',
+        'ATL_TOMCAT_DEBUG': '1',
+        'ATL_TOMCAT_URIENCODING':'ISO-8859-1',
         'ATL_TOMCAT_SECURE': 'true',
         'ATL_TOMCAT_SCHEME': 'https',
         'ATL_PROXY_NAME': 'conf.atlassian.com',
@@ -137,6 +141,8 @@ def test_server_xml_params(docker_cli, image):
     assert connector.get('protocol') == environment.get('ATL_TOMCAT_PROTOCOL')
     assert connector.get('redirectPort') == environment.get('ATL_TOMCAT_REDIRECTPORT')
     assert connector.get('acceptCount') == environment.get('ATL_TOMCAT_ACCEPTCOUNT')
+    assert connector.get('debug') == environment.get('ATL_TOMCAT_DEBUG')
+    assert connector.get('URIEncoding') == environment.get('ATL_TOMCAT_URIENCODING')
     assert connector.get('secure') == environment.get('ATL_TOMCAT_SECURE')
     assert connector.get('scheme') == environment.get('ATL_TOMCAT_SCHEME')
     assert connector.get('proxyName') == environment.get('ATL_PROXY_NAME')
