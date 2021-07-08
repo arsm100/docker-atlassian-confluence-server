@@ -125,15 +125,18 @@ of the setup. They can be controlled via the below environment variables.
    external tools.
 
 The following Tomcat/Catalina options are also supported. For more information,
-see https://tomcat.apache.org/tomcat-7.0-doc/config/index.html.
+see https://tomcat.apache.org/tomcat-7.0-doc/config/index.html
 
 * `ATL_TOMCAT_MGMT_PORT` (default: 8000)
-* `ATL_TOMCAT_MAXTHREADS` (default: 100)
+* `ATL_TOMCAT_MAXTHREADS` (default: 48)
 * `ATL_TOMCAT_MINSPARETHREADS` (default: 10)
 * `ATL_TOMCAT_CONNECTIONTIMEOUT` (default: 20000)
 * `ATL_TOMCAT_ENABLELOOKUPS` (default: false)
-* `ATL_TOMCAT_PROTOCOL` (default: HTTP/1.1)
+* `ATL_TOMCAT_PROTOCOL` (default: org.apache.coyote.http11.Http11NioProtocol)
+* `ATL_TOMCAT_REDIRECTPORT` (default: 8443)
 * `ATL_TOMCAT_ACCEPTCOUNT` (default: 10)
+* `ATL_TOMCAT_DEBUG` (default: 0)
+* `ATL_TOMCAT_URIENCODING` (default: UTF-8)
 * `ATL_TOMCAT_MAXHTTPHEADERSIZE` (default: 8192)
 
 ## JVM configuration
