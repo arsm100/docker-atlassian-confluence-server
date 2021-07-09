@@ -3,34 +3,25 @@
 <Server port="{{ atl_tomcat_mgmt_port | default('8000') }}"
         shutdown="SHUTDOWN">
 
-  <Listener className="org.apache.catalina.startup.VersionLoggerListener"/>
-  <Listener className="org.apache.catalina.core.AprLifecycleListener"
-            SSLEngine="on"/>
-  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener"/>
-  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener"/>
-  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener"/>
-
   <Service name="Catalina">
 
     <Connector port="{{ atl_tomcat_port | default('8090') }}"
-               maxThreads="{{ atl_tomcat_maxthreads | default('100') }}"
+               maxThreads="{{ atl_tomcat_maxthreads | default('48') }}"
                minSpareThreads="{{ atl_tomcat_minsparethreads | default('10') }}"
                connectionTimeout="{{ atl_tomcat_connectiontimeout | default('20000') }}"
                enableLookups="{{ atl_tomcat_enablelookups | default('false') }}"
-               protocol="{{ atl_tomcat_protocol | default('HTTP/1.1') }}"
+               protocol="{{ atl_tomcat_protocol | default('org.apache.coyote.http11.Http11NioProtocol') }}"
                redirectPort="{{ atl_tomcat_redirectport | default('8443') }}"
                acceptCount="{{ atl_tomcat_acceptcount | default('10') }}"
+               debug="{{ atl_tomcat_debug | default('0') }}"
+               URIEncoding="{{ atl_tomcat_uriencoding | default('UTF-8') }}"
                secure="{{ atl_tomcat_secure | default(catalina_connector_secure) | default('false') }}"
                scheme="{{ atl_tomcat_scheme | default(catalina_connector_scheme) | default('http') }}"
                proxyName="{{ atl_proxy_name | default(catalina_connector_proxyname) | default('') }}"
                proxyPort="{{ atl_proxy_port | default(catalina_connector_proxyport) | default('') }}"
+               maxHttpHeaderSize="{{ atl_tomcat_maxhttpheadersize | default('8192') }}" />
 
-               relaxedPathChars="[]|"
-               relaxedQueryChars="[]|{}^\`&quot;&lt;&gt;"
-               bindOnInit="false"
-               maxHttpHeaderSize="{{ atl_tomcat_maxhttpheadersize | default('8192') }}"
-               useBodyEncodingForURI="true"
-               disableUploadTimeout="true" />
+
 
     <Engine name="Standalone"
             defaultHost="localhost"
@@ -83,4 +74,5 @@
   </Service>
 
 </Server>
+
 
