@@ -3,4 +3,3 @@
 CONFLUENCE_TEST_LICENSE=`echo ${CONFLUENCE_TEST_LICENSE} | tr -d '\n \t'`
 
 sed "s~INJECT_LICENSE_HERE~${CONFLUENCE_TEST_LICENSE}~" confluence/confluence-home/confluence.cfg.xml.tmpl > confluence/confluence-home/confluence.cfg.xml
-sed "s~INJECT_BASE_IMAGE_HERE~${TEST_TARGET_IMAGE}~" confluence/Dockerfile.tmpl > confluence/Dockerfile

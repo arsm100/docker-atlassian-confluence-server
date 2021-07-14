@@ -18,6 +18,8 @@ services:
   confluence:
     build:
       context: ./confluence
+      args:
+        - TEST_TARGET_IMAGE=${TEST_TARGET_IMAGE}
     depends_on:
       - postgresql
     ports:
