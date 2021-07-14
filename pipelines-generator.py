@@ -7,18 +7,9 @@ TEMPLATE_FILE = 'bitbucket-pipelines.yml.j2'
 REPOS = ['atlassian/confluence', 'atlassian/confluence-server']
 
 images = {
-    'Conf': {
-        8: {
-            'start_version': '6',
-            'end_version': '7.1',
-            'default_release': True,
-            'base_image': 'adoptopenjdk:8-hotspot',
-            'tag_suffixes': ['adoptopenjdk8', 'jdk8', 'ubuntu', 'ubuntu-18.04-adoptopenjdk8'],
-            'dockerfile': 'Dockerfile',
-            'docker_repos': REPOS,
-        },
+    'Confluence': {
         11: {
-            'start_version': '7.1',
+            'start_version': '7.2',
             'end_version': '8',
             'default_release': True,
             'base_image': 'adoptopenjdk:11-hotspot',
