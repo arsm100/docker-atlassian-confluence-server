@@ -15,7 +15,6 @@ if [ -z "$CONFLUENCE_TEST_LICENSE" ]; then
     exit 1
 fi
 
-unzip -o confluence-home-6.0.1.zip -d confluence
 # NOTE: This expects the license to have been injected
 sh ./confluence/inject-license
 
