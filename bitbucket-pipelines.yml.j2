@@ -31,7 +31,7 @@ pipelines:
     {% for offset in range(0, batches) %}
 
         - step:
-            name: {{ name }} JDK {{ jdkver }} - Batch {{ offset + 1 }}
+            name: JDK {{ jdkver }} - Batch {{ offset + 1 }}
             services:
               - docker
             script:
@@ -83,7 +83,7 @@ pipelines:
     {% for offset in range(0, batches) %}
 
         - step:
-            name: {{ name }} JDK {{ jdkver }} - Batch {{ offset + 1 }}
+            name: JDK {{ jdkver }} - Batch {{ offset + 1 }}
             services:
               - docker
             script:

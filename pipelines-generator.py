@@ -7,7 +7,7 @@ TEMPLATE_FILE = 'bitbucket-pipelines.yml.j2'
 REPOS = ['atlassian/confluence', 'atlassian/confluence-server']
 
 images = {
-    'Confluence Ubuntu': {
+    'Conf': {
         8: {
             'start_version': '6',
             'end_version': '7.1',

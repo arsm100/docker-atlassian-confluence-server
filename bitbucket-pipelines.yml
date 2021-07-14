@@ -28,7 +28,7 @@ pipelines:
 
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 1
+            name: JDK 8 - Batch 1
             services:
               - docker
             script:
@@ -53,7 +53,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 2
+            name: JDK 8 - Batch 2
             services:
               - docker
             script:
@@ -78,7 +78,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 3
+            name: JDK 8 - Batch 3
             services:
               - docker
             script:
@@ -103,7 +103,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 4
+            name: JDK 8 - Batch 4
             services:
               - docker
             script:
@@ -128,7 +128,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 5
+            name: JDK 8 - Batch 5
             services:
               - docker
             script:
@@ -153,7 +153,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 6
+            name: JDK 8 - Batch 6
             services:
               - docker
             script:
@@ -178,7 +178,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 7
+            name: JDK 8 - Batch 7
             services:
               - docker
             script:
@@ -203,7 +203,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 8
+            name: JDK 8 - Batch 8
             services:
               - docker
             script:
@@ -228,7 +228,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 9
+            name: JDK 8 - Batch 9
             services:
               - docker
             script:
@@ -253,7 +253,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 10
+            name: JDK 8 - Batch 10
             services:
               - docker
             script:
@@ -278,7 +278,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 11
+            name: JDK 8 - Batch 11
             services:
               - docker
             script:
@@ -303,7 +303,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 12
+            name: JDK 8 - Batch 12
             services:
               - docker
             script:
@@ -328,7 +328,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 1
+            name: JDK 11 - Batch 1
             services:
               - docker
             script:
@@ -353,7 +353,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 2
+            name: JDK 11 - Batch 2
             services:
               - docker
             script:
@@ -378,7 +378,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 3
+            name: JDK 11 - Batch 3
             services:
               - docker
             script:
@@ -403,7 +403,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 4
+            name: JDK 11 - Batch 4
             services:
               - docker
             script:
@@ -428,7 +428,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 5
+            name: JDK 11 - Batch 5
             services:
               - docker
             script:
@@ -453,7 +453,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 6
+            name: JDK 11 - Batch 6
             services:
               - docker
             script:
@@ -478,7 +478,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 7
+            name: JDK 11 - Batch 7
             services:
               - docker
             script:
@@ -503,7 +503,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 8
+            name: JDK 11 - Batch 8
             services:
               - docker
             script:
@@ -528,7 +528,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 9
+            name: JDK 11 - Batch 9
             services:
               - docker
             script:
@@ -553,7 +553,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 10
+            name: JDK 11 - Batch 10
             services:
               - docker
             script:
@@ -578,7 +578,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 11
+            name: JDK 11 - Batch 11
             services:
               - docker
             script:
@@ -603,7 +603,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 12
+            name: JDK 11 - Batch 12
             services:
               - docker
             script:
@@ -647,7 +647,7 @@ pipelines:
 
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 1
+            name: JDK 8 - Batch 1
             services:
               - docker
             script:
@@ -673,7 +673,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 2
+            name: JDK 8 - Batch 2
             services:
               - docker
             script:
@@ -699,7 +699,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 3
+            name: JDK 8 - Batch 3
             services:
               - docker
             script:
@@ -725,7 +725,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 4
+            name: JDK 8 - Batch 4
             services:
               - docker
             script:
@@ -751,7 +751,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 5
+            name: JDK 8 - Batch 5
             services:
               - docker
             script:
@@ -777,7 +777,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 6
+            name: JDK 8 - Batch 6
             services:
               - docker
             script:
@@ -803,7 +803,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 7
+            name: JDK 8 - Batch 7
             services:
               - docker
             script:
@@ -829,7 +829,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 8
+            name: JDK 8 - Batch 8
             services:
               - docker
             script:
@@ -855,7 +855,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 9
+            name: JDK 8 - Batch 9
             services:
               - docker
             script:
@@ -881,7 +881,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 10
+            name: JDK 8 - Batch 10
             services:
               - docker
             script:
@@ -907,7 +907,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 11
+            name: JDK 8 - Batch 11
             services:
               - docker
             script:
@@ -933,7 +933,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 8 - Batch 12
+            name: JDK 8 - Batch 12
             services:
               - docker
             script:
@@ -959,7 +959,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 1
+            name: JDK 11 - Batch 1
             services:
               - docker
             script:
@@ -985,7 +985,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 2
+            name: JDK 11 - Batch 2
             services:
               - docker
             script:
@@ -1011,7 +1011,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 3
+            name: JDK 11 - Batch 3
             services:
               - docker
             script:
@@ -1037,7 +1037,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 4
+            name: JDK 11 - Batch 4
             services:
               - docker
             script:
@@ -1063,7 +1063,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 5
+            name: JDK 11 - Batch 5
             services:
               - docker
             script:
@@ -1089,7 +1089,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 6
+            name: JDK 11 - Batch 6
             services:
               - docker
             script:
@@ -1115,7 +1115,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 7
+            name: JDK 11 - Batch 7
             services:
               - docker
             script:
@@ -1141,7 +1141,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 8
+            name: JDK 11 - Batch 8
             services:
               - docker
             script:
@@ -1167,7 +1167,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 9
+            name: JDK 11 - Batch 9
             services:
               - docker
             script:
@@ -1193,7 +1193,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 10
+            name: JDK 11 - Batch 10
             services:
               - docker
             script:
@@ -1219,7 +1219,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 11
+            name: JDK 11 - Batch 11
             services:
               - docker
             script:
@@ -1245,7 +1245,7 @@ pipelines:
  
 
         - step:
-            name: Confluence Ubuntu JDK 11 - Batch 12
+            name: JDK 11 - Batch 12
             services:
               - docker
             script:
