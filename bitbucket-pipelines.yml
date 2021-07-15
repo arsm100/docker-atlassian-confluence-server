@@ -337,6 +337,39 @@ pipelines:
             - export DOCKER_REPO='atlassian/confluence-server'
             - python shared-components/image/push-readme.py
 
+
+    ######################################################################
+    # All other branches & PRs; run unit tests & functional tests
+    # against latest app version
+    ######################################################################
+    '**':
+      - step:
+          name: Run unit tests
+          image: python:3.7-alpine3.9
+          services:
+            - docker
+          script:
+            - apk add --no-cache git
+            - git submodule update --init --recursive
+            - pip install -q -r shared-components/tests/requirements.txt
+            - export PYTHONPATH=./shared-components/tests:$PYTHONPATH
+            - export DOCKERFILE='Dockerfile'
+            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
+            - export MAC_PRODUCT_KEY='confluence'
+            - py.test -v tests/
+            - py.test -v shared-components/tests/
+      - step:
+          name: Run integration tests
+          services:
+            - docker
+          script:
+            - apk add --no-cache git docker-compose jq curl
+            - git submodule update --init --recursive
+            - export CONFLUENCE_VERSION=`curl -s https://marketplace.atlassian.com/rest/2/products/key/confluence/versions/latest | jq -r .name`
+            - docker build --build-arg CONFLUENCE_VERSION=${CONFLUENCE_VERSION} -t test-image .
+            - export IS_RELEASE=false
+            - /usr/src/app/post_build.sh test-image $IS_RELEASE
+
   custom:
     ######################################################################
     # Custom: Do full release for each image flavour
@@ -674,38 +707,3 @@ pipelines:
             - snyk auth @SNYK_TOKEN
             - snyk container test atlassian/confluence-server:${DOCKER_TAG} --severity-threshold=high
             - docker push atlassian/confluence-server:${DOCKER_TAG}
-
-
-  pull-requests:
-    ######################################################################
-    # All other branches & PRs; run unit tests & functional tests
-    # against latest app version
-    ######################################################################
-    '**':
-      - step:
-          name: Run unit tests
-          image: python:3.7-alpine3.9
-          services:
-            - docker
-          script:
-            - apk add --no-cache git
-            - git submodule update --init --recursive
-            - pip install -q -r shared-components/tests/requirements.txt
-            - export PYTHONPATH=./shared-components/tests:$PYTHONPATH
-            - export DOCKERFILE='Dockerfile'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - py.test -v tests/
-            - py.test -v shared-components/tests/
-      - step:
-          name: Run integration tests
-          services:
-            - docker
-          script:
-            - apk add --no-cache git docker-compose jq curl
-            - git submodule update --init --recursive
-            - export CONFLUENCE_VERSION=`curl -s https://marketplace.atlassian.com/rest/2/products/key/confluence/versions/latest | jq -r .name`
-            - docker build --build-arg CONFLUENCE_VERSION=${CONFLUENCE_VERSION} -t test-image .
-            - export IS_RELEASE=false
-            - /usr/src/app/post_build.sh test-image $IS_RELEASE
-
