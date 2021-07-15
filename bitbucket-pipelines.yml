@@ -344,31 +344,38 @@ pipelines:
     ######################################################################
     '**':
       - step:
-          name: Run unit tests
-          image: python:3.7-alpine3.9
-          services:
-            - docker
+          name: Check if pipelines config is up-to-date...
           script:
-            - apk add --no-cache git
-            - git submodule update --init --recursive
-            - pip install -q -r shared-components/tests/requirements.txt
-            - export PYTHONPATH=./shared-components/tests:$PYTHONPATH
-            - export DOCKERFILE='Dockerfile'
-            - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
-            - export MAC_PRODUCT_KEY='confluence'
-            - py.test -v tests/
-            - py.test -v shared-components/tests/
-      - step:
-          name: Run integration tests
-          services:
-            - docker
-          script:
-            - apk add --no-cache git docker-compose jq curl
-            - git submodule update --init --recursive
-            - export CONFLUENCE_VERSION=`curl -s https://marketplace.atlassian.com/rest/2/products/key/confluence/versions/latest | jq -r .name`
-            - docker build --build-arg CONFLUENCE_VERSION=${CONFLUENCE_VERSION} -t test-image .
-            - export IS_RELEASE=false
-            - /usr/src/app/post_build.sh test-image $IS_RELEASE
+            - python3 pipelines-generator.py > bitbucket-piplines.yml.expected && diff bitbucket-pipelines.yml bitbucket-piplines.yml.expected
+
+      - parallel:
+        - step:
+            name: Run unit tests
+            image: python:3.7-alpine3.9
+            services:
+              - docker
+            script:
+              - apk add --no-cache git
+              - git submodule update --init --recursive
+              - pip install -q -r shared-components/tests/requirements.txt
+              - export PYTHONPATH=./shared-components/tests:$PYTHONPATH
+              - export DOCKERFILE='Dockerfile'
+              - export DOCKERFILE_VERSION_ARG='CONFLUENCE_VERSION'
+              - export MAC_PRODUCT_KEY='confluence'
+              - py.test -v tests/
+              - py.test -v shared-components/tests/
+
+        - step:
+            name: Run integration tests
+            services:
+              - docker
+            script:
+              - apk add --no-cache git docker-compose jq curl
+              - git submodule update --init --recursive
+              - export CONFLUENCE_VERSION=`curl -s https://marketplace.atlassian.com/rest/2/products/key/confluence/versions/latest | jq -r .name`
+              - docker build --build-arg CONFLUENCE_VERSION=${CONFLUENCE_VERSION} -t test-image .
+              - export IS_RELEASE=false
+              - /usr/src/app/post_build.sh test-image $IS_RELEASE
 
   custom:
     ######################################################################
