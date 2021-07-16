@@ -18,16 +18,18 @@ services:
   confluence:
     build:
       context: ./confluence
+      args:
+        - TEST_TARGET_IMAGE=${TEST_TARGET_IMAGE}
     depends_on:
       - postgresql
     ports:
       - '8090:8090'
     command: >
       bash -c '
-          if grep -oh 'Alpine' < /etc/os-release ; then apk update && apk add netcat-openbsd; else apt-get update -y && apt-get install -y netcat;  fi &&
-          /opt/atlassian/support/waitport postgresql 5432 &&
-          chown -R confluence.confluence  /var/atlassian/application-data/confluence/ &&
-          /entrypoint.py
+          apt-get update -y && apt-get install -y netcat &&
+              /opt/atlassian/support/waitport postgresql 5432 &&
+              chown -R confluence.confluence  /var/atlassian/application-data/confluence/ &&
+              /entrypoint.py
       '
 
   smoketests:
