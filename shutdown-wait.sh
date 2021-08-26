@@ -27,4 +27,4 @@ else
     ${CONFLUENCE_INSTALL_DIR}/bin/stop-confluence.sh;
 fi
 
-/opt/atlassian/support/wait-pid.sh
+/opt/atlassian/support/wait-pid.sh ${JVM_APP_PID}
