@@ -4,6 +4,7 @@ FROM $BASE_IMAGE
 LABEL maintainer="dc-deployments@atlassian.com"
 LABEL securitytxt="https://www.atlassian.com/.well-known/security.txt"
 
+ENV APP_NAME                                        confluence
 ENV RUN_USER                                        confluence
 ENV RUN_GROUP                                       confluence
 ENV RUN_UID                                         2002
@@ -55,6 +56,7 @@ RUN groupadd --gid ${RUN_GID} ${RUN_GROUP} \
 VOLUME ["${CONFLUENCE_HOME}"] # Must be declared after setting perms
 
 COPY entrypoint.py \
+     shutdown-wait.sh \
      shared-components/image/entrypoint_helpers.py  /
 COPY shared-components/support                      /opt/atlassian/support
 COPY config/*                                       /opt/atlassian/etc/
