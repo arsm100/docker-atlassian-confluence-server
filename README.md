@@ -390,6 +390,17 @@ using an external database.
 
 Read more about data recovery and backups: [Site Backup and Restore][10]
 
+# Shutdown
+
+Confluence allows a grace period of 20s for active operations to finish before
+termination. If sending a `docker stop` this should be taken into account with
+the `--time` flag.
+
+Alternatively, the script `/shutdown-wait.sh` is provided, which will initiate a
+clean shutdown and wait for the process to complete. This is the recommended
+method for shutdown in environments which provide for orderly shutdown,
+e.g. Kubernetes via the `preStop` hook.
+
 # Versioning
 
 The `latest` tag matches the most recent official release of Atlassian Confluence Server.
