@@ -69,6 +69,8 @@ pipelines:
             - pip install -q requests
             - export DOCKER_REPO='atlassian/confluence-server'
             - python shared-components/image/push-readme.py
+            - export DOCKER_REPO='atlassian/confluence'
+            - python shared-components/image/push-readme.py
 
 
     ######################################################################
@@ -164,8 +166,8 @@ pipelines:
             - git submodule update --init --recursive
             - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
             - >
-              docker build -t atlassian/confluence-server:${DOCKER_TAG}
+              docker build -t atlassian/confluence:${DOCKER_TAG}
               --build-arg CONFLUENCE_VERSION=${CONFLUENCE_VERSION} .
             - snyk auth $SNYK_TOKEN
-            - snyk container test atlassian/confluence-server:${DOCKER_TAG} --severity-threshold=high
-            - docker push atlassian/confluence-server:${DOCKER_TAG}
+            - snyk container test atlassian/confluence:${DOCKER_TAG} --severity-threshold=high
+            - docker push atlassian/confluence:${DOCKER_TAG}
