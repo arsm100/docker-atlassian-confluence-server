@@ -12,7 +12,7 @@ images = {
             'start_version': '7.2',
             'end_version': '8',
             'default_release': True,
-            'base_image': 'adoptopenjdk:11-hotspot',
+            'base_image': 'adoptopenjdk/openjdk11',
             'tag_suffixes': ['adoptopenjdk11', 'jdk11', 'ubuntu', 'ubuntu-18.04-adoptopenjdk11'],
             'dockerfile': 'Dockerfile',
             'docker_repos': REPOS,
