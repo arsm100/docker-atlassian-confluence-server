@@ -481,7 +481,7 @@ For product support, go to
 [support.atlassian.com](https://support.atlassian.com/confluence-server/).
 
 You can also visit the [Atlassian Data Center on
-Kubernetes](https://confluence.atlassian.com/support/atlassian-support-end-of-life-policy-201851003.html)
+Kubernetes](https://community.atlassian.com/t5/Atlassian-Data-Center-on/gh-p/DC_Kubernetes)
 forum for discussion on running Atlassian Data Center products in containers.
 
 # Contribution
