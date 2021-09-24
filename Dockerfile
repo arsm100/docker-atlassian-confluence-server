@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=adoptopenjdk:11-hotspot
+ARG BASE_IMAGE=adoptopenjdk/openjdk11
 FROM $BASE_IMAGE
 
 LABEL maintainer="dc-deployments@atlassian.com"

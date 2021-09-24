@@ -418,6 +418,24 @@ For example to get the `7.8.0-beta1` EAP release, use `atlassian/confluence:7.8.
 For example, `atlassian/confluence:6.13-ubuntu-18.04-adoptopenjdk8` will
 install the latest 6.13.x version with AdoptOpenJDK 8.
 
+# Supported JDK versions
+
+All the Atlassian Docker images are now JDK11 only, and generated from the
+[official AdoptOpenJDK Docker images](https://hub.docker.com/r/adoptopenjdk/openjdk11).
+
+The Docker images follow the [Atlassian Support end-of-life
+policy](https://confluence.atlassian.com/support/atlassian-support-end-of-life-policy-201851003.html);
+images for unsupported versions of the products remain available but will no longer
+receive updates or fixes.
+
+Historically, we have also generated other versions of the images, including
+JDK8, Alpine, and 'slim' versions of the JDK. These legacy images still exist in
+Docker Hub, however they should be considered deprecated, and do not receive
+updates or fixes.
+
+If for some reason you need a different version, see "Building your own image"
+above.
+
 # Troubleshooting
 
 These images include built-in scripts to assist in performing common JVM diagnostic tasks.
@@ -462,11 +480,9 @@ in the running container:
 For product support, go to
 [support.atlassian.com](https://support.atlassian.com/confluence-server/).
 
-Note that these images are built on the [AdoptOpenJDK](https://adoptopenjdk.net/) images. Prior to
-Confluence 6.13 OpenJDK was not a supported platform. See [the 6.13
-release-notes][12] for more information.
-
-Alpine builds are available for Confluence 6.x releases, however they are no longer supported.
+You can also visit the [Atlassian Data Center on
+Kubernetes](https://community.atlassian.com/t5/Atlassian-Data-Center-on/gh-p/DC_Kubernetes)
+forum for discussion on running Atlassian Data Center products in containers.
 
 # Contribution
 
