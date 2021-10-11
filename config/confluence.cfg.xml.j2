@@ -72,5 +72,9 @@
       <property name="atlassian.license.message">{{ atl_license_key }}</property>
     {% endif %}
 
+    {% if atl_tomcat_contextpath is defined and atl_tomcat_contextpath != '' %}
+      <property name="confluence.webapp.context.path">/{{ atl_tomcat_contextpath }}</property>
+    {% endif %}
+
   </properties>
 </confluence-configuration>
