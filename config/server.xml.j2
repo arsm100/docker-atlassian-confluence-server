@@ -41,7 +41,7 @@
           <Manager pathname=""/>
           <Valve className="org.apache.catalina.valves.StuckThreadDetectionValve"
                  threshold="60"/>
-        {% if atl_tomcat_access_log == 'true' %}
+        {% if (confluence_version.split('.') | map('int') | list) >= ('7.11.0'.split('.') | map('int') | list) or atl_tomcat_access_log == 'true' %}
           <Valve className="org.apache.catalina.valves.AccessLogValve"
                  requestAttributesEnabled="true"
                  directory="logs"
