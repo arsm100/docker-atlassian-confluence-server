@@ -42,7 +42,7 @@
           <Valve className="org.apache.catalina.valves.StuckThreadDetectionValve"
                  threshold="60"/>
         {% if ((atl_tomcat_access_log == 'true') or
-            (confluence_version.split('.') | map('int') | list) >= ('7.11.0'.split('.') | map('int') | list))  %}
+            (atl_tomcat_access_log is defined and (confluence_version.split('.') | map('int') | list) >= ('7.11.0'.split('.') | map('int') | list)) ) %}
           <Valve className="org.apache.catalina.valves.AccessLogValve"
                  requestAttributesEnabled="true"
                  directory="logs"
