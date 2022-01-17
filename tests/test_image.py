@@ -162,18 +162,61 @@ def test_server_xml_params(docker_cli, image):
 
     assert context.get('path') == environment.get('ATL_TOMCAT_CONTEXTPATH')
 
-def test_server_xml_access_log(docker_cli, image):
+def test_server_xml_access_log_enabled(docker_cli, image):
     environment = {
         'ATL_TOMCAT_ACCESS_LOG': 'true',
         'ATL_TOMCAT_PROXY_INTERNAL_IPS': '192.168.1.1',
+        'CONFLUENCE_VERSION': '7.10.0',
     }
 
     container = run_image(docker_cli, image, environment=environment)
     _jvm = wait_for_proc(container, get_bootstrap_proc(container))
 
     xml = parse_xml(container, f'{get_app_install_dir(container)}/conf/server.xml')
-    valve = xml.find('.//Context/Valve[@className="org.apache.catalina.valves.RemoteIpValve"]')
-    assert valve.get('internalProxies') == environment.get('ATL_TOMCAT_PROXY_INTERNAL_IPS')
+    value = xml.find('.//Context/Valve[@className="org.apache.catalina.valves.RemoteIpValve"]')
+    assert value.get('internalProxies') == environment.get('ATL_TOMCAT_PROXY_INTERNAL_IPS')
+
+def test_server_xml_access_log_disabled(docker_cli, image):
+    environment = {
+        'ATL_TOMCAT_ACCESS_LOG': 'false',
+        'ATL_TOMCAT_PROXY_INTERNAL_IPS': '192.168.1.1',
+        'CONFLUENCE_VERSION': '7.12.0',
+    }
+
+    container = run_image(docker_cli, image, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+
+    xml = parse_xml(container, f'{get_app_install_dir(container)}/conf/server.xml')
+    value = xml.find('.//Context/Valve[@className="org.apache.catalina.valves.RemoteIpValve"]')
+    assert value is None
+
+def test_server_xml_access_log_default_ver_lt_7_11(docker_cli, image):
+    environment = {
+        #'ATL_TOMCAT_ACCESS_LOG': Not defined,
+        'ATL_TOMCAT_PROXY_INTERNAL_IPS': '192.168.1.1',
+        'CONFLUENCE_VERSION': "7.10.0",
+    }
+
+    container = run_image(docker_cli, image, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+
+    xml = parse_xml(container, f'{get_app_install_dir(container)}/conf/server.xml')
+    value = xml.find('.//Context/Valve[@className="org.apache.catalina.valves.RemoteIpValve"]')
+    assert value is None
+
+def test_server_xml_access_log_default_ver_gt_7_11(docker_cli, image):
+    environment = {
+        #'ATL_TOMCAT_ACCESS_LOG': Not defined,
+        'ATL_TOMCAT_PROXY_INTERNAL_IPS': '192.168.1.1',
+        'CONFLUENCE_VERSION': '7.12.0',
+    }
+
+    container = run_image(docker_cli, image, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+
+    xml = parse_xml(container, f'{get_app_install_dir(container)}/conf/server.xml')
+    value = xml.find('.//Context/Valve[@className="org.apache.catalina.valves.RemoteIpValve"]')
+    assert value.get('internalProxies') == environment.get('ATL_TOMCAT_PROXY_INTERNAL_IPS')
 
 def test_seraph_defaults(docker_cli, image):
     container = run_image(docker_cli, image)

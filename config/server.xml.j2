@@ -21,8 +21,6 @@
                proxyPort="{{ atl_proxy_port | default(catalina_connector_proxyport) | default('') }}"
                maxHttpHeaderSize="{{ atl_tomcat_maxhttpheadersize | default('8192') }}" />
 
-
-
     <Engine name="Standalone"
             defaultHost="localhost"
             debug="0">
@@ -41,7 +39,8 @@
           <Manager pathname=""/>
           <Valve className="org.apache.catalina.valves.StuckThreadDetectionValve"
                  threshold="60"/>
-        {% if atl_tomcat_access_log == 'true' %}
+        {% if ((atl_tomcat_access_log == 'true') or
+            (atl_tomcat_access_log is not defined and (confluence_version.split('.') | map('int') | list) >= ('7.11.0'.split('.') | map('int') | list)) ) %}
           <Valve className="org.apache.catalina.valves.AccessLogValve"
                  requestAttributesEnabled="true"
                  directory="logs"

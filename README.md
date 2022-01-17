@@ -115,7 +115,7 @@ of the setup. They can be controlled via the below environment variables.
    The context path the application is served over. `CATALINA_CONTEXT_PATH` is
    also supported for backwards compatability.
 
-* `ATL_TOMCAT_ACCESS_LOG` (default: false)
+* `ATL_TOMCAT_ACCESS_LOG` (default: false [version < 7.11.0] and true [version >=7.11.0])
 
    Whether to enable Tomcat access logging; set to `true` to enable. *NOTE*:
    These logs are written to the Container internal volume by default (under
