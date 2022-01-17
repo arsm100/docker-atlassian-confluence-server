@@ -162,10 +162,11 @@ def test_server_xml_params(docker_cli, image):
 
     assert context.get('path') == environment.get('ATL_TOMCAT_CONTEXTPATH')
 
-def test_server_xml_access_log(docker_cli, image):
+def test_server_xml_access_log_enabled(docker_cli, image):
     environment = {
         'ATL_TOMCAT_ACCESS_LOG': 'true',
         'ATL_TOMCAT_PROXY_INTERNAL_IPS': '192.168.1.1',
+        'CONFLUENCE_VERSION': '7.10.0',
     }
 
     container = run_image(docker_cli, image, environment=environment)
@@ -179,6 +180,7 @@ def test_server_xml_access_log_disabled(docker_cli, image):
     environment = {
         'ATL_TOMCAT_ACCESS_LOG': 'false',
         'ATL_TOMCAT_PROXY_INTERNAL_IPS': '192.168.1.1',
+        'CONFLUENCE_VERSION': '7.12.0',
     }
 
     container = run_image(docker_cli, image, environment=environment)
