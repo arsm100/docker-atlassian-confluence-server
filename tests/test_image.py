@@ -175,11 +175,10 @@ def test_server_xml_access_log(docker_cli, image):
     value = xml.find('.//Context/Valve[@className="org.apache.catalina.valves.RemoteIpValve"]')
     assert value.get('internalProxies') == environment.get('ATL_TOMCAT_PROXY_INTERNAL_IPS')
 
-def test_server_xml_access_log_default_ver_lt_7_11(docker_cli, image):
+def test_server_xml_access_log_disabled(docker_cli, image):
     environment = {
-        #'ATL_TOMCAT_ACCESS_LOG': Not defined,
+        'ATL_TOMCAT_ACCESS_LOG': 'false',
         'ATL_TOMCAT_PROXY_INTERNAL_IPS': '192.168.1.1',
-        'CONFLUENCE_VERSION': "7.10.0",
     }
 
     container = run_image(docker_cli, image, environment=environment)
@@ -189,10 +188,11 @@ def test_server_xml_access_log_default_ver_lt_7_11(docker_cli, image):
     value = xml.find('.//Context/Valve[@className="org.apache.catalina.valves.RemoteIpValve"]')
     assert value is None
 
-def test_server_xml_access_log_disabled(docker_cli, image):
+def test_server_xml_access_log_default_ver_lt_7_11(docker_cli, image):
     environment = {
-        'ATL_TOMCAT_ACCESS_LOG': 'false',
+        #'ATL_TOMCAT_ACCESS_LOG': Not defined,
         'ATL_TOMCAT_PROXY_INTERNAL_IPS': '192.168.1.1',
+        'CONFLUENCE_VERSION': "7.10.0",
     }
 
     container = run_image(docker_cli, image, environment=environment)
