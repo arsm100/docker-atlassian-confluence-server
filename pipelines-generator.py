@@ -9,7 +9,7 @@ REPOS = ['atlassian/confluence', 'atlassian/confluence-server']
 images = {
     'Confluence': {
         11: {
-            'start_version': '7.3',
+            'start_version': '7.4',
             'end_version': '8',
             'default_release': True,
             'base_image': 'adoptopenjdk/openjdk11',
