@@ -37,7 +37,7 @@ pipelines:
               - >
                 python  /usr/src/app/make-releases.py \
                   --update \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -62,7 +62,7 @@ pipelines:
               - >
                 python  /usr/src/app/make-releases.py \
                   --update \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -87,7 +87,7 @@ pipelines:
               - >
                 python  /usr/src/app/make-releases.py \
                   --update \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -112,7 +112,7 @@ pipelines:
               - >
                 python  /usr/src/app/make-releases.py \
                   --update \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -137,7 +137,7 @@ pipelines:
               - >
                 python  /usr/src/app/make-releases.py \
                   --update \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -162,7 +162,7 @@ pipelines:
               - >
                 python  /usr/src/app/make-releases.py \
                   --update \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -187,7 +187,7 @@ pipelines:
               - >
                 python  /usr/src/app/make-releases.py \
                   --update \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -212,7 +212,7 @@ pipelines:
               - >
                 python  /usr/src/app/make-releases.py \
                   --update \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -237,7 +237,7 @@ pipelines:
               - >
                 python  /usr/src/app/make-releases.py \
                   --update \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -262,7 +262,7 @@ pipelines:
               - >
                 python  /usr/src/app/make-releases.py \
                   --update \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -287,7 +287,7 @@ pipelines:
               - >
                 python  /usr/src/app/make-releases.py \
                   --update \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -312,7 +312,7 @@ pipelines:
               - >
                 python  /usr/src/app/make-releases.py \
                   --update \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -399,7 +399,7 @@ pipelines:
                 python /usr/src/app/make-releases.py \
                   --create \
                   --create-eap \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -425,7 +425,7 @@ pipelines:
                 python /usr/src/app/make-releases.py \
                   --create \
                   --create-eap \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -451,7 +451,7 @@ pipelines:
                 python /usr/src/app/make-releases.py \
                   --create \
                   --create-eap \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -477,7 +477,7 @@ pipelines:
                 python /usr/src/app/make-releases.py \
                   --create \
                   --create-eap \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -503,7 +503,7 @@ pipelines:
                 python /usr/src/app/make-releases.py \
                   --create \
                   --create-eap \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -529,7 +529,7 @@ pipelines:
                 python /usr/src/app/make-releases.py \
                   --create \
                   --create-eap \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -555,7 +555,7 @@ pipelines:
                 python /usr/src/app/make-releases.py \
                   --create \
                   --create-eap \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -581,7 +581,7 @@ pipelines:
                 python /usr/src/app/make-releases.py \
                   --create \
                   --create-eap \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -607,7 +607,7 @@ pipelines:
                 python /usr/src/app/make-releases.py \
                   --create \
                   --create-eap \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -633,7 +633,7 @@ pipelines:
                 python /usr/src/app/make-releases.py \
                   --create \
                   --create-eap \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -659,7 +659,7 @@ pipelines:
                 python /usr/src/app/make-releases.py \
                   --create \
                   --create-eap \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
@@ -685,7 +685,7 @@ pipelines:
                 python /usr/src/app/make-releases.py \
                   --create \
                   --create-eap \
-                  --start-version='7.3' \
+                  --start-version='7.4' \
                   --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
