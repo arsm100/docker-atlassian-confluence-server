@@ -1,0 +1,18 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.14.1
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-UBUNTU2004-EXPAT-2403934:
+    - '*':
+        reason: Ignore until March 25, 2022 - waiting for `adoptopenjdk/openjdk11` image update
+        expires: 2022-03-25T00:00:00.000Z
+  SNYK-UBUNTU2004-CYRUSSASL2-2408941:
+    - '*':
+        reason: Ignore until March 25, 2022 - waiting for `adoptopenjdk/openjdk11` image update
+        expires: 2022-03-25T00:00:00.000Z
+  SNYK-UBUNTU2004-EXPAT-2403778:
+    - '*':
+        reason: Ignore until March 25, 2022 - waiting for `adoptopenjdk/openjdk11` image update
+        expires: 2022-03-25T00:00:00.000Z
+patch: {}
+
