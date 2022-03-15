@@ -48,7 +48,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='0' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -73,7 +73,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='1' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -98,7 +98,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='2' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -123,7 +123,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='3' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -148,7 +148,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='4' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -173,7 +173,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='5' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -198,7 +198,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='6' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -223,7 +223,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='7' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -248,7 +248,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='8' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -273,7 +273,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='9' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -298,7 +298,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='10' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -323,7 +323,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='11' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -410,7 +410,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='0' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -436,7 +436,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='1' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -462,7 +462,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='2' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -488,7 +488,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='3' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -514,7 +514,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='4' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -540,7 +540,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='5' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -566,7 +566,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='6' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -592,7 +592,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='7' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -618,7 +618,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='8' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -644,7 +644,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='9' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -670,7 +670,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='10' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 
@@ -696,7 +696,7 @@ pipelines:
                   --concurrent-builds='1' \
                   --job-offset='11' \
                   --jobs-total='12' \
-                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --docker-repos='docker-public.packages.atlassian.com/atlassian/confluence,docker-public.packages.atlassian.com/atlassian/confluence-server' \
                   --push
  
 

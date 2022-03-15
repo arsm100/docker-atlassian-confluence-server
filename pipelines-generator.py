@@ -4,7 +4,8 @@ import os
 import jinja2 as j2
 
 TEMPLATE_FILE = 'bitbucket-pipelines.yml.j2'
-REPOS = ['atlassian/confluence', 'atlassian/confluence-server']
+REPOS = ['docker-public.packages.atlassian.com/atlassian/confluence',
+         'docker-public.packages.atlassian.com/atlassian/confluence-server']
 
 images = {
     'Confluence': {
