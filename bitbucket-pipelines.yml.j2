@@ -36,7 +36,7 @@ pipelines:
               - docker
             script:
               - git submodule update --init --recursive
-              - echo ${DOCKER_BOT_PASSWORD} | docker login docker-public.packages.atlassian.com --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
               - >
                 python  /usr/src/app/make-releases.py \
                   --update \
@@ -130,7 +130,7 @@ pipelines:
               - docker
             script:
               - git submodule update --init --recursive
-              - echo ${DOCKER_BOT_PASSWORD} | docker login docker-public.packages.atlassian.com --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
               - >
                 python /usr/src/app/make-releases.py \
                   --create \
@@ -164,10 +164,10 @@ pipelines:
             - docker
           script:
             - git submodule update --init --recursive
-            - echo ${DOCKER_BOT_PASSWORD} | docker login docker-public.packages.atlassian.com --username ${DOCKER_BOT_USERNAME} --password-stdin
+            - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
             - >
-              docker build -t docker-public.packages.atlassian.com/atlassian/confluence:${DOCKER_TAG}
+              docker build -t ${DOCKER_REGISTRY}/atlassian/confluence:${DOCKER_TAG}
               --build-arg CONFLUENCE_VERSION=${CONFLUENCE_VERSION} .
             - snyk auth $SNYK_TOKEN
-            - snyk container test docker-public.packages.atlassian.com/atlassian/confluence:${DOCKER_TAG} --severity-threshold=high
-            - docker push docker-public.packages.atlassian.com/atlassian/confluence:${DOCKER_TAG}
+            - snyk container test ${DOCKER_REGISTRY}/atlassian/confluence:${DOCKER_TAG} --severity-threshold=high
+            - docker push ${DOCKER_REGISTRY}/atlassian/confluence:${DOCKER_TAG}
