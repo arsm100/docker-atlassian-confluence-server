@@ -60,18 +60,6 @@ pipelines:
   {% endfor %}
 {% endfor %}
 
-      - step:
-          name: Update README
-          image: python:3.7-alpine3.9
-          script:
-            - apk add --no-cache git
-            - git submodule update --init --recursive
-            - pip install -q requests
-            - export DOCKER_REPO='atlassian/confluence-server'
-            - python shared-components/image/push-readme.py
-            - export DOCKER_REPO='atlassian/confluence'
-            - python shared-components/image/push-readme.py
-
 
     ######################################################################
     # All other branches & PRs; run unit tests & functional tests
