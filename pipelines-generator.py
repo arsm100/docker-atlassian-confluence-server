@@ -27,7 +27,7 @@ def main():
         lstrip_blocks=True,
         trim_blocks=True)
     template = jenv.get_template(TEMPLATE_FILE)
-    generated_output = template.render(images=images, batches=12)
+    generated_output = template.render(images=images, batches=8)
 
     print(generated_output)
 
