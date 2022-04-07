@@ -426,3 +426,20 @@ def test_jvm_fallback_fonts(docker_cli, image):
     assert font.exists
     assert font.is_symlink
 
+
+def test_confluence_xml_snapshot_properties(docker_cli, image, run_user):
+    environment = {
+        'ATL_SETUP_STEP': 'complete',
+        'ATL_SETUP_TYPE': 'clustersetup',
+        'ATL_BUILD_NUMBER': '8703',
+        'ATL_SNAPSHOT_USED': 'true',
+    }
+    container = run_image(docker_cli, image, user=run_user, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+
+    xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
+
+    assert xml.findall('.//setupStep')[0].text == "complete"
+    assert xml.findall('.//setupType')[0].text == "clustersetup"
+    assert xml.findall('.//buildNumber')[0].text == "8703"
+    assert xml.findall('.//property[@name="hibernate.setup"]')[0].text == "true"

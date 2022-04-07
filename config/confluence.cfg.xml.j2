@@ -2,9 +2,9 @@
 
 <confluence-configuration>
 
-  <setupStep>setupstart</setupStep>
-  <setupType>custom</setupType>
-  <buildNumber>0</buildNumber>
+  <setupStep>{{ atl_setup_step | default('setupstart') }}</setupStep>
+  <setupType>{{ atl_setup_type | default('custom') }}</setupType>
+  <buildNumber>{{ atl_build_number | default('0') }}</buildNumber>
 
   <properties>
     <property name="confluence.database.connection.type">database-type-standard</property>
@@ -74,6 +74,10 @@
 
     {% if atl_tomcat_contextpath is defined and atl_tomcat_contextpath != '' %}
       <property name="confluence.webapp.context.path">/{{ atl_tomcat_contextpath }}</property>
+    {% endif %}
+
+    {% if atl_snapshot_used is defined %}
+      <property name="hibernate.setup">true</property>
     {% endif %}
 
   </properties>
