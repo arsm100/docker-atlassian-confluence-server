@@ -262,7 +262,7 @@ pipelines:
             script:
               - apk add --no-cache git docker-compose jq curl
               - git submodule update --init --recursive
-              - export CONFLUENCE_VERSION=`curl -s https://marketplace.atlassian.com/rest/2/products/key/confluence/versions/latest | jq -r .name`
+              - export CONFLUENCE_VERSION=`curl -s https://marketplace.atlassian.com/rest/2/products/key/confluence/versions | jq -r '._embedded.versions | .[0].name'`
               - docker build --build-arg CONFLUENCE_VERSION=${CONFLUENCE_VERSION} -t test-image .
               - export IS_RELEASE=false
               - /usr/src/app/post_build.sh test-image $IS_RELEASE
