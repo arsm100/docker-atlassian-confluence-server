@@ -443,3 +443,27 @@ def test_confluence_xml_snapshot_properties(docker_cli, image, run_user):
     assert xml.findall('.//setupType')[0].text == "clustersetup"
     assert xml.findall('.//buildNumber')[0].text == "8703"
     assert xml.findall('.//property[@name="hibernate.setup"]')[0].text == "true"
+
+def test_confluence_xml_no_overwrite(docker_cli, image, run_user):
+    environment = {
+        'ATL_TOMCAT_CONTEXTPATH': 'myconf',
+    }
+
+    container = docker_cli.containers.run(image, detach=True, user=run_user, environment=environment)
+    tihost = testinfra.get_host("docker://"+container.id)
+    cfg = f'{get_app_home(tihost)}/confluence.cfg.xml'
+
+    _jvm = wait_for_proc(tihost, get_bootstrap_proc(tihost))
+
+    xml = parse_xml(tihost, cfg)
+    assert xml.findall('.//property[@name="confluence.webapp.context.path"]')[0].text == "/myconf"
+
+    container.exec_run(f"sed -i 's/myconf/otherval/' {cfg}")
+
+    xml = parse_xml(tihost, cfg)
+    assert xml.findall('.//property[@name="confluence.webapp.context.path"]')[0].text == "/otherval"
+
+    container.restart(timeout=60)
+
+    xml = parse_xml(tihost, cfg)
+    assert xml.findall('.//property[@name="confluence.webapp.context.path"]')[0].text == "/otherval"
