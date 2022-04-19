@@ -306,9 +306,7 @@ management technology, and is beyond the scope of this documentation.
    configuration is purely specified through the environment (e.g. Kubernetes)
    this is undesirable; this flag forces an update of all generated files.
    
-   In Confluence the affected files are:
-
-   * `confluence.cfg.xml`
+   In Confluence the affected files are: `confluence.cfg.xml`
    
 * `SET_PERMISSIONS` (default: true)
 
