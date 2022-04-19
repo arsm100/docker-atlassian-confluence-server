@@ -307,9 +307,7 @@ management technology, and is beyond the scope of this documentation.
    this behaviour may be undesirable; this flag forces an update of all
    generated files.
    
-   In Confluence the affected files are: 
-
-   * `confluence.cfg.xml`
+   In Confluence the affected files are: `confluence.cfg.xml`
    
    See [the entrypoint code](entrypoint.py) for the details of how configuration
    files are generated.
