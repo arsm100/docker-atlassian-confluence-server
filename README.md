@@ -297,6 +297,21 @@ management technology, and is beyond the scope of this documentation.
 
 ## Container Configuration
 
+* `ATL_FORCE_CFG_UPDATE` (default: false)
+
+   The Docker [entrypoint](entrypoint.py) generates application configuration on
+   first start; not all of these files are regenerated on subsequent
+   starts. This is deliberate, to avoid race conditions or overwriting manual
+   changes during restarts and upgrades. However in deployments where
+   configuration is purely specified through the environment (e.g. Kubernetes)
+   this behaviour may be undesirable; this flag forces an update of all
+   generated files.
+   
+   In Confluence the affected files are: `confluence.cfg.xml`
+   
+   See [the entrypoint code](entrypoint.py) for the details of how configuration
+   files are generated.
+   
 * `SET_PERMISSIONS` (default: true)
 
    Define whether to set home directory permissions on startup. Set to `false` to disable
