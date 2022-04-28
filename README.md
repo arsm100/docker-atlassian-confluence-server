@@ -451,6 +451,31 @@ updates or fixes.
 If for some reason you need a different version, see "Building your own image"
 above.
 
+# Supported architectures
+
+Currently the Atlassian Docker images are built for the `linux/amd64` target
+platform; we do not have other architectures on our roadmap at this
+point. However the Dockerfiles and support tooling have now had all
+architecture-specific components removed, so if necessary it is possible to
+build images for any platform supported by Docker.
+
+## Building on the target architecture
+
+Note: This method is known to work on Mac M1 and AWS ARM64 machines, but has not
+be extensively tested.
+
+The simplest method of getting a platform image is to build it on a target
+machine. The following assumes you have git and Docker installed. You will also
+need to know which version of Confluence you want to build; substitute
+`CONFLUENCE_VERSION=x.x.x` with your required version:
+
+```
+git clone --recurse-submodule https://bitbucket.org/atlassian-docker/docker-atlassian-confluence-server.git
+cd docker-atlassian-confluence-server
+docker build --tag my-image --build-arg CONFLUENCE_VERSION=x.x.x .
+```
+This image can be pushed up to your own Docker Hub or private repository.
+
 # Troubleshooting
 
 These images include built-in scripts to assist in performing common JVM diagnostic tasks.
