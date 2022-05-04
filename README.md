@@ -528,6 +528,11 @@ forum for discussion on running Atlassian Data Center products in containers.
 
 See the [contributing guideline](CONTRIBUTING.md) if you are contributing from outside Atlassian.
 
+# Changelog
+
+For a detailed list of changes to the Docker image configuration see [the Git
+commit history](https://bitbucket.org/atlassian-docker/docker-atlassian-confluence-server/commits/).
+
 # License
 
 Copyright © 2020 Atlassian Corporation Pty Ltd.
