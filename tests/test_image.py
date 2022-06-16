@@ -279,14 +279,14 @@ def test_confluence_xml_postgres(docker_cli, image, run_user):
     assert xml.findall('.//property[@name="hibernate.dialect"]')[0].text == "com.atlassian.confluence.impl.hibernate.dialect.PostgreSQLDialect"
     assert xml.findall('.//property[@name="hibernate.connection.driver_class"]')[0].text == "org.postgresql.Driver"
 
-    assert xml.findall('.//property[@name="hibernate.c3p0.min_size"]')[0].text == "20"
-    assert xml.findall('.//property[@name="hibernate.c3p0.max_size"]')[0].text == "100"
-    assert xml.findall('.//property[@name="hibernate.c3p0.timeout"]')[0].text == "30"
-    assert xml.findall('.//property[@name="hibernate.c3p0.idle_test_period"]')[0].text == "100"
-    assert xml.findall('.//property[@name="hibernate.c3p0.max_statements"]')[0].text == "0"
-    assert xml.findall('.//property[@name="hibernate.c3p0.validate"]')[0].text == "false"
-    assert xml.findall('.//property[@name="hibernate.c3p0.acquire_increment"]')[0].text == "1"
-    assert xml.findall('.//property[@name="hibernate.c3p0.preferredTestQuery"]')[0].text == "select 1"
+    assert xml.findall('.//property[@name="hibernate.hikari.min_size"]')[0].text == "20"
+    assert xml.findall('.//property[@name="hibernate.hikari.max_size"]')[0].text == "100"
+    assert xml.findall('.//property[@name="hibernate.hikari.timeout"]')[0].text == "30"
+    assert xml.findall('.//property[@name="hibernate.hikari.idle_test_period"]')[0].text == "100"
+    assert xml.findall('.//property[@name="hibernate.hikari.max_statements"]')[0].text == "0"
+    assert xml.findall('.//property[@name="hibernate.hikari.validate"]')[0].text == "true"
+    assert xml.findall('.//property[@name="hibernate.hikari.acquire_increment"]')[0].text == "1"
+    assert xml.findall('.//property[@name="hibernate.hikari.preferredTestQuery"]')[0].text == "select 1"
 
 
 def test_confluence_xml_postgres_all_set(docker_cli, image, run_user):
@@ -310,14 +310,14 @@ def test_confluence_xml_postgres_all_set(docker_cli, image, run_user):
     xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
     assert xml.findall('.//property[@name="hibernate.connection.driver_class"]')[0].text == "org.postgresql.Driver"
     assert xml.findall('.//property[@name="hibernate.dialect"]')[0].text == "com.atlassian.confluence.impl.hibernate.dialect.PostgreSQLDialect"
-    assert xml.findall('.//property[@name="hibernate.c3p0.min_size"]')[0].text == "x20"
-    assert xml.findall('.//property[@name="hibernate.c3p0.max_size"]')[0].text == "x100"
-    assert xml.findall('.//property[@name="hibernate.c3p0.timeout"]')[0].text == "x30"
-    assert xml.findall('.//property[@name="hibernate.c3p0.idle_test_period"]')[0].text == "x100"
-    assert xml.findall('.//property[@name="hibernate.c3p0.max_statements"]')[0].text == "x0"
-    assert xml.findall('.//property[@name="hibernate.c3p0.validate"]')[0].text == "xfalse"
-    assert xml.findall('.//property[@name="hibernate.c3p0.acquire_increment"]')[0].text == "x1"
-    assert xml.findall('.//property[@name="hibernate.c3p0.preferredTestQuery"]')[0].text == "xselect 1"
+    assert xml.findall('.//property[@name="hibernate.hikari.min_size"]')[0].text == "x20"
+    assert xml.findall('.//property[@name="hibernate.hikari.max_size"]')[0].text == "x100"
+    assert xml.findall('.//property[@name="hibernate.hikari.timeout"]')[0].text == "x30"
+    assert xml.findall('.//property[@name="hibernate.hikari.idle_test_period"]')[0].text == "x100"
+    assert xml.findall('.//property[@name="hibernate.hikari.max_statements"]')[0].text == "x0"
+    assert xml.findall('.//property[@name="hibernate.hikari.validate"]')[0].text == "xfalse"
+    assert xml.findall('.//property[@name="hibernate.hikari.acquire_increment"]')[0].text == "x1"
+    assert xml.findall('.//property[@name="hibernate.hikari.preferredTestQuery"]')[0].text == "xselect 1"
 
 
 def test_confluence_xml_cluster_aws(docker_cli, image, run_user):
@@ -496,3 +496,29 @@ def test_confluence_xml_force_overwrite(docker_cli, image, run_user):
 
     xml = parse_xml(tihost, cfg)
     assert xml.findall('.//property[@name="confluence.webapp.context.path"]')[0].text == "/myconf"
+
+
+def test_confluence_db_pool_version_7_13(docker_cli, image, run_user):
+    environment = {
+        'CONFLUENCE_VERSION': '7.13.7',
+        'ATL_JDBC_URL': 'postgresql:hostname',
+        'ATL_DB_TYPE': 'postgresql'
+    }
+    container = run_image(docker_cli, image, user=run_user, environment=environment)
+
+    xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
+
+    assert xml.findall('.//property[@name="hibernate.c3p0.min_size"]')[0].text == "20"
+
+
+def test_confluence_db_pool_version_7_14(docker_cli, image, run_user):
+    environment = {
+        'CONFLUENCE_VERSION': '7.17.7',
+        'ATL_JDBC_URL': 'postgresql:hostname',
+        'ATL_DB_TYPE': 'postgresql'
+    }
+    container = run_image(docker_cli, image, user=run_user, environment=environment)
+
+    xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
+
+    assert xml.findall('.//property[@name="hibernate.hikari.min_size"]')[0].text == "20"
