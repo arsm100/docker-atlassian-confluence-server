@@ -172,15 +172,15 @@ Example:
 * `ATL_LICENSE_KEY` (from Confluence 7.9 onwards)
 
   The Confluence license string. Providing this will remove the need to supply it through the web startup screen.
-  
+
 * *use with caution* `CONFLUENCE_LOG_STDOUT` `[true, false]`  (from Confluence 7.9 onwards)
 
-  Prior to Confluence version 7.9.0, the log files are always stored in the `logs` folder in Confluence home. From version 
+  Prior to Confluence version 7.9.0, the log files are always stored in the `logs` folder in Confluence home. From version
   7.9.0, the logs can be printed directly to the `stdout` and don't use the file at all. This makes it possible to fetch the log messages
   via `docker logs <CONTAINER_ID>`. In this setup we recommend using some log aggregation tooling (e.g. AWS Cloudwatch or ELK stack).
-  
+
   **Beware, if enabled, the support ZIP produced by the Troubleshooting and Support plugin doesn't contain the application logs.**
-  
+
 ## Database configuration
 
 It is optionally possible to configure the database from the environment,
@@ -306,12 +306,12 @@ management technology, and is beyond the scope of this documentation.
    configuration is purely specified through the environment (e.g. Kubernetes)
    this behaviour may be undesirable; this flag forces an update of all
    generated files.
-   
+
    In Confluence the affected files are: `confluence.cfg.xml`
-   
+
    See [the entrypoint code](entrypoint.py) for the details of how configuration
    files are generated.
-   
+
 * `SET_PERMISSIONS` (default: true)
 
    Define whether to set home directory permissions on startup. Set to `false` to disable
@@ -423,20 +423,20 @@ So `atlassian/confluence:latest` will use the newest stable version of
 Confluence Server available.
 
 Alternatively, you can use a specific minor version of Confluence Server by
-using a version number tag: `atlassian/confluence:6.13`. This will
-install the latest `6.13.x` version that is available.
+using a version number tag: `atlassian/confluence:7.13`. This will
+install the latest `7.13.x` version that is available.
 
 We also publish docker images for our [EAP releases](https://www.atlassian.com/software/confluence/download-eap) (not
 supported for use in production). The tag for EAP releases is the EAP version.
 For example to get the `7.8.0-beta1` EAP release, use `atlassian/confluence:7.8.0-beta1`.
 
-For example, `atlassian/confluence:6.13-ubuntu-18.04-adoptopenjdk8` will
-install the latest 6.13.x version with AdoptOpenJDK 8.
+For example, `atlassian/confluence:7.13-ubuntu-jdk11` will
+install the latest 7.13.x version with Eclipse Temurin OpenJDK 11.
 
 # Supported JDK versions
 
 All the Atlassian Docker images are now JDK11 only, and generated from the
-[official AdoptOpenJDK Docker images](https://hub.docker.com/r/adoptopenjdk/openjdk11).
+[official Eclipse Temurin OpenJDK Docker images](https://hub.docker.com/_/eclipse-temurin).
 
 The Docker images follow the [Atlassian Support end-of-life
 policy](https://confluence.atlassian.com/support/atlassian-support-end-of-life-policy-201851003.html);
