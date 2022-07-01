@@ -10,7 +10,6 @@ images = {
     'Confluence': {
         11: {
             'start_version': '7.4',
-            'end_version': '8',
             'default_release': True,
             'base_image': 'eclipse-temurin:11',
             'tag_suffixes': ['jdk11','ubuntu-jdk11'],

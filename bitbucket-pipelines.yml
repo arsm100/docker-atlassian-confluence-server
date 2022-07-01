@@ -38,7 +38,6 @@ pipelines:
                 python  /usr/src/app/make-releases.py \
                   --update \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
@@ -63,7 +62,6 @@ pipelines:
                 python  /usr/src/app/make-releases.py \
                   --update \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
@@ -88,7 +86,6 @@ pipelines:
                 python  /usr/src/app/make-releases.py \
                   --update \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
@@ -113,7 +110,6 @@ pipelines:
                 python  /usr/src/app/make-releases.py \
                   --update \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
@@ -138,7 +134,6 @@ pipelines:
                 python  /usr/src/app/make-releases.py \
                   --update \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
@@ -163,7 +158,6 @@ pipelines:
                 python  /usr/src/app/make-releases.py \
                   --update \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
@@ -188,7 +182,6 @@ pipelines:
                 python  /usr/src/app/make-releases.py \
                   --update \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
@@ -213,7 +206,6 @@ pipelines:
                 python  /usr/src/app/make-releases.py \
                   --update \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
@@ -288,7 +280,6 @@ pipelines:
                   --create \
                   --create-eap \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
@@ -314,7 +305,6 @@ pipelines:
                   --create \
                   --create-eap \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
@@ -340,7 +330,6 @@ pipelines:
                   --create \
                   --create-eap \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
@@ -366,7 +355,6 @@ pipelines:
                   --create \
                   --create-eap \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
@@ -392,7 +380,6 @@ pipelines:
                   --create \
                   --create-eap \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
@@ -418,7 +405,6 @@ pipelines:
                   --create \
                   --create-eap \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
@@ -444,7 +430,6 @@ pipelines:
                   --create \
                   --create-eap \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
@@ -470,7 +455,6 @@ pipelines:
                   --create \
                   --create-eap \
                   --start-version='7.4' \
-                  --end-version='8' \
                   --default-release \
                   --dockerfile='Dockerfile' \
                   --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:11' \
