@@ -498,27 +498,15 @@ def test_confluence_xml_force_overwrite(docker_cli, image, run_user):
     assert xml.findall('.//property[@name="confluence.webapp.context.path"]')[0].text == "/myconf"
 
 
-def test_confluence_db_pool_version_7_13(docker_cli, image, run_user):
+@pytest.mark.parametrize("version,db_property", [('7.13.7', 'c3p0'), ('7.17.7', 'hikari'), ('6.9.0', 'c3p0'), ('8.0.0', 'hikari')])
+def test_confluence_db_pool_property(docker_cli, image, version, db_property):
     environment = {
-        'CONFLUENCE_VERSION': '7.13.7',
+        'CONFLUENCE_VERSION': version,
         'ATL_JDBC_URL': 'postgresql:hostname',
         'ATL_DB_TYPE': 'postgresql'
     }
-    container = run_image(docker_cli, image, user=run_user, environment=environment)
+    container = run_image(docker_cli, image, environment=environment)
 
     xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
 
-    assert xml.findall('.//property[@name="hibernate.c3p0.min_size"]')[0].text == "20"
-
-
-def test_confluence_db_pool_version_7_14(docker_cli, image, run_user):
-    environment = {
-        'CONFLUENCE_VERSION': '7.17.7',
-        'ATL_JDBC_URL': 'postgresql:hostname',
-        'ATL_DB_TYPE': 'postgresql'
-    }
-    container = run_image(docker_cli, image, user=run_user, environment=environment)
-
-    xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
-
-    assert xml.findall('.//property[@name="hibernate.hikari.min_size"]')[0].text == "20"
+    assert xml.findall(f'.//property[@name="hibernate.{db_property}.min_size"]')[0].text == "20"
