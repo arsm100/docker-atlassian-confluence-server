@@ -11,7 +11,7 @@
     <property name="webwork.multipart.saveDir">${localHome}/temp</property>
     <property name="attachments.dir">${confluenceHome}/attachments</property>
     
-
+    {# Confluence versions 7.13 and newer #}
     {% if (confluence_version.split(".")[0] | int() == 7 and confluence_version.split(".")[1] | int() <= 13) or confluence_version.split(".")[0] | int() < 7 %}
     {% set db_pool_variable = "c3p0" %}
     {% else %}
