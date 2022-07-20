@@ -25,7 +25,7 @@ running.
 version is deprecated and only kept for backwards-compatibility; for new
 installations it is recommended to use the shorter name.
 
-** Use docker version >= 20.10.9. **
+** Use docker version >= 20.10.10. **
 
 # Quick Start
 
