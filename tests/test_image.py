@@ -498,6 +498,20 @@ def test_confluence_xml_force_overwrite(docker_cli, image, run_user):
     assert xml.findall('.//property[@name="confluence.webapp.context.path"]')[0].text == "/myconf"
 
 
+expected_db_properties = {
+    'hikari': {
+        'hibernate.hikari.idleTimeout': '30000',
+        'hibernate.hikari.registerMbeans': 'true',
+        'hibernate.hikari.maximumPoolSize': '100',
+        'hibernate.hikari.minimumIdle': '20',
+    },
+    'c3p0': {
+        'hibernate.c3p0.min_size': '20',
+        'hibernate.c3p0.max_size': '100',
+        'hibernate.c3p0.timeout': '30',
+    }
+}
+
 @pytest.mark.parametrize("version,db_property", [('7.13.7', 'c3p0'), ('7.17.7', 'hikari'), ('6.9.0', 'c3p0'), ('8.0.0', 'hikari')])
 def test_confluence_db_pool_property(docker_cli, image, version, db_property):
     environment = {
@@ -509,4 +523,8 @@ def test_confluence_db_pool_property(docker_cli, image, version, db_property):
 
     xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
 
-    assert xml.findall(f'.//property[@name="hibernate.{db_property}.min_size"]')[0].text == "20"
+    expected = expected_db_properties[db_property]
+
+    for property, expected_value in expected.items():
+        assert xml.findall(f'.//property[@name="{property}"]')[0].text == expected_value
+
