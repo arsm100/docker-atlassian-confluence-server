@@ -41,7 +41,7 @@
       <property name="hibernate.c3p0.acquire_increment">{{ atl_db_acquireincrement | default('1') }}</property>
       <property name="hibernate.c3p0.preferredTestQuery">{{ atl_db_validationquery | default('select 1') }}</property>
       {% else %}
-      <property name="hibernate.hikari.idleTimeout">{{ (atl_db_timeout | default(30)) * 1000 }}</property>
+      <property name="hibernate.hikari.idleTimeout">{{ (atl_db_timeout | default(30) | int) * 1000 }}</property>
       <property name="hibernate.hikari.maximumPoolSize">{{ atl_db_poolmaxsize | default('100') }}</property>
       <property name="hibernate.hikari.minimumIdle">{{ atl_db_poolminsize | default('20') }}</property>
       <property name="hibernate.hikari.registerMbeans">true</property>

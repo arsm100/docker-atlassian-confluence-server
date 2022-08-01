@@ -242,7 +242,7 @@ def test_conf_init_set(docker_cli, image):
     assert init.contains("confluence.home = /tmp/")
 
 
-def test_confluence_xml_default(docker_cli, image):
+def test_confluence_xml_default_c3p0(docker_cli, image):
     container = run_image(docker_cli, image)
     _jvm = wait_for_proc(container, get_bootstrap_proc(container))
 
@@ -260,13 +260,12 @@ def test_confluence_lucene_index(docker_cli, image):
     xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
     assert xml.findall('.//property[@name="lucene.index.dir"]')[0].text == '/some/other/dir'
 
-
 def test_confluence_xml_postgres(docker_cli, image, run_user):
     environment = {
         'ATL_DB_TYPE': 'postgresql',
         'ATL_JDBC_URL': 'atl_jdbc_url',
         'ATL_JDBC_USER': 'atl_jdbc_user',
-        'ATL_JDBC_PASSWORD': 'atl_jdbc_password'
+        'ATL_JDBC_PASSWORD': 'atl_jdbc_password',
     }
     container = run_image(docker_cli, image, user=run_user, environment=environment)
     _jvm = wait_for_proc(container, get_bootstrap_proc(container))
@@ -279,18 +278,66 @@ def test_confluence_xml_postgres(docker_cli, image, run_user):
     assert xml.findall('.//property[@name="hibernate.dialect"]')[0].text == "com.atlassian.confluence.impl.hibernate.dialect.PostgreSQLDialect"
     assert xml.findall('.//property[@name="hibernate.connection.driver_class"]')[0].text == "org.postgresql.Driver"
 
-    assert xml.findall('.//property[@name="hibernate.hikari.min_size"]')[0].text == "20"
-    assert xml.findall('.//property[@name="hibernate.hikari.max_size"]')[0].text == "100"
-    assert xml.findall('.//property[@name="hibernate.hikari.timeout"]')[0].text == "30"
-    assert xml.findall('.//property[@name="hibernate.hikari.idle_test_period"]')[0].text == "100"
-    assert xml.findall('.//property[@name="hibernate.hikari.max_statements"]')[0].text == "0"
-    assert xml.findall('.//property[@name="hibernate.hikari.validate"]')[0].text == "true"
-    assert xml.findall('.//property[@name="hibernate.hikari.acquire_increment"]')[0].text == "1"
-    assert xml.findall('.//property[@name="hibernate.hikari.preferredTestQuery"]')[0].text == "select 1"
+    assert xml.findall('.//property[@name="hibernate.hikari.idleTimeout"]')[0].text == "30000"
+    assert xml.findall('.//property[@name="hibernate.hikari.maximumPoolSize"]')[0].text == "100"
+    assert xml.findall('.//property[@name="hibernate.hikari.minimumIdle"]')[0].text == "20"
+    assert xml.findall('.//property[@name="hibernate.hikari.registerMbeans"]')[0].text == "true"
 
 
 def test_confluence_xml_postgres_all_set(docker_cli, image, run_user):
     environment = {
+        'ATL_DB_TYPE': 'postgresql',
+        'ATL_JDBC_URL': 'atl_jdbc_url',
+        'ATL_JDBC_USER': 'atl_jdbc_user',
+        'ATL_JDBC_PASSWORD': 'atl_jdbc_password',
+        'ATL_DB_POOLMAXSIZE': 'x100',
+        'ATL_DB_POOLMINSIZE': 'x20',
+        'ATL_DB_TIMEOUT': '40',
+    }
+    container = run_image(docker_cli, image, user=run_user, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+
+    xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
+    assert xml.findall('.//property[@name="hibernate.connection.driver_class"]')[0].text == "org.postgresql.Driver"
+    assert xml.findall('.//property[@name="hibernate.dialect"]')[0].text == "com.atlassian.confluence.impl.hibernate.dialect.PostgreSQLDialect"
+    assert xml.findall('.//property[@name="hibernate.hikari.idleTimeout"]')[0].text == "40000"
+    assert xml.findall('.//property[@name="hibernate.hikari.maximumPoolSize"]')[0].text == "x100"
+    assert xml.findall('.//property[@name="hibernate.hikari.minimumIdle"]')[0].text == "x20"
+
+
+
+def test_confluence_xml_postgres_c3p0(docker_cli, image, run_user):
+    environment = {
+        'CONFLUENCE_VERSION': '7.10.0',
+        'ATL_DB_TYPE': 'postgresql',
+        'ATL_JDBC_URL': 'atl_jdbc_url',
+        'ATL_JDBC_USER': 'atl_jdbc_user',
+        'ATL_JDBC_PASSWORD': 'atl_jdbc_password',
+    }
+    container = run_image(docker_cli, image, user=run_user, environment=environment)
+    _jvm = wait_for_proc(container, get_bootstrap_proc(container))
+
+    xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
+    assert xml.findall('.//property[@name="hibernate.connection.url"]')[0].text == "atl_jdbc_url"
+    assert xml.findall('.//property[@name="hibernate.connection.username"]')[0].text == "atl_jdbc_user"
+    assert xml.findall('.//property[@name="hibernate.connection.password"]')[0].text == "atl_jdbc_password"
+    assert xml.findall('.//property[@name="confluence.database.choice"]')[0].text == "postgresql"
+    assert xml.findall('.//property[@name="hibernate.dialect"]')[0].text == "com.atlassian.confluence.impl.hibernate.dialect.PostgreSQLDialect"
+    assert xml.findall('.//property[@name="hibernate.connection.driver_class"]')[0].text == "org.postgresql.Driver"
+
+    assert xml.findall('.//property[@name="hibernate.c3p0.min_size"]')[0].text == "20"
+    assert xml.findall('.//property[@name="hibernate.c3p0.max_size"]')[0].text == "100"
+    assert xml.findall('.//property[@name="hibernate.c3p0.timeout"]')[0].text == "30"
+    assert xml.findall('.//property[@name="hibernate.c3p0.idle_test_period"]')[0].text == "100"
+    assert xml.findall('.//property[@name="hibernate.c3p0.max_statements"]')[0].text == "0"
+    assert xml.findall('.//property[@name="hibernate.c3p0.validate"]')[0].text == "true"
+    assert xml.findall('.//property[@name="hibernate.c3p0.acquire_increment"]')[0].text == "1"
+    assert xml.findall('.//property[@name="hibernate.c3p0.preferredTestQuery"]')[0].text == "select 1"
+
+
+def test_confluence_xml_postgres_all_set_c3p0(docker_cli, image, run_user):
+    environment = {
+        'CONFLUENCE_VERSION': '7.10.0',
         'ATL_DB_TYPE': 'postgresql',
         'ATL_JDBC_URL': 'atl_jdbc_url',
         'ATL_JDBC_USER': 'atl_jdbc_user',
@@ -310,14 +357,14 @@ def test_confluence_xml_postgres_all_set(docker_cli, image, run_user):
     xml = parse_xml(container, f'{get_app_home(container)}/confluence.cfg.xml')
     assert xml.findall('.//property[@name="hibernate.connection.driver_class"]')[0].text == "org.postgresql.Driver"
     assert xml.findall('.//property[@name="hibernate.dialect"]')[0].text == "com.atlassian.confluence.impl.hibernate.dialect.PostgreSQLDialect"
-    assert xml.findall('.//property[@name="hibernate.hikari.min_size"]')[0].text == "x20"
-    assert xml.findall('.//property[@name="hibernate.hikari.max_size"]')[0].text == "x100"
-    assert xml.findall('.//property[@name="hibernate.hikari.timeout"]')[0].text == "x30"
-    assert xml.findall('.//property[@name="hibernate.hikari.idle_test_period"]')[0].text == "x100"
-    assert xml.findall('.//property[@name="hibernate.hikari.max_statements"]')[0].text == "x0"
-    assert xml.findall('.//property[@name="hibernate.hikari.validate"]')[0].text == "xfalse"
-    assert xml.findall('.//property[@name="hibernate.hikari.acquire_increment"]')[0].text == "x1"
-    assert xml.findall('.//property[@name="hibernate.hikari.preferredTestQuery"]')[0].text == "xselect 1"
+    assert xml.findall('.//property[@name="hibernate.c3p0.min_size"]')[0].text == "x20"
+    assert xml.findall('.//property[@name="hibernate.c3p0.max_size"]')[0].text == "x100"
+    assert xml.findall('.//property[@name="hibernate.c3p0.timeout"]')[0].text == "x30"
+    assert xml.findall('.//property[@name="hibernate.c3p0.idle_test_period"]')[0].text == "x100"
+    assert xml.findall('.//property[@name="hibernate.c3p0.max_statements"]')[0].text == "x0"
+    assert xml.findall('.//property[@name="hibernate.c3p0.validate"]')[0].text == "xfalse"
+    assert xml.findall('.//property[@name="hibernate.c3p0.acquire_increment"]')[0].text == "x1"
+    assert xml.findall('.//property[@name="hibernate.c3p0.preferredTestQuery"]')[0].text == "xselect 1"
 
 
 def test_confluence_xml_cluster_aws(docker_cli, image, run_user):
