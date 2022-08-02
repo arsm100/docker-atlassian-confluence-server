@@ -10,7 +10,6 @@
     <property name="confluence.database.connection.type">database-type-standard</property>
     <property name="webwork.multipart.saveDir">${localHome}/temp</property>
     <property name="attachments.dir">${confluenceHome}/attachments</property>
-    
     <property name="lucene.index.dir">{{ atl_lucene_index_dir | default('${confluenceHome}/index') }}</property>
 
     {# We need mappings for "oracle12c" and "oracle" to remain backwards compatible with Confluence 7.3.0 and earlier. Oracle 19c support was added in Confluence 7.3.1 and changed the database type name for oracle databases from "oracle12c" to "oracle" #}
