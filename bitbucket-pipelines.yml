@@ -219,6 +219,190 @@ pipelines:
                   --push
  
 
+        - step:
+            name: JDK 17 - Batch 1
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python  /usr/src/app/make-releases.py \
+                  --update \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
+                  --concurrent-builds='1' \
+                  --job-offset='0' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
+        - step:
+            name: JDK 17 - Batch 2
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python  /usr/src/app/make-releases.py \
+                  --update \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
+                  --concurrent-builds='1' \
+                  --job-offset='1' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
+        - step:
+            name: JDK 17 - Batch 3
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python  /usr/src/app/make-releases.py \
+                  --update \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
+                  --concurrent-builds='1' \
+                  --job-offset='2' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
+        - step:
+            name: JDK 17 - Batch 4
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python  /usr/src/app/make-releases.py \
+                  --update \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
+                  --concurrent-builds='1' \
+                  --job-offset='3' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
+        - step:
+            name: JDK 17 - Batch 5
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python  /usr/src/app/make-releases.py \
+                  --update \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
+                  --concurrent-builds='1' \
+                  --job-offset='4' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
+        - step:
+            name: JDK 17 - Batch 6
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python  /usr/src/app/make-releases.py \
+                  --update \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
+                  --concurrent-builds='1' \
+                  --job-offset='5' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
+        - step:
+            name: JDK 17 - Batch 7
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python  /usr/src/app/make-releases.py \
+                  --update \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
+                  --concurrent-builds='1' \
+                  --job-offset='6' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
+        - step:
+            name: JDK 17 - Batch 8
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python  /usr/src/app/make-releases.py \
+                  --update \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
+                  --concurrent-builds='1' \
+                  --job-offset='7' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
 
     ######################################################################
     # All other branches & PRs; run unit tests & functional tests
@@ -461,6 +645,198 @@ pipelines:
                   --dockerfile-version-arg='CONFLUENCE_VERSION' \
                   --mac-product-key='confluence' \
                   --tag-suffixes='jdk11,ubuntu-jdk11' \
+                  --concurrent-builds='1' \
+                  --job-offset='7' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
+        - step:
+            name: JDK 17 - Batch 1
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python /usr/src/app/make-releases.py \
+                  --create \
+                  --create-eap \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
+                  --concurrent-builds='1' \
+                  --job-offset='0' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
+        - step:
+            name: JDK 17 - Batch 2
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python /usr/src/app/make-releases.py \
+                  --create \
+                  --create-eap \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
+                  --concurrent-builds='1' \
+                  --job-offset='1' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
+        - step:
+            name: JDK 17 - Batch 3
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python /usr/src/app/make-releases.py \
+                  --create \
+                  --create-eap \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
+                  --concurrent-builds='1' \
+                  --job-offset='2' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
+        - step:
+            name: JDK 17 - Batch 4
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python /usr/src/app/make-releases.py \
+                  --create \
+                  --create-eap \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
+                  --concurrent-builds='1' \
+                  --job-offset='3' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
+        - step:
+            name: JDK 17 - Batch 5
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python /usr/src/app/make-releases.py \
+                  --create \
+                  --create-eap \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
+                  --concurrent-builds='1' \
+                  --job-offset='4' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
+        - step:
+            name: JDK 17 - Batch 6
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python /usr/src/app/make-releases.py \
+                  --create \
+                  --create-eap \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
+                  --concurrent-builds='1' \
+                  --job-offset='5' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
+        - step:
+            name: JDK 17 - Batch 7
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python /usr/src/app/make-releases.py \
+                  --create \
+                  --create-eap \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
+                  --concurrent-builds='1' \
+                  --job-offset='6' \
+                  --jobs-total='8' \
+                  --docker-repos='atlassian/confluence,atlassian/confluence-server' \
+                  --push
+ 
+
+        - step:
+            name: JDK 17 - Batch 8
+            services:
+              - docker
+            script:
+              - git submodule update --init --recursive
+              - echo ${DOCKER_BOT_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_BOT_USERNAME} --password-stdin
+              - >
+                python /usr/src/app/make-releases.py \
+                  --create \
+                  --create-eap \
+                  --start-version='8' \
+                  --dockerfile='Dockerfile' \
+                  --dockerfile-buildargs='BASE_IMAGE=eclipse-temurin:17' \
+                  --dockerfile-version-arg='CONFLUENCE_VERSION' \
+                  --mac-product-key='confluence' \
+                  --tag-suffixes='jdk17,ubuntu-jdk17' \
                   --concurrent-builds='1' \
                   --job-offset='7' \
                   --jobs-total='8' \
