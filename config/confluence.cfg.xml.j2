@@ -8,6 +8,7 @@
 
   <properties>
     <property name="confluence.database.connection.type">database-type-standard</property>
+    <property name="struts.multipart.saveDir">${localHome}/temp</property>
     <property name="webwork.multipart.saveDir">${localHome}/temp</property>
     <property name="attachments.dir">${confluenceHome}/attachments</property>
     <property name="lucene.index.dir">{{ atl_lucene_index_dir | default('${confluenceHome}/index') }}</property>
