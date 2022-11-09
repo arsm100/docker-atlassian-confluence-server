@@ -1,0 +1,53 @@
+name: Docker Image CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        required: true
+        description: Confluence version to build ARM supported image for.
+      repository:
+        type: string
+        required: false
+        default: arsm100/confluence-m1
+        description: The repository OWNER/NAME to publish to.
+      latest:
+        type: boolean
+        required: false
+        default: true
+        description: Whether the new image should be tagged as "latest".
+
+jobs:
+  buildx:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Pull latest changes from upstream repo and submodules
+        run: |
+          git remote add bitbucket  https://bitbucket.org/atlassian-docker/docker-atlassian-confluence-server.git -m master
+          git fetch bitbucket master && git merge
+          git submodule update --init --remote shared-components/
+      - name: Build ARM image and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          build-args: |
+            CONFLUENCE_VERSION=${{ github.event.inputs.version }}
+          tags: ${{ github.event.inputs.repository }}:${{ github.event.inputs.version }}${{ github.event.inputs.latest == 'true' && format(',{0}:latest', github.event.inputs.repository) || ''}}
+          platforms: linux/arm64/v8
+          cache-from: type=gha
+          cache-to: type=gha
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
