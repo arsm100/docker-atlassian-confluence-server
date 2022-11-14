@@ -81,7 +81,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          push: false
+          push: true
           build-args: |
             CONFLUENCE_VERSION=${{ needs.get-version.outputs.version }}
           tags: arsm100/confluence-m1:${{ needs.get-version.outputs.version }}${{ github.event.inputs.latest == 'true' && ',arsm100/confluence-m1:latest' || ''}}

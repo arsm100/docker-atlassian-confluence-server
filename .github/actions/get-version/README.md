@@ -7,15 +7,15 @@ is set as the output instead.
 ## Usage
 
 ```yml
-  get_version:
+  get-version:
     name: Get Confluence Version
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.get_version.outputs.version }}
+      version: ${{ steps.get-version.outputs.version }}
     steps:
       - uses: actions/checkout@v3
       - name: Get Version
-        id: get_version
+        id: get-version
         uses: ./.github/actions/get-version
         with:
           # Optional provided version to use and skip checking the Atlassian feeds
@@ -29,22 +29,22 @@ is set as the output instead.
 To retrieve the latest EAP version, the action can be used as such:
 
 ```yml
-  get_eap_version:
+  get-eap-version:
     name: Get EAP Version
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.get_eap_version.outputs.version }}
+      version: ${{ steps.get-eap-version.outputs.version }}
     steps:
       - uses: actions/checkout@v3
       - name: Get EAP Version
-        id: get_eap_version
+        id: get-eap-version
         uses: ./.github/actions/get-version
         with:
           type: EAP
 
-    use_latest_version:
+    use-latest-version:
       name: Use Latest EAP version
-      needs: get_eap_version
-      run: echo "Latest EAP version is ${{ needs.get_eap_version.outputs.version }}"
+      needs: get-eap-version
+      run: echo "Latest EAP version is ${{ needs.get-eap-version.outputs.version }}"
       shell: bash
 ```

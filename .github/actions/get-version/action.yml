@@ -1,20 +1,20 @@
 name: Get Version
-author: ServiceRocket
-description: This action is to get the latest released Early Access Programme (EAP) or Stable (GA) Confluence version number
+author: arsm100
+description: This action is to get the latest released Early Access Programme (EAP) or General Availability (GA) Confluence version number
 inputs:
   type:
     description: The type of Confluence build. Only accepted values are 'EAP' and 'GA'
     required: true
   version:
-    description: The provided max version to run test against (if any).
+    description: The provided version to build (if any).
 outputs:
   version:
     description: The latest EAP or GA version
-    value: ${{ steps.get_version.outputs.version }}
+    value: ${{ steps.get-version.outputs.version }}
 runs:
   using: composite
   steps:
     - name: Get Latest Version
-      id: get_version
+      id: get-version
       run: python ${{ github.action_path }}/get_version.py ${{ inputs.type }} ${{ inputs.version }}
       shell: bash
