@@ -1,3 +1,14 @@
+# Confluence ARM-Compatible Docker Image Builder
+
+This repository is a fork of the [Atlassian Confluence image builder](https://bitbucket.org/atlassian-docker/docker-atlassian-confluence-server/src/master/) 
+on Bitbucket but with added support for arm architecture; most notably, support for M1 and M2 Apple machines.
+
+This repository publishes the arm-compatible images to Docker Hub under [arsm100/confluence-m1](https://hub.docker.com/r/arsm100/confluence-m1).
+The Atlassian Early Access Programme (EAP) and General Availability (GA) feeds are polled twice every working day. If a 
+new version is detected, it is automatically built and published for ARM support.
+
+README of upstream repo:
+
 ![Atlassian Confluence Server](https://wac-cdn.atlassian.com/dam/jcr:5d1374c2-276f-4bca-9ce4-813aba614b7a/confluence-icon-gradient-blue.svg?cdnVersion=696)
 
 Confluence Server is where you create, organise and discuss work with your

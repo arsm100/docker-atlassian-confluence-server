@@ -1,6 +1,9 @@
 name: Docker Image CI
 
 on:
+  schedule:
+    - cron: '58 8 * * 1-5'    # Runs at 08:58 every weekday (For EAP).
+    - cron: '57 20 * * 1-5'    # Runs at 20:57 every weekday (For GA).
   workflow_dispatch:
     inputs:
       version:
@@ -19,9 +22,6 @@ on:
         required: false
         default: false
         description: Whether the new image should be tagged as "latest".
-  schedule:
-    - cron: '15 0 * * MON-FRI'    # Runs at 00:15 every weekday (For EAP).
-    - cron: '15 12 * * MON-FRI'    # Runs at 12:15 every weekday (For GA).
 
 jobs:
   get-version:
@@ -36,7 +36,7 @@ jobs:
         uses: ./.github/actions/get-version
         with:
           version: ${{ github.event.inputs.version }}
-          type: ${{ github.event.inputs.type != '' && github.event.inputs.type || (github.event.schedule == '15 0 * * MON-FRI' && 'EAP' || 'GA' )}}
+          type: ${{ github.event.inputs.type != '' && github.event.inputs.type || (github.event.schedule == '58 8 * * 1-5' && 'EAP' || 'GA' )}}
 
   query-image:
     name: Search for Image
@@ -57,6 +57,7 @@ jobs:
           fi
 
   buildx:
+    name: Build and Publish Image
     needs: [ get-version, query-image ]
     if: ${{ needs.query-image.outputs.exists == 'false' }}
     runs-on: ubuntu-latest
@@ -84,7 +85,7 @@ jobs:
           push: true
           build-args: |
             CONFLUENCE_VERSION=${{ needs.get-version.outputs.version }}
-          tags: arsm100/confluence-m1:${{ needs.get-version.outputs.version }}${{ github.event.inputs.latest == 'true' && ',arsm100/confluence-m1:latest' || ''}}
+          tags: arsm100/confluence-m1:${{ needs.get-version.outputs.version }}${{ (github.event.inputs.latest == 'true' || github.event.schedule == '57 20 * * 1-5') && ',arsm100/confluence-m1:latest' || ''}}
           platforms: linux/arm64/v8
           cache-from: type=gha
           cache-to: type=gha
