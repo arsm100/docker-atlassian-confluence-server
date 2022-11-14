@@ -10,7 +10,7 @@ on:
       type:
         type: choice
         required: false
-        description: If the version is not provided, you can automatically build for the latest EAP or GA Confluence version. Will be ignored if version is provided.
+        description: If the version is not provided, you can automatically build for the latest EAP or GA Confluence version. Will be ignored if version is provided manually.
         options:
           - EAP
           - GA
@@ -20,7 +20,8 @@ on:
         default: false
         description: Whether the new image should be tagged as "latest".
   schedule:
-    - cron: '15 0,12 * * MON-FRI'    # Runs at 00:15 & 12:15 every weekday.
+    - cron: '15 0 * * MON-FRI'    # Runs at 00:15 every weekday (For EAP).
+    - cron: '15 12 * * MON-FRI'    # Runs at 12:15 every weekday (For GA).
 
 jobs:
   get-version:
@@ -35,10 +36,29 @@ jobs:
         uses: ./.github/actions/get-version
         with:
           version: ${{ github.event.inputs.version }}
-          type: ${{ github.event.inputs.type }}
+          type: ${{ github.event.inputs.type != '' && github.event.inputs.type || (github.event.schedule == '15 0 * * MON-FRI' && 'EAP' || 'GA' )}}
+
+  query-image:
+    name: Search for Image
+    needs: get-version
+    runs-on: ubuntu-latest
+    outputs:
+      exists: ${{ steps.search.outputs.exists }}
+    steps:
+      - name: Query Docker Hub
+        id: search
+        run: |
+          if curl --silent -f -lSL https://hub.docker.com/v2/repositories/arsm100/confluence-m1/tags/${{ needs.get-version.outputs.version }}; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Image already exists on Docker Hub. Skipping build..."
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Image doesn't exist on Docker Hub. Continuing build..."
+          fi
 
   buildx:
-    needs: get-version
+    needs: [ get-version, query-image ]
+    if: ${{ needs.query-image.outputs.exists == 'false' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

@@ -15,7 +15,7 @@ def get_latest_version():
                                     key=lambda build: datetime.strptime(build['released'], "%d-%b-%Y"))
     latest_version = sorted_feed_json_array[-1]['version']
 
-    os.system(f'echo ::set-output name=version::"{latest_version}"')
+    os.system(f'echo "version={latest_version}" >> $GITHUB_OUTPUT')
     print(f'Latest version is {latest_version}')
 
 
