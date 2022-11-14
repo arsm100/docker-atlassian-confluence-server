@@ -5,21 +5,40 @@ on:
     inputs:
       version:
         type: string
-        required: true
-        description: Confluence version to build ARM supported image for.
-      repository:
-        type: string
         required: false
-        default: arsm100/confluence-m1
-        description: The repository OWNER/NAME to publish to.
+        description: Confluence version to build ARM supported image for. If not provided, will build for latest EAP or GA version.
+      type:
+        type: choice
+        required: false
+        description: If the version is not provided, you can automatically build for the latest EAP or GA Confluence version. Will be ignored if version is provided.
+        options:
+          - EAP
+          - GA
       latest:
         type: boolean
         required: false
-        default: true
+        default: false
         description: Whether the new image should be tagged as "latest".
+  schedule:
+    - cron: '15 0,12 * * MON-FRI'    # Runs at 00:15 & 12:15 every weekday.
 
 jobs:
+  get-version:
+    name: Get Version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get Latest Version
+        id: version
+        uses: ./.github/actions/get-version
+        with:
+          version: ${{ github.event.inputs.version }}
+          type: ${{ github.event.inputs.type }}
+
   buildx:
+    needs: get-version
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -35,19 +54,17 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Pull latest changes from upstream repo and submodules
         run: |
-          git remote add bitbucket  https://bitbucket.org/atlassian-docker/docker-atlassian-confluence-server.git -m master
+          git remote add bitbucket https://bitbucket.org/atlassian-docker/docker-atlassian-confluence-server.git -m master
           git fetch bitbucket master && git merge
           git submodule update --init --remote shared-components/
       - name: Build ARM image and push
         uses: docker/build-push-action@v3
         with:
           context: .
-          push: true
+          push: false
           build-args: |
-            CONFLUENCE_VERSION=${{ github.event.inputs.version }}
-          tags: ${{ github.event.inputs.repository }}:${{ github.event.inputs.version }}${{ github.event.inputs.latest == 'true' && format(',{0}:latest', github.event.inputs.repository) || ''}}
+            CONFLUENCE_VERSION=${{ needs.get-version.outputs.version }}
+          tags: arsm100/confluence-m1:${{ needs.get-version.outputs.version }}${{ github.event.inputs.latest == 'true' && ',arsm100/confluence-m1:latest' || ''}}
           platforms: linux/arm64/v8
           cache-from: type=gha
           cache-to: type=gha
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
